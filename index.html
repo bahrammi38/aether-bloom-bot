@@ -85,20 +85,12 @@
         <div class="logo">🌱</div>
         <h1>Aether Bloom</h1>
         <p>به باغ اثیری خود خوش آمدید. گل‌های کمیاب را پرورش دهید و BLOOM به دست آورید.</p>
-        <button class="start-button" onclick="startApp()">شروع بازی</button>
+        <button class="start-button" onclick="window.location.href = 'game.html';">شروع بازی</button>
     </div>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
-        function startApp() {
-            // وقتی کاربر روی دکمه "شروع" کلیک می‌کند، این تابع اجرا می‌شود
-            // اینجا باید کدی برای هدایت کاربر به صفحه اصلی بازی قرار بگیرد
-            alert("بازی شروع شد!");
-            // در ادامه، اینجا را به مسیر فایل صفحه بازی تغییر می‌دهیم
-            // window.location.href = "game.html";
-        }
-        
-        // این کد برای آماده کردن Telegram Web App هست
+        // این توابع برای فیکس سایز و فونت هست
         Telegram.WebApp.ready();
         Telegram.WebApp.expand();
     </script>
