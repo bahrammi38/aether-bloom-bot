@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Aether Bloom - Garden</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0d0d0d;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            justify-content: space-around;
+        }
+        .dashboard {
+            background-color: #1a1a1a;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .balance {
+            font-size: 2em;
+            font-weight: bold;
+            color: #00aaff;
+        }
+        .timer {
+            font-size: 1.5em;
+            color: #b0b0b0;
+            margin-top: 10px;
+        }
+        .pot-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .pot-image {
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        .flower-image {
+            position: absolute;
+            bottom: 60px;
+            width: 50%;
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+        .claim-button {
+            background-color: #00aaff;
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        .claim-button:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard">
+        <h3>موجودی شما</h3>
+        <span class="balance"><span id="bloom-balance">0</span> BLOOM</span>
+    </div>
+
+    <div class="pot-container">
+        <img id="pot" class="pot-image" src="goldun.PNG" alt="Fantasy Pot">
+        <img id="flower" class="flower-image" src="gol1.PNG" alt="Flower">
+    </div>
+
+    <div class="timer">
+        زمان باقی‌مانده: <span id="countdown">00:00:00</span>
+    </div>
+
+    <button id="claim-button" class="claim-button" disabled>دریافت BLOOM</button>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        Telegram.WebApp.ready();
+        Telegram.WebApp.expand();
+
+        const claimButton = document.getElementById('claim-button');
+        const bloomBalanceEl = document.getElementById('bloom-balance');
+        const countdownEl = document.getElementById('countdown');
+        const flowerImage = document.getElementById('flower');
+
+        const MINE_INTERVAL = 30 * 60 * 1000; // 30 دقیقه به میلی‌ثانیه
+        const BLOOM_PER_CLAIM = 10; // مقدار BLOOM در هر بار Claim
+
+        let lastClaimTime = 0;
+        let bloomBalance = 0;
+        let timerInterval;
+
+        // تابع برای به‌روزرسانی UI
+        function updateUI() {
+            bloomBalanceEl.textContent = bloomBalance;
+        }
+
+        // تابع برای شروع تایمر
+        function startTimer() {
+            claimButton.disabled = true;
+            flowerImage.style.opacity = 0;
+            lastClaimTime = new Date().getTime();
+
+            timerInterval = setInterval(() => {
+                const now = new Date().getTime();
+                const timeLeft = MINE_INTERVAL - (now - lastClaimTime);
+
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                countdownEl.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    countdownEl.textContent = "آماده دریافت!";
+                    claimButton.disabled = false;
+                    flowerImage.style.opacity = 1;
+                }
+            }, 1000);
+        }
+
+        // تابع برای دریافت BLOOM
+        claimButton.onclick = () => {
+            bloomBalance += BLOOM_PER_CLAIM;
+            updateUI();
+            Telegram.WebApp.showAlert('تبریک! ' + BLOOM_PER_CLAIM + ' BLOOM به موجودی شما اضافه شد.');
+            startTimer();
+        };
+
+        // شروع اولیه تایمر وقتی صفحه بارگذاری می‌شود
+        startTimer();
+    </script>
+</body>
+</html>
