@@ -67,12 +67,12 @@
             transition: opacity 0.5s ease-in-out;
         }
         
-        body.loaded #loadingScreen {
+        body.app-loaded #loadingScreen {
             opacity: 0;
             pointer-events: none;
         }
         
-        body.loaded #mainApp {
+        body.app-loaded #mainApp {
             opacity: 1;
         }
 
@@ -489,4 +489,228 @@
     
     <div class="modal" id="depositModal">
         <div class="modal-content">
-            <span class
+            <span class="close-modal" onclick="closeModal('depositModal')">&times;</span>
+            <h2 class="modal-title">واریز وجه</h2>
+            <p class="modal-message">
+                برای واریز، لطفاً از طریق کیف پول خود به آدرس زیر TON ارسال کنید.
+            </p>
+            <div class="deposit-form">
+                <input type="text" id="walletAddress" value="UQCxqp4HAry2FPbTUCHS0NMJuoMdrv8l1Ors-QNjhF3FW11C" readonly>
+                <button class="modal-btn" onclick="copyWalletAddress()">کپی آدرس ولت</button>
+                <button class="modal-btn" onclick="closeModal('depositModal')">بستن</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="withdrawModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('withdrawModal')">&times;</span>
+            <h2 class="modal-title">برداشت وجه</h2>
+            <p class="modal-message" id="withdrawMessage">
+                موجودی شما با موفقیت به کیف پولتان واریز خواهد شد.
+            </p>
+            <button class="modal-btn" onclick="closeModal('withdrawModal')">متوجه شدم</button>
+        </div>
+    </div>
+
+    <div class="modal" id="eggInfoModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('eggInfoModal')">&times;</span>
+            <h2 class="modal-title" id="infoModalTitle">اطلاعات تخم مرغ</h2>
+            <div class="modal-icon" id="infoModalIcon"><i class="fas fa-egg"></i></div>
+            <p class="modal-message" id="infoModalMessage">جزئیات تخم مرغ اینجا نمایش داده می‌شود.</p>
+            <button class="modal-btn" onclick="closeModal('eggInfoModal')">متوجه شدم</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    const TON_TO_TOMAN_RATE = 200000;
+
+    let userData = {
+        balanceTON: 0,
+        balanceToman: 0,
+        dailyProfitTON: 0,
+        dailyProfitToman: 0,
+        eggs: {
+            normal: 0, golden: 0, crystal: 0, diamond: 0, magic: 0, legendary: 0
+        },
+        hasFreeEgg: false,
+        lastWithdrawalDate: null,
+        userId: '7805585046',
+        referralCount: 0,
+        referredBy: null
+    };
+
+    const eggPricesTON = {
+        normal: 0.05, golden: 0.25, crystal: 0.5, diamond: 2.5, magic: 5, legendary: 25
+    };
+    const eggProfitsTON = {
+        normal: 0.0025, golden: 0.0175, crystal: 0.045, diamond: 0.3, magic: 0.75, legendary: 5
+    };
+    const eggDurations = {
+        normal: "۷ روز", golden: "۱۴ روز", crystal: "۲۱ روز", diamond: "۳۰ روز", magic: "۴۵ روز", legendary: "۶۰ روز"
+    };
+    const eggDescriptions = {
+        normal: "سرمایه‌گذاری کوتاه‌مدت با ریسک پایین و سود روزانه ۵%", golden: "سرمایه‌گذاری میان‌مدت با ریسک متوسط و سود روزانه ۷%", crystal: "سرمایه‌گذاری با پشتیبانی طلا و سود روزانه ۹%", diamond: "سرمایه‌گذاری بلندمدت با ریسک بالا و سود روزانه ۱۲%", magic: "سرمایه‌گذاری ویژه با پشتیبانی الماس و سود روزانه ۱۵%", legendary: "سرمایه‌گذاری اختصاصی با بالاترین سود روزانه ۲۰%"
+    };
+    const eggNames = {
+        normal: "تخم مرغ معمولی", golden: "تخم مرغ طلایی", crystal: "تخم مرغ کریستالی", diamond: "تخم مرغ الماسی", magic: "تخم مرغ جادویی", legendary: "تخم مرغ افسانه‌ای"
+    };
+    const eggIcons = {
+        normal: '<i class="fas fa-egg"></i>', golden: '<i class="fas fa-egg" style="color: #ffd700;"></i>', crystal: '<i class="fas fa-gem" style="color: #1abc9c;"></i>', diamond: '<i class="fas fa-gem" style="color: #3498db;"></i>', magic: '<i class="fas fa-hat-wizard" style="color: #9b59b6;"></i>', legendary: '<i class="fas fa-dragon" style="color: #e74c3c;"></i>'
+    };
+
+    const loadingScreen = document.getElementById('loadingScreen');
+    const mainApp = document.getElementById('mainApp');
+    const userBalanceEl = document.getElementById('userBalance');
+    const dailyProfitEl = document.getElementById('dailyProfit');
+    const depositModal = document.getElementById('depositModal');
+    const purchaseModal = document.getElementById('purchaseModal');
+    const profitModal = document.getElementById('profitModal');
+    const eggInfoModal = document.getElementById('eggInfoModal');
+    const withdrawModal = document.getElementById('withdrawModal');
+    const profitMessageEl = document.getElementById('profitMessage');
+    const infoModalTitle = document.getElementById('infoModalTitle');
+    const infoModalIcon = document.getElementById('infoModalIcon');
+    const infoModalMessage = document.getElementById('infoModalMessage');
+    const referralLinkEl = document.getElementById('referralLink');
+    const body = document.body;
+
+    const inventoryCounts = {
+        normal: document.getElementById('count-normal'), golden: document.getElementById('count-golden'), crystal: document.getElementById('count-crystal'), diamond: document.getElementById('count-diamond'), magic: document.getElementById('count-magic'), legendary: document.getElementById('count-legendary')
+    };
+
+    function initializeApp() {
+        if (!userData.hasFreeEgg) {
+            userData.eggs.normal = 1;
+            userData.hasFreeEgg = true;
+        }
+        
+        // This small timeout ensures the CSS transition is triggered smoothly
+        setTimeout(() => {
+            body.classList.add('app-loaded');
+            updateUI();
+        }, 50);
+    }
+    
+    function updateUI() {
+        userData.balanceToman = userData.balanceTON * TON_TO_TOMAN_RATE;
+        userData.dailyProfitToman = userData.dailyProfitTON * TON_TO_TOMAN_RATE;
+        userBalanceEl.textContent = `${userData.balanceTON.toFixed(2)} TON (${Math.round(userData.balanceToman).toLocaleString()} تومان)`;
+        dailyProfitEl.textContent = `${userData.dailyProfitTON.toFixed(2)} TON (${Math.round(userData.dailyProfitToman).toLocaleString()} تومان)`;
+        for (const type in userData.eggs) {
+            inventoryCounts[type].textContent = userData.eggs[type];
+        }
+        referralLinkEl.href = `https://t.me/vioou_bot?start=${userData.userId}`;
+        referralLinkEl.textContent = `https://t.me/vioou_bot?start=${userData.userId}`;
+    }
+
+    function buyEgg(type) {
+        const price = eggPricesTON[type];
+        if (userData.balanceTON >= price) {
+            userData.balanceTON -= price;
+            userData.eggs[type]++;
+            updateUI();
+            showModal('purchaseModal');
+        } else {
+            alert('موجودی کافی نیست! لطفاً ابتدا حساب خود را شارژ کنید.');
+        }
+    }
+
+    function collectProfit() {
+        let totalProfit = 0;
+        for (const type in userData.eggs) {
+            totalProfit += userData.eggs[type] * eggProfitsTON[type];
+        }
+        if (totalProfit > 0) {
+            userData.balanceTON += totalProfit;
+            userData.dailyProfitTON = totalProfit;
+            profitMessageEl.textContent = `شما ${totalProfit.toFixed(2)} TON (${(totalProfit * TON_TO_TOMAN_RATE).toLocaleString()} تومان) سود از تخم مرغ‌های خود دریافت کردید.`;
+            updateUI();
+            showModal('profitModal');
+        } else {
+            alert('هنوز تخم مرغی برای دریافت سود ندارید!');
+        }
+    }
+
+    function depositWithTon() {
+        alert('برای واریز، از طریق کیف پول خود به آدرس نمایش داده شده در پنجره واریز TON ارسال کنید.');
+    }
+    
+    const MIN_WITHDRAWAL_TON = 2;
+    function withdraw() {
+        if (userData.balanceTON < MIN_WITHDRAWAL_TON) {
+            alert(`حداقل مبلغ برای برداشت ${MIN_WITHDRAWAL_TON} TON است.`);
+            return;
+        }
+        alert('درخواست برداشت شما ثبت شد و به زودی به کیف پول شما واریز خواهد شد.');
+        showModal('withdrawModal');
+    }
+
+    function showEggInfo(type) {
+        infoModalTitle.textContent = eggNames[type];
+        infoModalIcon.innerHTML = eggIcons[type];
+        const message = `
+            <div style="text-align: right; line-height: 1.8;">
+                <div>قیمت: ${eggPricesTON[type].toFixed(2)} TON (${(eggPricesTON[type] * TON_TO_TOMAN_RATE).toLocaleString()} تومان)</div>
+                <div>مدت سرمایه‌گذاری: ${eggDurations[type]}</div>
+                <div>سود روزانه: ${eggProfitsTON[type].toFixed(4)} TON (${(eggProfitsTON[type] * TON_TO_TOMAN_RATE).toLocaleString()} تومان)</div>
+                <div>توضیحات: ${eggDescriptions[type]}</div>
+            </div>
+        `;
+        infoModalMessage.innerHTML = message;
+        showModal('eggInfoModal');
+    }
+    
+    function copyWalletAddress() {
+        navigator.clipboard.writeText(document.getElementById('walletAddress').value).then(() => {
+            alert('آدرس ولت با موفقیت کپی شد!');
+        });
+    }
+    
+    function copyReferralLink() {
+        navigator.clipboard.writeText(referralLinkEl.href).then(() => {
+            alert('لینک رفرال با موفقیت کپی شد!');
+        });
+    }
+
+    function showModal(modalId) {
+        document.getElementById(modalId).style.display = 'flex';
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+    }
+
+    document.querySelectorAll('.buy-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const type = e.target.getAttribute('data-type');
+            buyEgg(type);
+        });
+    });
+
+    document.querySelectorAll('.egg-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+            if (!e.target.classList.contains('buy-btn')) {
+                const type = item.getAttribute('data-type');
+                showEggInfo(type);
+            }
+        });
+    });
+
+    document.getElementById('collectBtn').addEventListener('click', collectProfit);
+    document.querySelector('.action-buttons button:last-child').addEventListener('click', withdraw);
+
+    window.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal')) {
+            e.target.style.display = 'none';
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', initializeApp);
+
+</script>
+</body>
+</html>
