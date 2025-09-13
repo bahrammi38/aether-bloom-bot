@@ -1,12 +1,3 @@
-کد بدون صفحه لودینگ
-همانطور که درخواست کردید، کد را به گونه‌ای تغییر دادم که صفحه لودینگ به طور کامل حذف شود و کاربر به محض ورود، مستقیماً وارد بازی شود.
-
-در این نسخه، هیچ تأخیر زمانی یا انیمیشن محو شدن وجود ندارد. کد مستقیماً محتوای اصلی را نمایش می‌دهد. این روش سریع‌ترین راه برای بارگذاری اپلیکیشن است.
-
-کد زیر را کپی کرده و در فایل خود جایگزین کنید.
-
-HTML
-
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -540,7 +531,7 @@ HTML
     const inventoryCounts = {
         normal: document.getElementById('count-normal'), golden: document.getElementById('count-golden'), crystal: document.getElementById('count-crystal'), diamond: document.getElementById('count-diamond'), magic: document.getElementById('count-magic'), legendary: document.getElementById('count-legendary')
     };
-    
+
     function initializeApp() {
         if (!userData.hasFreeEgg) {
             userData.eggs.normal = 1;
@@ -665,7 +656,6 @@ HTML
     });
 
     document.addEventListener('DOMContentLoaded', initializeApp);
-
 </script>
 </body>
 </html>
