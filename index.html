@@ -1,3 +1,710 @@
-<!DOCTYPE html> <html lang="fa" dir="rtl"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>بازی تخم مرغ های سرمایه‌گذاری</title> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> <link href="https://v1.fontapi.ir/css/Vazir" rel="stylesheet"> <style> :root { --primary-color: #8e44ad; --primary-dark: #6c3483; --primary-light: #b979d6; --secondary-color: #f39c12; --accent-color: #ff4757; --text-color: #2c3e50; --background-light: #f9f9f9; --card-bg: #ffffff; --success-color: #27ae60; --neon-text: #fff; --neon-glow: #8e44ad; } * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazir', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; } body { background: linear-gradient(135deg, #2c3e50 0%, #000000 100%); color: var(--text-color); min-height: 100vh; padding: 0; margin: 0; overflow-x: hidden; } .app-container { max-width: 100%; min-height: 100vh; margin: 0 auto; overflow: hidden; padding-bottom: 80px; } /* صفحه لودینگ */ .loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #000000 0%, #2c3e50 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; transition: opacity 0.5s ease; } .loader { width: 80px; height: 80px; border: 5px solid rgba(142, 68, 173, 0.2); border-radius: 50%; border-top-color: var(--primary-color); animation: spin 1s ease-in-out infinite; } @keyframes spin { to { transform: rotate(360deg); } } .loading-text { color: var(--neon-text); margin-top: 20px; font-size: 1.5rem; text-shadow: 0 0 10px var(--neon-glow), 0 0 20px var(--neon-glow), 0 0 30px var(--neon-glow); letter-spacing: 2px; } .header { background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%); color: white; padding: 20px; text-align: center; border-radius: 0 0 20px 20px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); position: relative; } .header h1 { font-size: 2rem; margin-bottom: 10px; text-shadow: 0 0 10px rgba(255, 255, 255, 0.7); letter-spacing: 1px; } .balance-container { display: flex; justify-content: space-between; background-color: rgba(0, 0, 0, 0.3); padding: 15px; border-radius: 15px; margin-top: 15px; backdrop-filter: blur(5px); } .balance-item { text-align: center; flex: 1; } .balance-label { font-size: 0.9rem; margin-bottom: 5px; color: rgba(255, 255, 255, 0.8); } .balance-amount { font-size: 1.2rem; font-weight: bold; color: var(--neon-text); text-shadow: 0 0 5px var(--neon-glow); } .wallet-section { background: rgba(0, 0, 0, 0.3); padding: 15px; border-radius: 15px; margin-top: 15px; backdrop-filter: blur(5px); text-align: center; } .wallet-address { font-size: 0.9rem; word-break: break-all; margin: 10px 0; color: var(--neon-text); text-shadow: 0 0 5px var(--neon-glow); } .copy-btn { background: var(--secondary-color); color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; margin-top: 5px; box-shadow: 0 0 10px rgba(243, 156, 18, 0.5); } .deposit-btn { background: var(--success-color); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-top: 10px; font-weight: bold; box-shadow: 0 0 10px rgba(39, 174, 96, 0.5); } .main-content { padding: 20px; } .section-title { color: var(--neon-text); margin-bottom: 15px; text-align: center; font-size: 1.5rem; text-shadow: 0 0 10px var(--neon-glow); padding: 10px; } .eggs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 30px; } .egg-item { background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%); border-radius: 15px; padding: 20px; text-align: center; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); transition: all 0.3s ease; cursor: pointer; backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.1); } .egg-item:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(142, 68, 173, 0.4); } .egg-icon { font-size: 3rem; margin-bottom: 15px; filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5)); } .egg-name { font-weight: bold; margin-bottom: 5px; font-size: 1.1rem; color: var(--neon-text); text-shadow: 0 0 5px var(--neon-glow); } .egg-price { color: var(--secondary-color); font-weight: bold; margin-bottom: 10px; text-shadow: 0 0 5px rgba(243, 156, 18, 0.7); } .egg-description { font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); margin-bottom: 15px; height: 60px; overflow: hidden; } .egg-duration { font-size: 0.8rem; color: var(--accent-color); margin-bottom: 10px; text-shadow: 0 0 5px rgba(231, 76, 60, 0.7); } .buy-btn { background: linear-gradient(135deg, var(--secondary-color) 0%, #e67e22 100%); color: white; border: none; padding: 10px 15px; border-radius: 8px; width: 100%; cursor: pointer; transition: all 0.3s ease; font-weight: bold; box-shadow: 0 0 10px rgba(243, 156, 18, 0.5); } .buy-btn:hover { background: linear-gradient(135deg, #e67e22 0%, #d35400 100%); box-shadow: 0 0 15px rgba(243, 156, 18, 0.7); } .inventory-section { background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%); border-radius: 15px; padding: 20px; margin-top: 20px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.1); } .inventory-title { text-align: center; margin-bottom: 15px; color: var(--neon-text); font-size: 1.3rem; text-shadow: 0 0 5px var(--neon-glow); } .inventory-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; } .inventory-item { background: rgba(0, 0, 0, 0.2); border-radius: 10px; padding: 10px; text-align: center; backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.1); } .inventory-count { font-weight: bold; font-size: 1.2rem; margin: 5px 0; color: var(--neon-text); text-shadow: 0 0 5px var(--neon-glow); } .inventory-name { font-size: 0.8rem; color: rgba(255, 255, 255, 0.7); } .actions-section { position: fixed; bottom: 0; left: 0; right: 0; background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%); padding: 15px; display: flex; justify-content: space-around; border-radius: 20px 20px 0 0; box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.3); z-index: 100; } .action-btn { background: rgba(0, 0, 0, 0.3); color: white; border: none; padding: 12px 20px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-direction: column; min-width: 80px; transition: all 0.3s ease; backdrop-filter: blur(5px); } .action-btn:hover { background: rgba(0, 0, 0, 0.5); transform: translateY(-3px); } .action-icon { font-size: 1.5rem; margin-bottom: 5px; text-shadow: 0 0 5px var(--neon-glow); } .action-text { font-size: 0.8rem; } .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); z-index: 1000; justify-content: center; align-items: center; } .modal-content { background: linear-gradient(135deg, #2c3e50 0%, #000000 100%); border-radius: 20px; padding: 25px; width: 90%; max-width: 400px; text-align: center; position: relative; box-shadow: 0 0 30px rgba(142, 68, 173, 0.5); border: 1px solid var(--primary-color); } .close-modal { position: absolute; top: 15px; left: 15px; font-size: 1.5rem; cursor: pointer; color: var(--accent-color); text-shadow: 0 0 5px var(--accent-color); } .modal-title { color: var(--neon-text); margin-bottom: 15px; font-size: 1.4rem; text-shadow: 0 0 10px var(--neon-glow); } .modal-icon { font-size: 4rem; margin: 15px 0; color: var(--primary-color); text-shadow: 0 0 10px var(--neon-glow); } .modal-message { margin-bottom: 20px; line-height: 1.6; color: rgba(255, 255, 255, 0.8); } .modal-btn { background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%); color: white; border: none; padding: 12px 25px; border-radius: 10px; cursor: pointer; font-size: 1rem; margin-top: 10px; box-shadow: 0 0 10px rgba(142, 68, 173, 0.5); transition: all 0.3s ease; } .modal-btn:hover { box-shadow: 0 0 15px rgba(142, 68, 173, 0.7); } .egg-animation { animation: pulse 1s infinite alternate; } @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.1); } } .profit-badge { background-color: var(--success-color); color: white; padding: 3px 8px; border-radius: 20px; font-size: 0.8rem; margin-left: 5px; } .hidden { display: none; } /* استایل نئونی برای متن‌ها */ .neon-text { color: var(--neon-text); text-shadow: 0 0 5px var(--neon-glow), 0 0 10px var(--neon-glow), 0 0 15px var(--neon-glow); } /* انیمیشن‌های اضافی */ @keyframes glow { 0% { text-shadow: 0 0 5px var(--neon-glow); } 50% { text-shadow: 0 0 20px var(--neon-glow), 0 0 30px var(--neon-glow); } 100% { text-shadow: 0 0 5px var(--neon-glow); } } .glowing { animation: glow 2s infinite; } .deposit-form { margin-top: 15px; } .deposit-input { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--primary-color); background: rgba(0, 0, 0, 0.3); color: white; margin-bottom: 10px; text-align: center; } </style> </head> <body> <!-- صفحه لودینگ --> <div class="loading-screen" id="loadingScreen"> <div class="loader"></div> <div class="loading-text glowing">در حال بارگذاری بازی...</div> </div> <div class="app-container hidden" id="mainApp"> <div class="header"> <h1 class="neon-text">بازی تخم مرغ های سرمایه‌گذاری</h1> <p>تخم مرغ بخر، سود کن، ثروتمند شو!</p> <div class="balance-container"> <div class="balance-item"> <div class="balance-label">موجودی شما</div> <div class="balance-amount" id="userBalance">۱۰,۰۰۰ تومان</div> </div> <div class="balance-item"> <div class="balance-label">سود امروز</div> <div class="balance-amount" id="dailyProfit">۰ تومان</div> </div> </div> <div class="wallet-section"> <div class="balance-label">آدرس ولت برای واریز</div> <div class="wallet-address" id="walletAddress">TXYZ1234567890ABCDEFGHIJKLMNOPQRSTUVW</div> <button class="copy-btn" onclick="copyWalletAddress()">کپی آدرس</button> <div class="deposit-form"> <input type="number" class="deposit-input" id="depositAmount" placeholder="مبلغ واریز (تومان)"> <button class="deposit-btn" onclick="simulateDeposit()">شبیه‌سازی واریز</button> </div> </div> </div> <div class="main-content"> <h2 class="section-title neon-text">انواع تخم مرغ‌های سرمایه‌گذاری</h2> <div class="eggs-grid"> <div class="egg-item" data-type="normal"> <div class="egg-icon"><i class="fas fa-egg"></i></div> <div class="egg-name">تخم مرغ معمولی</div> <div class="egg-price">قیمت: ۱۰,۰۰۰ تومان</div> <div class="egg-duration">مدت سرمایه‌گذاری: ۷ روز</div> <div class="egg-description">سود روزانه: ۵% | بازگشت سرمایه: ۱۳۵%</div> <button class="buy-btn" data-type="normal">خرید تخم مرغ</button> </div> <div class="egg-item" data-type="golden"> <div class="egg-icon"><i class="fas fa-egg" style="color: #ffd700;"></i></div> <div class="egg-name">تخم مرغ طلایی</div> <div class="egg-price">قیمت: ۵۰,۰۰۰ تومان</div> <div class="egg-duration">مدت سرمایه‌گذاری: ۱۴ روز</div> <div class="egg-description">سود روزانه: ۷% | بازگشت سرمایه: ۱۹۸%</div> <button class="buy-btn" data-type="golden">خرید تخم مرغ</button> </div> <div class="egg-item" data-type="crystal"> <div class="egg-icon"><i class="fas fa-gem" style="color: #1abc9c;"></i></div> <div class="egg-name">تخم مرغ کریستالی</div> <div class="egg-price">قیمت: ۱۰۰,۰۰۰ تومان</div> <div class="egg-duration">مدت سرمایه‌گذاری: ۲۱ روز</div> <div class="egg-description">سود روزانه: ۹% | بازگشت سرمایه: ۲۸۹%</div> <button class="buy-btn" data-type="crystal">خرید تخم مرغ</button> </div> <div class="egg-item" data-type="diamond"> <div class="egg-icon"><i class="fas fa-gem" style="color: #3498db;"></i></div> <div class="egg-name">تخم مرغ الماسی</div> <div class="egg-price">قیمت: ۵۰۰,۰۰۰ تومان</div> <div class="egg-duration">مدت سرمایه‌گذاری: ۳۰ روز</div> <div class="egg-description">سود روزانه: ۱۲% | بازگشت سرمایه: ۴۶۰%</div> <button class="buy-btn" data-type="diamond">خرید تخم مرغ</button> </div> <div class="egg-item" data-type="magic"> <div class="egg-icon"><i class="fas fa-hat-wizard" style="color: #9b59b6;"></i></div> <div class="egg-name">تخم مرغ جادویی</div> <div class="egg-price">قیمت: ۱,۰۰۰,۰۰۰ تومان</div> <div class="egg-duration">مدت سرمایه‌گذاری: ۴۵ روز</div> <div class="egg-description">سود روزانه: ۱۵% | بازگشت سرمایه: ۷۷۵%</div> <button class="buy-btn" data-type="magic">خرید تخم مرغ</button> </div> <div class="egg-item" data-type="legendary"> <div class="egg-icon"><i class="fas fa-dragon" style="color: #e74c3c;"></i></div> <div class="egg-name">تخم مرغ افسانه‌ای</div> <div class="egg-price">قیمت: ۵,۰۰۰,۰۰۰ تومان</div> <div class="egg-duration">مدت سرمایه‌گذاری: ۶۰ روز</div> <div class="egg-description">سود روزانه: ۲۰% | بازگشت سرمایه: ۱۳۰۰%</div> <button class="buy-btn" data-type="legendary">خرید تخم مرغ</button> </div> </div> <div class="inventory-section"> <h3 class="inventory-title">موجودی تخم مرغ‌های شما</h3> <div class="inventory-grid"> <div class="inventory-item"> <div class="egg-icon"><i class="fas fa-egg"></i></div> <div class="inventory-count" id="count-normal">۰</div> <div class="inventory-name">معمولی</div> </div> <div class="inventory-item"> <div class="egg-icon"><i class="fas fa-egg" style="color: #ffd700;"></i></div> <div class="inventory-count" id="count-golden">۰</div> <div class="inventory-name">طلایی</div> </div> <div class="inventory-item"> <div class="egg-icon"><i class="fas fa-gem" style="color: #1abc9c;"></i></div> <div class="inventory-count" id="count-crystal">۰</div> <div class="inventory-name">کریستالی</div> </div> <div class="inventory-item"> <div class="egg-icon"><i class="fas fa-gem" style="color: #3498db;"></i></div> <div class="inventory-count" id="count-diamond">۰</div> <div class="inventory-name">الماسی</div> </div> <div class="inventory-item"> <div class="egg-icon"><i class="fas fa-hat-wizard" style="color: #9b59b6;"></i></div> <div class="inventory-count" id="count-magic">۰</div> <div class="inventory-name">جادویی</div> </div> <div class="inventory-item"> <div class="egg-icon"><i class="fas fa-dragon" style="color: #e74c3c;"></i></div> <div class="inventory-count" id="count-legendary">۰</div> <div class="inventory-name">افسانه‌ای</div> </div> </div> </div> </div> <div class="actions-section"> <button class="action-btn" id="collectBtn"> <div class="action-icon"><i class="fas fa-coins"></i></div> <div class="action-text">دریافت سود</div> </button> <button class="action-btn" id="upgradeBtn"> <div class="action-icon"><i class="fas fa-level-up-alt"></i></div> <div class="action-text">ارتقاء حساب</div> </button> <button class="action-btn" id="marketBtn"> <div class="action-icon"><i class="fas fa-chart-line"></i></div> <div class="action-text">وضعیت بازار</div> </button> </div> <div class="modal" id="purchaseModal"> <div class="modal-content"> <span class="close-modal" onclick="closeModal('purchaseModal')">&times;</span> <h2 class="modal-title">خرید موفق</h2> <div class="modal-icon"><i class="fas fa-check-circle"></i></div> <p class="modal-message">تخم مرغ با موفقیت خریداری شد و به موجودی شما اضافه گردید.</p> <button class="modal-btn" onclick="closeModal('purchaseModal')">متوجه شدم</button> </div> </div> <div class="modal" id="profitModal"> <div class="modal-content"> <span class="close-modal" onclick="closeModal('profitModal')">&times;</span> <h2 class="modal-title">سود دریافت شد</h2> <div class="modal-icon"><i class="fas fa-coins"></i></div> <p class="modal-message" id="profitMessage">شما ۰ تومان سود از تخم مرغ‌های خود دریافت کردید.</p> <button class="modal-btn" onclick="closeModal('profitModal')">متوجه شدم</button> </div> </div> <div class="modal" id="depositModal"> <div class="modal-content"> <span class="close-modal" onclick="closeModal('depositModal')">&times;</span> <h2 class="modal-title">واریز موفق</h2> <div class="modal-icon"><i class="fas fa-check-circle"></i></div> <p class="modal-message" id="depositMessage">مبلغ ۰ تومان با موفقیت به حساب شما واریز شد.</p> <button class="modal-btn" onclick="closeModal('depositModal')">متوجه شدم</button> </div> </div> <div class="modal" id="eggInfoModal"> <div class="modal-content"> <span class="close-modal" onclick="closeModal('eggInfoModal')">&times;</span> <h2 class="modal-title" id="infoModalTitle">اطلاعات تخم مرغ</h2> <div class="modal-icon" id="infoModalIcon"><i class="fas fa-egg"></i></div> <p class="modal-message" id="infoModalMessage">جزئیات تخم مرغ اینجا نمایش داده می‌شود.</p> <button class="modal-btn" onclick="closeModal('eggInfoModal')">متوجه شدم</button> </div> </div> </div> <script> // داده‌های کاربر let userData = { balance: 10000, dailyProfit: 0, eggs: { normal: 0, golden: 0, crystal: 0, diamond: 0, magic: 0, legendary: 0 }, eggPrices: { normal: 10000, golden: 50000, crystal: 100000, diamond: 500000, magic: 1000000, legendary: 5000000 }, eggProfits: { normal: 500, // 5% of 10000 golden: 3500, // 7% of 50000 crystal: 9000, // 9% of 100000 diamond: 60000, // 12% of 500000 magic: 150000, // 15% of 1000000 legendary: 1000000 // 20% of 5000000 }, eggDurations: { normal: "۷ روز", golden: "۱۴ روز", crystal: "۲۱ روز", diamond: "۳۰ روز", magic: "۴۵ روز", legendary: "۶۰ روز" }, eggDescriptions: { normal: "سرمایه‌گذاری کوتاه‌مدت با ریسک پایین و سود روزانه ۵%", golden: "سرمایه‌گذاری میان‌مدت با ریسک متوسط و سود روزانه ۷%", crystal: "سرمایه‌گذاری با پشتیبانی طلا و سود روزانه ۹%", diamond: "سرمایه‌گذاری بلندمدت با ریسک بالا و سود روزانه ۱۲%", magic: "سرمایه‌گذاری ویژه با پشتیبانی الماس و سود روزانه ۱۵%", legendary: "سرمایه‌گذاری اختصاصی با بالاترین سود روزانه ۲۰%" } }; // عناصر DOM const loadingScreen = document.getElementById('loadingScreen'); const mainApp = document.getElementById('mainApp'); const userBalanceEl = document.getElementById('userBalance'); const dailyProfitEl = document.getElementById('dailyProfit'); const walletAddressEl = document.getElementById('walletAddress'); const depositAmountEl = document.getElementById('depositAmount'); const purchaseModal = document.getElementById('purchaseModal'); const profitModal = document.getElementById('profitModal'); const depositModal = document.getElementById('depositModal'); const eggInfoModal = document.getElementById('eggInfoModal'); const profitMessageEl = document.getElementById('profitMessage'); const depositMessageEl = document.getElementById('depositMessage'); const infoModalTitle = document.getElementById('infoModalTitle'); const infoModalIcon = document.getElementById('infoModalIcon'); const infoModalMessage = document.getElementById('infoModalMessage'); // شمارنده‌های موجودی const inventoryCounts = { normal: document.getElementById('count-normal'), golden: document.getElementById('count-golden'), crystal: document.getElementById('count-crystal'), diamond: document.getElementById('count-diamond'), magic: document.getElementById('count-magic'), legendary: document.getElementById('count-legendary') }; // شبیه‌سازی بارگذاری setTimeout(() => { loadingScreen.style.opacity = '0'; setTimeout(() => { loadingScreen.classList.add('hidden'); mainApp.classList.remove('hidden'); updateUI(); }, 500); }, 2000); // به‌روزرسانی رابط کاربری function updateUI() { userBalanceEl.textContent = userData.balance.toLocaleString() + ' تومان'; dailyProfitEl.textContent = userData.dailyProfit.toLocaleString() + ' تومان'; // به‌روزرسانی موجودی تخم مرغ‌ها for (const type in userData.eggs) { inventoryCounts[type].textContent = userData.eggs[type]; } } // خرید تخم مرغ function buyEgg(type) { const price = userData.eggPrices[type]; if (userData.balance >= price) { userData.balance -= price; userData.eggs[type]++; updateUI(); showModal('purchaseModal'); } else { alert('موجودی کافی نیست! لطفاً ابتدا حساب خود را شارژ کنید.'); } } // دریافت سود function collectProfit() { let totalProfit = 0; for (const type in userData.eggs) { totalProfit += userData.eggs[type] * userData.eggProfits[type]; } if (totalProfit > 0) { userData.balance += totalProfit; userData.dailyProfit = totalProfit; profitMessageEl.textContent = `شما ${totalProfit.toLocaleString()} تومان سود از تخم مرغ‌های خود دریافت کردید.`; updateUI(); showModal('profitModal'); } else { alert('هنوز تخم مرغی برای دریافت سود ندارید!'); } } // شبیه‌سازی واریز وجه function simulateDeposit() { const amount = parseInt(depositAmountEl.value); if (isNaN(amount) || amount <= 0) { alert('لطفاً یک مبلغ معتبر وارد کنید.'); return; } userData.balance += amount; depositMessageEl.textContent = `مبلغ ${amount.toLocaleString()} تومان با موفقیت به حساب شما واریز شد.`; updateUI(); showModal('depositModal'); depositAmountEl.value = ''; } // نمایش اطلاعات تخم مرغ function showEggInfo(type) { const eggNames = { normal: "تخم مرغ معمولی", golden: "تخم مرغ طلایی", crystal: "تخم مرغ کریستالی", diamond: "تخم مرغ الماسی", magic: "تخم مرغ جادویی", legendary: "تخم مرغ افسانه‌ای" }; const eggIcons = { normal: '<i class="fas fa-egg"></i>', golden: '<i class="fas fa-egg" style="color: #ffd700;"></i>', crystal: '<i class="fas fa-gem" style="color: #1abc9c;"></i>', diamond: '<i class="fas fa-gem" style="color: #3498db;"></i>', magic: '<i class="fas fa-hat-wizard" style="color: #9b59b6;"></i>', legendary: '<i class="fas fa-dragon" style="color: #e74c3c;"></i>' }; infoModalTitle.textContent = eggNames[type]; infoModalIcon.innerHTML = eggIcons[type]; const message = ` <div style="text-align: right; line-height: 1.8;"> <div>قیمت: ${userData.eggPrices[type].toLocaleString()} تومان</div> <div>مدت سرمایه‌گذاری: ${userData.eggDurations[type]}</div> <div>سود روزانه: ${userData.eggProfits[type].toLocaleString()} تومان</div> <div>توضیحات: ${userData.eggDescriptions[type]}</div> </div> `; infoModalMessage.innerHTML = message; showModal('eggInfoModal'); } // کپی آدرس ولت function copyWalletAddress() { navigator.clipboard.writeText(walletAddressEl.textContent).then(() => { alert('آدرس ولت با موفقیت کپی شد!'); }); } // نمایش مودال function showModal(modalId) { document.getElementById(modalId).style.display = 'flex'; } // بستن مودال function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; } // رویدادهای کلیک document.querySelectorAll('.buy-btn').forEach(btn => { btn.addEventListener('click', (e) => { const type = e.target.getAttribute('data-type'); buyEgg(type); }); }); document.querySelectorAll('.egg-item').forEach(item => { item.addEventListener('click', (e) => { if (!e.target.classList.contains('buy-btn')) { const type = item.getAttribute('data-type'); showEggInfo(type); } }); }); document.getElementById('collectBtn').addEventListener('click', collectProfit); document.getElementById('upgradeBtn').addEventListener('click', () => { alert('سیستم ارتقاء حساب به زودی راه‌اندازی خواهد شد!'); }); document.getElementById('marketBtn').addEventListener('click', () => { alert('وضعیت بازار در حال حاضر مثبت است! فرصت‌های سرمایه‌گذاری عالی وجود دارد.'); }); // بستن مودال با کلیک خارج از آن window.addEventListener('click', (e) => { if (e.target.classList.contains('modal')) { e.target.style.display = 'none'; } }); </script> </body> </html> 
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TonEgg - سرمایه‌گذاری TON</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            text-align: right;
+            position: relative;
+        }
 
-# بازی تخم مرغ های سرمایه‌گذاری - نسخه نهایی در این نسخه تمام مشکلات رفع شده و سیستم کامل سرمایه‌گذاری با قابلیت واریز وجه و محاسبه سود پیاده‌سازی شده است. ```html <!DOCTYPE html> <html lang="fa" dir="rtl"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>بازی تخم مرغ های سرمایه‌گذاری</title> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> <link href="https://v1.fontapi.ir/css/Vazir" rel="stylesheet"> <style> :root { --primary-color: #8e44ad; --primary-dark: #6c3483; --primary-light: #b979d6; --secondary-color: #f39c12; --accent-color: #ff4757; --text-color: #2c3e50; --background-light: #f9f9f9; --card-bg: #ffffff; --success-color: #27ae60; --neon-text: #fff; --neon-glow: #8e44ad; } * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazir', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; } body { background: linear-gradient(135deg, #2c3e50 0%, #000000 100%); color: var(--text-color); min-height: 100vh; padding: 0; margin: 0; overflow-x: hidden; } .app-container { max-width: 100%; min-height: 100vh; margin: 0 auto; overflow: hidden; padding-bottom: 80px; } /* صفحه لودینگ */ .loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #000000 0%, #2c3e50 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; transition: opacity 0.5s ease; } .loader { width: 80px; height: 80px; border: 5px solid rgba(142, 68, 173, 0.2); border-radius: 50%; border-top-color: var(--primary-color); animation: spin 1s ease-in-out infinite; } @keyframes spin { to { transform: rotate(360deg); } } .loading-text { color: var(--neon-text); margin-top: 20px; font-size: 1.5rem; text-shadow: 0 0 10px var(--neon-glow), 0 0 20px var(--neon-glow), 0 0 30px var(--neon-glow); letter-spacing: 2px; } .header { background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%); color: white; padding: 20px; text-align: center; border-radius: 0 0 20px 20px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); position: relative; } .header h1 { font-size: 2rem; margin-bottom: 10px; text-shadow: 0 0 10px rgba(255, 255, 255, 0.7); letter-spacing: 1px; } .balance-container { display: flex; justify-content: space-between; background-color: rgba(0, 0, 0, 0.3); padding: 15px; border-radius: 15px; margin-top: 15px; backdrop-filter: blur(5px); } .balance-item { text-align: center; flex: 1; } .balance-label { font-size: 0.9rem; margin-bottom: 5px; color: rgba(255, 255, 255, 0.8); } .balance-amount { font-size: 1.2rem; font-weight: bold; color: var(--neon-text); text-shadow: 0 0 5px var(--neon-glow); } .wallet-section { background: rgba(0, 0, 0, 0.3); padding: 15px; border-radius: 15px; margin-top: 15px; backdrop-filter: blur(5px); text-align: center; } .wallet-address { font-size: 0.9rem; word-break: break-all; margin: 10px 0; color: var(--neon-text); text-shadow: 0 0 5px var(--neon-glow); } .copy-btn { background: var(--secondary-color); color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; margin-top: 5px; box-shadow: 0 0 10px rgba(243, 156, 18, 0.5); } .deposit-btn { background: var(--success-color); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-top: 10px; font-weight: bold; box-shadow: 0 0 10px rgba(39, 174, 96, 0.5); } .main-content { padding: 20px; } .section-title { color: var(--neon-text); margin-bottom: 15px; text-align: center; font-size: 1.5rem; text-shadow: 0 0 10px var(--neon-glow); padding: 10px; } .eggs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 30px; } .egg-item { background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%); border-radius: 15px; padding: 20px; text-align: center; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); transition: all 0.3s ease; cursor: pointer; backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.1); } .egg-item:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(142, 68, 173, 0.4); } .egg-icon { font-size: 3rem; margin-bottom: 15px; filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5)); } .egg-name { font-weight: bold; margin-bottom: 5px; font-size: 1.1rem; color: var(--neon-text); text-shadow: 0 0 5px var(--neon-glow); } .egg-price { color: var(--secondary-color); font-weight: bold; margin-bottom: 10px; text-shadow: 0 0 5px rgba(243, 156, 18, 0.7); } .egg-description { font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); margin-bottom: 15px; height: 60px; overflow: hidden; } .egg-duration { font-size: 0.8rem; color: var(--accent-color); margin-bottom: 10px; text-shadow: 0 0 5px rgba(231, 76, 60, 0.7); } .buy-btn { background: linear-gradient(135deg, var(--secondary-color) 0%, #e67e22 100%); color: white; border: none; padding: 10px 15px; border-radius: 8px; width: 100%; cursor: pointer; transition: all 0.3s ease; font-weight: bold; box-shadow: 0 0 10px rgba(243, 156, 18, 0.5); } .buy-btn:hover { background: linear-gradient(135deg, #e67e22 0%, #d35400 100%); box-shadow: 0 0 15px rgba(243, 156, 18, 0.7); } .inventory-section { background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%); border-radius: 15px; padding: 20px; margin-top: 20px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.1); } .inventory-title { text-align: center; margin-bottom: 15px; color: var(--neon-text); font-size: 1.3rem; text-shadow: 0 0 5px var(--neon-glow); } .inventory-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; } .inventory-item { background: rgba(0, 0, 0, 0.2); border-radius: 10px; padding: 10px; text-align: center; backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.1); } .inventory-count { font-weight: bold; font-size: 1.2rem; margin: 5px 0; color: var(--neon-text); text-shadow: 0 0 5px var(--neon-glow); } .inventory-name { font-size: 0.8rem; color: rgba(255, 255, 255, 0.7); } .actions-section { position: fixed; bottom: 0; left: 0; right: 0; background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%); padding: 15px; display: flex; justify-content: space-around; border-radius: 20px 20px 0 0; box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.3); z-index: 100; } .action-btn { background: rgba(0, 0, 0, 0.3); color: white; border: none; padding: 12px 20px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-direction: column; min-width: 80px; transition: all 0.3s ease; backdrop-filter: blur(5px); } .action-btn:hover { background: rgba(0, 0, 0, 0.5); transform: translateY(-3px); } .action-icon { font-size: 1.5rem; margin-bottom: 5px; text-shadow: 0 0 5px var(--neon-glow); } .action-text { font-size: 0.8rem; } .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); z-index: 1000; justify-content: center; align-items: center; } .modal-content { background: linear-gradient(135deg, #2c3e50 0%, #000000 100%); border-radius: 20px; padding: 25px; width: 90%; max-width: 400px; text-align: center; position: relative; box-shadow: 0 0 30px rgba(142, 68, 173, 0.5); border: 1px solid var(--primary-color); } .close-modal { position: absolute; top: 15px; left: 15px; font-size: 1.5rem; cursor: pointer; color: var(--accent-color); text-shadow: 0 0 5px var(--accent-color); } .modal-title { color: var(--neon-text); margin-bottom: 15px; font-size: 1.4rem; text-shadow: 0 0 10px var(--neon-glow); } .modal-icon { font-size: 4rem; margin: 15px 0; color: var(--primary-color); text-shadow: 0 0 10px var(--neon-glow); } .modal-message { margin-bottom: 20px; line-height: 1.6; color: rgba(255, 255, 255, 0.8); } .modal-btn { background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%); color: white; border: none; padding: 12px 25px; border-radius: 10px; cursor: pointer; font-size: 1rem; margin-top: 10px; box-shadow: 0 0 10px rgba(142, 68, 173, 0.5); transition: all 0.3s ease; } .modal-btn:hover { box-shadow: 0 0 15px rgba(142, 68, 173, 0.7); } .egg-animation { animation: pulse 1s infinite alternate; } @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.1); } } .profit-badge { background-color: var(--success-color); color: white; padding: 3px 8px; border-radius: 20px; font-size: 0.8rem; margin-left: 5px; } .hidden { display: none; } /* استایل نئونی برای متن‌ها */ .neon-text { color: var(--neon-text); text-shadow: 0 0 5px var(--neon-glow), 0 0 10px var(--neon-glow), 0 0 15px var(--neon-glow); } /* انیمیشن‌های اضافی */ @keyframes glow { 0% { text-shadow: 0 0 5px var(--neon-glow); } 50% { text-shadow: 0 0 20px var(--neon-glow), 0 0 30px var(--neon-glow); } 100% { text-shadow: 0 0 5px var(--neon-glow); } } .glowing { animation: glow 2s infinite; } .deposit-form { margin-top: 15px; } .deposit-input { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--primary-color); background: rgba(0, 0, 0, 0.3); color: white; margin-bottom: 10px; text-align: center; } </style> </head> <body> <!-- صفحه لودینگ --> <div class="loading-screen" id="loadingScreen"> <div class="loader"></div> <div class="loading-text glowing">در حال بارگذاری بازی...</div> </div> <div class="app-container hidden" id="mainApp"> <div class="header"> <h1 class="neon-text">بازی تخم مرغ های سرمایه‌گذاری</h1> <p>تخم مرغ بخر، سود کن، ثروتمند شو!</p> <div class="balance-container"> <div class="balance-item"> <div class="balance-label">موجودی شما</div> <div class="balance-amount" id="userBalance">۱۰,۰۰۰ تومان</div> </div> <div class="balance-item"> <div class="balance-label">سود امروز</div> <div class="balance-amount" id="dailyProfit">۰ تومان</div> </div> </div> <div class="wallet-section"> <div class="balance-label">آدرس ولت برای واریز</div> <div class="wallet-address" id="walletAddress">TXYZ1234567890ABCDEFGHIJKLMNOPQRSTUVW</div> <button class="copy-btn" onclick="copyWalletAddress()">کپی آدرس</button> <div class="deposit-form"> <input type="number" class="deposit-input" id="depositAmount" placeholder="مبلغ واریز (تومان)"> <button class="deposit-btn" onclick="simulateDeposit()">شبیه‌سازی واریز</button> </div> </div> </div> <div class="main-content"> <h2 class="section-title neon-text">انواع تخم مرغ‌های سرمایه‌گذاری</h2> <div class="eggs-grid"> <div class="egg-item" data-type="normal"> <div class="egg-icon"><i class="fas fa-egg"></i></div> <div class="egg-name">تخم مرغ معمولی</div> <div class="egg-price">قیمت: ۱۰,۰۰۰ تومان</div> <div class="egg-duration">مدت سرمایه‌گذاری: ۷ روز</div> <div class="egg-description">سود روزانه: ۵% | بازگشت سرمایه: ۱۳۵%</div> <button class="buy-btn" data-type="normal">خرید تخم مرغ</button> </div> <div class="egg-item" data-type="golden"> <div class="egg-icon"><i class="fas fa-egg" style="color: #ffd700;"></i></div> <div class="egg-name">تخم مرغ طلایی</div> <div class="egg-price">قیمت: ۵۰,۰۰۰ تومان</div> <div class="egg-duration">مدت سرمایه‌گذاری: ۱۴ روز</div> <div class="egg-description">سود روزانه: ۷% | بازگشت سرمایه: ۱۹۸%</div> <button class="buy-btn" data-type="golden">خرید تخم مرغ</button> </div> <div class="egg-item" data-type="crystal"> <div class="egg-icon"><i class="fas fa-gem" style="color: #1abc9c;"></i></div> <div class="egg-name">تخم مرغ کریستالی</div> <div class="egg-price">قیمت: ۱۰۰,۰۰۰ تومان</div> <div class="egg-duration">مدت سرمایه‌گذاری: ۲۱ روز</div> <div class="egg-description">سود روزانه: ۹% | بازگشت سرمایه: ۲۸۹%</div> <button class="buy-btn" data-type="crystal">خرید تخم مرغ</button> </div> <div class="egg-item" data-type="diamond"> <div class="egg-icon"><i class="fas fa-gem" style="color: #3498db;"></i></div> <div class="egg-name">تخم مرغ الماسی</div> <div class="egg-price">قیمت: ۵۰۰,۰۰۰ تومان</div> <div class="egg-duration">مدت سرمایه‌گذاری: ۳۰ روز</div> <div class="egg-description">سود روزانه: ۱۲% | بازگشت سرمایه: ۴۶۰%</div> <button class="buy-btn" data-type="diamond">خرید تخم مرغ</button> </div> <div class="egg-item" data-type="magic"> <div class="egg-icon"><i class="fas fa-hat-wizard" style="color: #9b59b6;"></i></div> <div class="egg-name">تخم مرغ جادویی</div> <div class="egg-price">قیمت: ۱,۰۰۰,۰۰۰ تومان</div> <div class="egg-duration">مدت سرمایه‌گذاری: ۴۵ روز</div> <div class="egg-description">سود روزانه: ۱۵% | بازگشت سرمایه: ۷۷۵%</div> <button class="buy-btn" data-type="magic">خرید تخم مرغ</button> </div> <div class="egg-item" data-type="legendary"> <div class="egg-icon"><i class="fas fa-dragon" style="color: #e74c3c;"></i></div> <div class="egg-name">تخم مرغ افسانه‌ای</div> <div class="egg-price">قیمت: ۵,۰۰۰,۰۰۰ تومان</div> <div class="egg-duration">مدت سرمایه‌گذاری: ۶۰ روز</div> <div class="egg-description">سود روزانه: ۲۰% | بازگشت سرمایه: ۱۳۰۰%</div> <button class="buy-btn" data-type="legendary">خرید تخم مرغ</button> </div> </div> <div class="inventory-section"> <h3 class="inventory-title">موجودی تخم مرغ‌های شما</h3> <div class="inventory-grid"> <div class="inventory-item"> <div class="egg-icon"><i class="fas fa-egg"></i></div> <div class="inventory-count" id="count-normal">۰</div> <div class="inventory-name">معمولی</div> </div> <div class="inventory-item"> <div class="egg-icon"><i class="fas fa-egg" style="color: #ffd700;"></i></div> <div class="inventory-count" id="count-golden">۰</div> <div class="inventory-name">طلایی</div> </div> <div class="inventory-item"> <div class="egg-icon"><i class="fas fa-gem" style="color: #1abc9c;"></i></div> <div class="inventory-count" id="count-crystal">۰</div> <div class="inventory-name">کریستالی</div> </div> <div class="inventory-item"> <div class="egg-icon"><i class="fas fa-gem" style="color: #3498db;"></i></div> <div class="inventory-count" id="count-diamond">۰</div> <div class="inventory-name">الماسی</div> </div> <div class="inventory-item"> <div class="egg-icon"><i class="fas fa-hat-wizard" style="color: #9b59b6;"></i></div> <div class="inventory-count" id="count-magic">۰</div> <div class="inventory-name">جادویی</div> </div> <div class="inventory-item"> <div class="egg-icon"><i class="fas fa-dragon" style="color: #e74c3c;"></i></div> <div class="inventory-count" id="count-legendary">۰</div> <div class="inventory-name">افسانه‌ای</div> </div> </div> </div> </div> <div class="actions-section"> <button class="action-btn" id="collectBtn"> <div class="action-icon"><i class="fas fa-coins"></i></div> <div class="action-text">دریافت سود</div> </button> <button class="action-btn" id="upgradeBtn"> <div class="action-icon"><i class="fas fa-level-up-alt"></i></div> <div class="action-text">ارتقاء حساب</div> </button> <button class="action-btn" id="marketBtn"> <div class="action-icon"><i class="fas fa-chart-line"></i></div> <div class="action-text">وضعیت بازار</div> </button> </div> <div class="modal" id="purchaseModal"> <div class="modal-content"> <span class="close-modal" onclick="closeModal('purchaseModal')">&times;</span> <h2 class="modal-title">خرید موفق</h2> <div class="modal-icon"><i class="fas fa-check-circle"></i></div> <p class="modal-message">تخم مرغ با موفقیت خریداری شد و به موجودی شما اضافه گردید.</p> <button class="modal-btn" onclick="closeModal('purchaseModal')">متوجه شدم</button> </div> </div> <div class="modal" id="profitModal"> <div class="modal-content"> <span class="close-modal" onclick="closeModal('profitModal')">&times;</span> <h2 class="modal-title">سود دریافت شد</h2> <div class="modal-icon"><i class="fas fa-coins"></i></div> <p class="modal-message" id="profitMessage">شما ۰ تومان سود از تخم مرغ‌های خود دریافت کردید.</p> <button class="modal-btn" onclick="closeModal('profitModal')">متوجه شدم</button> </div> </div> <div class="modal" id="depositModal"> <div class="modal-content"> <span class="close-modal" onclick="closeModal('depositModal')">&times;</span> <h2 class="modal-title">واریز موفق</h2> <div class="modal-icon"><i class="fas fa-check-circle"></i></div> <p class="modal-message" id="depositMessage">مبلغ ۰ تومان با موفقیت به حساب شما واریز شد.</p> <button class="modal-btn" onclick="closeModal('depositModal')">متوجه شدم</button> </div> </div> <div class="modal" id="eggInfoModal"> <div class="modal-content"> <span class="close-modal" onclick="closeModal('eggInfoModal')">&times;</span> <h2 class="modal-title" id="infoModalTitle">اطلاعات تخم مرغ</h2> <div class="modal-icon" id="infoModalIcon"><i class="fas fa-egg"></i></div> <p class="modal-message" id="infoModalMessage">جزئیات تخم مرغ اینجا نمایش داده می‌شود.</p> <button class="modal-btn" onclick="closeModal('eggInfoModal')">متوجه شدم</button> </div> </div> </div> <script> // داده‌های کاربر let userData = { balance: 10000, dailyProfit: 0, eggs: { normal: 0, golden: 0, crystal: 0, diamond: 0, magic: 0, legendary: 0 }, eggPrices: { normal: 10000, golden: 50000, crystal: 100000, diamond: 500000, magic: 1000000, legendary: 5000000 }, eggProfits: { normal: 500, // 5% of 10000 golden: 3500, // 7% of 50000 crystal: 9000, // 9% of 100000 diamond: 60000, // 12% of 500000 magic: 150000, // 15% of 1000000 legendary: 1000000 // 20% of 5000000 }, eggDurations: { normal: "۷ روز", golden: "۱۴ روز", crystal: "۲۱ روز", diamond: "۳۰ روز", magic: "۴۵ روز", legendary: "۶۰ روز" }, eggDescriptions: { normal: "سرمایه‌گذاری کوتاه‌مدت با ریسک پایین و سود روزانه ۵%", golden: "سرمایه‌گذاری میان‌مدت با ریسک متوسط و سود روزانه ۷%", crystal: "سرمایه‌گذاری با پشتیبانی طلا و سود روزانه ۹%", diamond: "سرمایه‌گذاری بلندمدت با ریسک بالا و سود روزانه ۱۲%", magic: "سرمایه‌گذاری ویژه با پشتیبانی الماس و سود روزانه ۱۵%", legendary: "سرمایه‌گذاری اختصاصی با بالاترین سود روزانه ۲۰%" } }; // عناصر DOM const loadingScreen = document.getElementById('loadingScreen'); const mainApp = document.getElementById('mainApp'); const userBalanceEl = document.getElementById('userBalance'); const dailyProfitEl = document.getElementById('dailyProfit'); const walletAddressEl = document.getElementById('walletAddress'); const depositAmountEl = document.getElementById('depositAmount'); const purchaseModal = document.getElementById('purchaseModal'); const profitModal = document.getElementById('profitModal'); const depositModal = document.getElementById('depositModal'); const eggInfoModal = document.getElementById('eggInfoModal'); const profitMessageEl = document.getElementById('profitMessage'); const depositMessageEl = document.getElementById('depositMessage'); const infoModalTitle = document.getElementById('infoModalTitle'); const infoModalIcon = document.getElementById('infoModalIcon'); const infoModalMessage = document.getElementById('infoModalMessage'); // شمارنده‌های موجودی const inventoryCounts = { normal: document.getElementById('count-normal'), golden: document.getElementById('count-golden'), crystal: document.getElementById('count-crystal'), diamond: document.getElementById('count-diamond'), magic: document.getElementById('count-magic'), legendary: document.getElementById('count-legendary') }; // شبیه‌سازی بارگذاری setTimeout(() => { loadingScreen.style.opacity = '0'; setTimeout(() => { loadingScreen.classList.add('hidden'); mainApp.classList.remove('hidden'); updateUI(); }, 500); }, 2000); // به‌روزرسانی رابط کاربری function updateUI() { userBalanceEl.textContent = userData.balance.toLocaleString() + ' تومان'; dailyProfitEl.textContent = userData.dailyProfit.toLocaleString() + ' تومان'; // به‌روزرسانی موجودی تخم مرغ‌ها for (const type in userData.eggs) { inventoryCounts[type].textContent = userData.eggs[type]; } } // خرید تخم مرغ function buyEgg(type) { const price = userData.eggPrices[type]; if (userData.balance >= price) { userData.balance -= price; userData.eggs[type]++; updateUI(); showModal('purchaseModal'); } else { alert('موجودی کافی نیست! لطفاً ابتدا حساب خود را شارژ کنید.'); } } // دریافت سود function collectProfit() { let totalProfit = 0; for (const type in userData.eggs) { totalProfit += userData.eggs[type] * userData.eggProfits[type]; } if (totalProfit > 0) { userData.balance += totalProfit; userData.dailyProfit = totalProfit; profitMessageEl.textContent = `شما ${totalProfit.toLocaleString()} تومان سود از تخم مرغ‌های خود دریافت کردید.`; updateUI(); showModal('profitModal'); } else { alert('هنوز تخم مرغی برای دریافت سود ندارید!'); } } // شبیه‌سازی واریز وجه function simulateDeposit() { const amount = parseInt(depositAmountEl.value); if (isNaN(amount) || amount <= 0) { alert('لطفاً یک مبلغ معتبر وارد کنید.'); return; } userData.balance += amount; depositMessageEl.textContent = `مبلغ ${amount.toLocaleString()} تومان با موفقیت به حساب شما واریز شد.`; updateUI(); showModal('depositModal'); depositAmountEl.value = ''; } // نمایش اطلاعات تخم مرغ function showEggInfo(type) { const eggNames = { normal: "تخم مرغ معمولی", golden: "تخم مرغ طلایی", crystal: "تخم مرغ کریستالی", diamond: "تخم مرغ الماسی", magic: "تخم مرغ جادویی", legendary: "تخم مرغ افسانه‌ای" }; const eggIcons = { normal: '<i class="fas fa-egg"></i>', golden: '<i class="fas fa-egg" style="color: #ffd700;"></i>', crystal: '<i class="fas fa-gem" style="color: #1abc9c;"></i>', diamond: '<i class="fas fa-gem" style="color: #3498db;"></i>', magic: '<i class="fas fa-hat-wizard" style="color: #9b59b6;"></i>', legendary: '<i class="fas fa-dragon" style="color: #e74c3c;"></i>' }; infoModalTitle.textContent = eggNames[type]; infoModalIcon.innerHTML = eggIcons[type]; const message = ` <div style="text-align: right; line-height: 1.8;"> <div>قیمت: ${userData.eggPrices[type].toLocaleString()} تومان</div> <div>مدت سرمایه‌گذاری: ${userData.eggDurations[type]}</div> <div>سود روزانه: ${userData.eggProfits[type].toLocaleString()} تومان</div> <div>توضیحات: ${userData.eggDescriptions[type]}</div> </div> `; infoModalMessage.innerHTML = message; showModal('eggInfoModal'); } // کپی آدرس ولت function copyWalletAddress() { navigator.clipboard.writeText(walletAddressEl.textContent).then(() => { alert('آدرس ولت با موفقیت کپی شد!'); }); } // نمایش مودال function showModal(modalId) { document.getElementById(modalId).style.display = 'flex'; } // بستن مودال function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; } // رویدادهای کلیک document.querySelectorAll('.buy-btn').forEach(btn => { btn.addEventListener('click', (e) => { const type = e.target.getAttribute('data-type'); buyEgg(type); }); }); document.querySelectorAll('.egg-item').forEach(item => { item.addEventListener('click', (e) => { if (!e.target.classList.contains('buy-btn')) { const type = item.getAttribute('data-type'); showEggInfo(type); } }); }); document.getElementById('collectBtn').addEventListener('click', collectProfit); document.getElementById('upgradeBtn').addEventListener('click', () => { alert('سیستم ارتقاء حساب به زودی راه‌اندازی خواهد شد!'); }); document.getElementById('marketBtn').addEventListener('click', () => { alert('وضعیت بازار در حال حاضر مثبت است! فرصت‌های سرمایه‌گذاری عالی وجود دارد.'); }); // بستن مودال با کلیک خارج از آن window.addEventListener('click', (e) => { if (e.target.classList.contains('modal')) { e.target.style.display = 'none'; } }); </script> </body> </html>
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.0.3/fonts/Vazirmatn-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        #loadingScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 1000;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #mainApp {
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header h1 i {
+            margin-left: 10px;
+        }
+
+        .header p {
+            margin: 5px 0 0;
+            font-size: 1rem;
+            font-weight: 300;
+        }
+
+        .balance-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .balance-item h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 400;
+        }
+
+        .balance-item p {
+            margin: 5px 0 0;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            background-color: #fff;
+            color: #007bff;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .investment-section, .inventory-section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .investment-section h2, .inventory-section h2 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .egg-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .egg-item {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            width: 130px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease;
+            cursor: pointer;
+        }
+
+        .egg-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .egg-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .egg-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .egg-price {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .buy-btn {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background-color 0.3s;
+        }
+
+        .buy-btn:hover {
+            background-color: #218838;
+        }
+
+        .inventory-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .inventory-item {
+            background-color: #e9ecef;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            width: 130px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .inventory-item p {
+            margin: 5px 0;
+            font-size: 0.9rem;
+        }
+
+        .inventory-item h3 {
+            margin-top: 0;
+            font-size: 1rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            max-width: 90%;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        .modal-title {
+            margin-top: 0;
+            font-size: 1.8rem;
+            color: #007bff;
+        }
+
+        .modal-icon {
+            font-size: 3rem;
+            color: #28a745;
+            margin-bottom: 10px;
+        }
+        
+        #depositModal .modal-icon {
+            color: #007bff;
+        }
+
+        #profitModal .modal-icon {
+            color: #ffc107;
+        }
+
+        .modal-message {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .modal-btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .modal-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .deposit-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .deposit-form input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            text-align: right;
+        }
+        
+        .referral-link {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 15px;
+        }
+        .referral-link a {
+            direction: ltr;
+            display: inline-block;
+            overflow-x: auto;
+            white-space: nowrap;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div id="loadingScreen">
+    <div class="spinner"></div>
+    <p style="margin-top: 20px;">در حال بارگذاری... لطفاً صبر کنید.</p>
+</div>
+
+<div id="mainApp" class="hidden">
+    <div class="header">
+        <h1><i class="fas fa-seedling"></i> TonEgg</h1>
+        <p>مزرعه TON خودت رو بساز و سود روزانه بگیر!</p>
+        <div class="balance-section">
+            <div class="balance-item">
+                <h3>موجودی شما</h3>
+                <p id="userBalance">۰ TON (۰ تومان)</p>
+            </div>
+            <div class="balance-item">
+                <h3>سود روزانه</h3>
+                <p id="dailyProfit">۰ TON (۰ تومان)</p>
+            </div>
+        </div>
+        <div class="action-buttons">
+            <button class="action-btn" onclick="collectProfit()">
+                <i class="fas fa-dollar-sign"></i> دریافت سود
+            </button>
+            <button class="action-btn" onclick="showModal('depositModal')">
+                <i class="fas fa-wallet"></i> واریز
+            </button>
+            <button class="action-btn" onclick="withdraw()">
+                <i class="fas fa-hand-holding-usd"></i> برداشت
+            </button>
+        </div>
+    </div>
+
+    <div class="investment-section">
+        <h2>تخم مرغ‌ها برای خرید</h2>
+        <div class="egg-list">
+            <div class="egg-item" data-type="normal">
+                <div class="egg-icon"><i class="fas fa-egg"></i></div>
+                <div class="egg-title">معمولی</div>
+                <div class="egg-price">۰.۰۵ TON (۱۰۰۰۰ تومان)</div>
+                <button class="buy-btn" data-type="normal">خرید</button>
+            </div>
+            <div class="egg-item" data-type="golden">
+                <div class="egg-icon" style="color: #ffd700;"><i class="fas fa-egg"></i></div>
+                <div class="egg-title">طلایی</div>
+                <div class="egg-price">۰.۲۵ TON (۵۰۰۰۰ تومان)</div>
+                <button class="buy-btn" data-type="golden">خرید</button>
+            </div>
+            <div class="egg-item" data-type="crystal">
+                <div class="egg-icon" style="color: #1abc9c;"><i class="fas fa-gem"></i></div>
+                <div class="egg-title">کریستالی</div>
+                <div class="egg-price">۰.۵ TON (۱۰۰۰۰۰ تومان)</div>
+                <button class="buy-btn" data-type="crystal">خرید</button>
+            </div>
+            <div class="egg-item" data-type="diamond">
+                <div class="egg-icon" style="color: #3498db;"><i class="fas fa-gem"></i></div>
+                <div class="egg-title">الماسی</div>
+                <div class="egg-price">۲.۵ TON (۵۰۰۰۰۰ تومان)</div>
+                <button class="buy-btn" data-type="diamond">خرید</button>
+            </div>
+            <div class="egg-item" data-type="magic">
+                <div class="egg-icon" style="color: #9b59b6;"><i class="fas fa-hat-wizard"></i></div>
+                <div class="egg-title">جادویی</div>
+                <div class="egg-price">۵ TON (۱۰۰۰۰۰۰ تومان)</div>
+                <button class="buy-btn" data-type="magic">خرید</button>
+            </div>
+            <div class="egg-item" data-type="legendary">
+                <div class="egg-icon" style="color: #e74c3c;"><i class="fas fa-dragon"></i></div>
+                <div class="egg-title">افسانه‌ای</div>
+                <div class="egg-price">۲۵ TON (۵۰۰۰۰۰۰ تومان)</div>
+                <button class="buy-btn" data-type="legendary">خرید</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="inventory-section">
+        <h2>موجودی من</h2>
+        <div class="inventory-list">
+            <div class="inventory-item">
+                <h3>معمولی</h3>
+                <p id="count-normal">۰</p>
+            </div>
+            <div class="inventory-item">
+                <h3>طلایی</h3>
+                <p id="count-golden">۰</p>
+            </div>
+            <div class="inventory-item">
+                <h3>کریستالی</h3>
+                <p id="count-crystal">۰</p>
+            </div>
+            <div class="inventory-item">
+                <h3>الماسی</h3>
+                <p id="count-diamond">۰</p>
+            </div>
+            <div class="inventory-item">
+                <h3>جادویی</h3>
+                <p id="count-magic">۰</p>
+            </div>
+            <div class="inventory-item">
+                <h3>افسانه‌ای</h3>
+                <p id="count-legendary">۰</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="investment-section">
+        <h2>رفرال و بونوس</h2>
+        <p>با دعوت از دوستانتان، از سرمایه‌گذاری آنها سود ببرید!</p>
+        <div class="referral-link">
+            <p>لینک رفرال شما:</p>
+            <a href="#" id="referralLink">t.me/vioou_bot?start=7805585046</a>
+            <button class="buy-btn" onclick="copyReferralLink()">کپی لینک</button>
+        </div>
+    </div>
+
+    <div class="modal" id="purchaseModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('purchaseModal')">&times;</span>
+            <h2 class="modal-title">خرید موفق</h2>
+            <div class="modal-icon"><i class="fas fa-check-circle"></i></div>
+            <p class="modal-message">خرید شما با موفقیت انجام شد.</p>
+            <button class="modal-btn" onclick="closeModal('purchaseModal')">متوجه شدم</button>
+        </div>
+    </div>
+
+    <div class="modal" id="profitModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('profitModal')">&times;</span>
+            <h2 class="modal-title">سود شما</h2>
+            <div class="modal-icon"><i class="fas fa-money-bill-wave"></i></div>
+            <p class="modal-message" id="profitMessage">مبلغ ۰ تومان سود از تخم مرغ‌های خود دریافت کردید.</p>
+            <button class="modal-btn" onclick="closeModal('profitModal')">متوجه شدم</button>
+        </div>
+    </div>
+    
+    <div class="modal" id="depositModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('depositModal')">&times;</span>
+            <h2 class="modal-title">واریز وجه</h2>
+            <p class="modal-message">
+                برای واریز، لطفاً از طریق کیف پول خود به آدرس زیر TON ارسال کنید.
+            </p>
+            <div class="deposit-form">
+                <input type="text" id="walletAddress" value="UQCxqp4HAry2FPbTUCHS0NMJuoMdrv8l1Ors-QNjhF3FW11C" readonly>
+                <button class="modal-btn" onclick="copyWalletAddress()">کپی آدرس ولت</button>
+                <button class="modal-btn" onclick="closeModal('depositModal')">بستن</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="withdrawModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('withdrawModal')">&times;</span>
+            <h2 class="modal-title">برداشت وجه</h2>
+            <p class="modal-message" id="withdrawMessage">
+                موجودی شما با موفقیت به کیف پولتان واریز خواهد شد.
+            </p>
+            <button class="modal-btn" onclick="closeModal('withdrawModal')">متوجه شدم</button>
+        </div>
+    </div>
+
+    <div class="modal" id="eggInfoModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('eggInfoModal')">&times;</span>
+            <h2 class="modal-title" id="infoModalTitle">اطلاعات تخم مرغ</h2>
+            <div class="modal-icon" id="infoModalIcon"><i class="fas fa-egg"></i></div>
+            <p class="modal-message" id="infoModalMessage">جزئیات تخم مرغ اینجا نمایش داده می‌شود.</p>
+            <button class="modal-btn" onclick="closeModal('eggInfoModal')">متوجه شدم</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    const TON_TO_TOMAN_RATE = 200000;
+
+    let userData = {
+        balanceTON: 0,
+        balanceToman: 0,
+        dailyProfitTON: 0,
+        dailyProfitToman: 0,
+        eggs: {
+            normal: 0, golden: 0, crystal: 0, diamond: 0, magic: 0, legendary: 0
+        },
+        hasFreeEgg: false,
+        lastWithdrawalDate: null,
+        userId: 'USER_ID_123456',
+        referralCount: 0,
+        referredBy: null
+    };
+
+    const eggPricesTON = {
+        normal: 0.05, golden: 0.25, crystal: 0.5, diamond: 2.5, magic: 5, legendary: 25
+    };
+    const eggProfitsTON = {
+        normal: 0.0025, golden: 0.0175, crystal: 0.045, diamond: 0.3, magic: 0.75, legendary: 5
+    };
+    const eggDurations = {
+        normal: "۷ روز", golden: "۱۴ روز", crystal: "۲۱ روز", diamond: "۳۰ روز", magic: "۴۵ روز", legendary: "۶۰ روز"
+    };
+    const eggDescriptions = {
+        normal: "سرمایه‌گذاری کوتاه‌مدت با ریسک پایین و سود روزانه ۵%", golden: "سرمایه‌گذاری میان‌مدت با ریسک متوسط و سود روزانه ۷%", crystal: "سرمایه‌گذاری با پشتیبانی طلا و سود روزانه ۹%", diamond: "سرمایه‌گذاری بلندمدت با ریسک بالا و سود روزانه ۱۲%", magic: "سرمایه‌گذاری ویژه با پشتیبانی الماس و سود روزانه ۱۵%", legendary: "سرمایه‌گذاری اختصاصی با بالاترین سود روزانه ۲۰%"
+    };
+    const eggNames = {
+        normal: "تخم مرغ معمولی", golden: "تخم مرغ طلایی", crystal: "تخم مرغ کریستالی", diamond: "تخم مرغ الماسی", magic: "تخم مرغ جادویی", legendary: "تخم مرغ افسانه‌ای"
+    };
+    const eggIcons = {
+        normal: '<i class="fas fa-egg"></i>', golden: '<i class="fas fa-egg" style="color: #ffd700;"></i>', crystal: '<i class="fas fa-gem" style="color: #1abc9c;"></i>', diamond: '<i class="fas fa-gem" style="color: #3498db;"></i>', magic: '<i class="fas fa-hat-wizard" style="color: #9b59b6;"></i>', legendary: '<i class="fas fa-dragon" style="color: #e74c3c;"></i>'
+    };
+
+    const loadingScreen = document.getElementById('loadingScreen');
+    const mainApp = document.getElementById('mainApp');
+    const userBalanceEl = document.getElementById('userBalance');
+    const dailyProfitEl = document.getElementById('dailyProfit');
+    const depositModal = document.getElementById('depositModal');
+    const purchaseModal = document.getElementById('purchaseModal');
+    const profitModal = document.getElementById('profitModal');
+    const eggInfoModal = document.getElementById('eggInfoModal');
+    const withdrawModal = document.getElementById('withdrawModal');
+    const profitMessageEl = document.getElementById('profitMessage');
+    const infoModalTitle = document.getElementById('infoModalTitle');
+    const infoModalIcon = document.getElementById('infoModalIcon');
+    const infoModalMessage = document.getElementById('infoModalMessage');
+    const referralLinkEl = document.getElementById('referralLink');
+
+    const inventoryCounts = {
+        normal: document.getElementById('count-normal'), golden: document.getElementById('count-golden'), crystal: document.getElementById('count-crystal'), diamond: document.getElementById('count-diamond'), magic: document.getElementById('count-magic'), legendary: document.getElementById('count-legendary')
+    };
+
+    function initializeApp() {
+        if (!userData.hasFreeEgg) {
+            userData.eggs.normal = 1;
+            userData.hasFreeEgg = true;
+        }
+
+        setTimeout(() => {
+            loadingScreen.style.opacity = '0';
+            setTimeout(() => {
+                loadingScreen.classList.add('hidden');
+                mainApp.classList.remove('hidden');
+                updateUI();
+            }, 500);
+        }, 2000);
+    }
+    
+    function updateUI() {
+        userData.balanceToman = userData.balanceTON * TON_TO_TOMAN_RATE;
+        userData.dailyProfitToman = userData.dailyProfitTON * TON_TO_TOMAN_RATE;
+        userBalanceEl.textContent = `${userData.balanceTON.toFixed(2)} TON (${Math.round(userData.balanceToman).toLocaleString()} تومان)`;
+        dailyProfitEl.textContent = `${userData.dailyProfitTON.toFixed(2)} TON (${Math.round(userData.dailyProfitToman).toLocaleString()} تومان)`;
+        for (const type in userData.eggs) {
+            inventoryCounts[type].textContent = userData.eggs[type];
+        }
+        referralLinkEl.href = `https://t.me/your_bot_name?start=${userData.userId}`;
+        referralLinkEl.textContent = `https://t.me/your_bot_name?start=${userData.userId}`;
+    }
+
+    function buyEgg(type) {
+        const price = eggPricesTON[type];
+        if (userData.balanceTON >= price) {
+            userData.balanceTON -= price;
+            userData.eggs[type]++;
+            updateUI();
+            showModal('purchaseModal');
+        } else {
+            alert('موجودی کافی نیست! لطفاً ابتدا حساب خود را شارژ کنید.');
+        }
+    }
+
+    function collectProfit() {
+        let totalProfit = 0;
+        for (const type in userData.eggs) {
+            totalProfit += userData.eggs[type] * eggProfitsTON[type];
+        }
+        if (totalProfit > 0) {
+            userData.balanceTON += totalProfit;
+            userData.dailyProfitTON = totalProfit;
+            profitMessageEl.textContent = `شما ${totalProfit.toFixed(2)} TON (${(totalProfit * TON_TO_TOMAN_RATE).toLocaleString()} تومان) سود از تخم مرغ‌های خود دریافت کردید.`;
+            updateUI();
+            showModal('profitModal');
+        } else {
+            alert('هنوز تخم مرغی برای دریافت سود ندارید!');
+        }
+    }
+
+    function depositWithTon() {
+        alert('برای واریز، از طریق کیف پول خود به آدرس نمایش داده شده در پنجره واریز TON ارسال کنید.');
+    }
+    
+    const MIN_WITHDRAWAL_TON = 2;
+    function withdraw() {
+        if (userData.balanceTON < MIN_WITHDRAWAL_TON) {
+            alert(`حداقل مبلغ برای برداشت ${MIN_WITHDRAWAL_TON} TON است.`);
+            return;
+        }
+        alert('درخواست برداشت شما ثبت شد و به زودی به کیف پول شما واریز خواهد شد.');
+        showModal('withdrawModal');
+    }
+
+    function showEggInfo(type) {
+        infoModalTitle.textContent = eggNames[type];
+        infoModalIcon.innerHTML = eggIcons[type];
+        const message = `
+            <div style="text-align: right; line-height: 1.8;">
+                <div>قیمت: ${eggPricesTON[type].toFixed(2)} TON (${(eggPricesTON[type] * TON_TO_TOMAN_RATE).toLocaleString()} تومان)</div>
+                <div>مدت سرمایه‌گذاری: ${eggDurations[type]}</div>
+                <div>سود روزانه: ${eggProfitsTON[type].toFixed(4)} TON (${(eggProfitsTON[type] * TON_TO_TOMAN_RATE).toLocaleString()} تومان)</div>
+                <div>توضیحات: ${eggDescriptions[type]}</div>
+            </div>
+        `;
+        infoModalMessage.innerHTML = message;
+        showModal('eggInfoModal');
+    }
+    
+    function copyWalletAddress() {
+        navigator.clipboard.writeText(document.getElementById('walletAddress').value).then(() => {
+            alert('آدرس ولت با موفقیت کپی شد!');
+        });
+    }
+    
+    function copyReferralLink() {
+        navigator.clipboard.writeText(referralLinkEl.href).then(() => {
+            alert('لینک رفرال با موفقیت کپی شد!');
+        });
+    }
+
+    function showModal(modalId) {
+        document.getElementById(modalId).style.display = 'flex';
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+    }
+
+    document.querySelectorAll('.buy-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const type = e.target.getAttribute('data-type');
+            buyEgg(type);
+        });
+    });
+
+    document.querySelectorAll('.egg-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+            if (!e.target.classList.contains('buy-btn')) {
+                const type = item.getAttribute('data-type');
+                showEggInfo(type);
+            }
+        });
+    });
+
+    document.getElementById('collectBtn').addEventListener('click', collectProfit);
+    document.querySelector('.action-buttons button:last-child').addEventListener('click', withdraw);
+
+    window.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal')) {
+            e.target.style.display = 'none';
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', initializeApp);
+
+</script>
+</body>
+</html>
