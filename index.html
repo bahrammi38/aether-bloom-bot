@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TonEgg - مزرعه نئون</title>
+    <title>TonEgg - مزرعه تون</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         @font-face {
@@ -33,8 +32,6 @@
         #mainApp {
             width: 100%;
             max-width: 500px;
-            padding: 0px;
-            /* Adjust padding as content is inside pages now */
             box-sizing: border-box;
             flex-grow: 1;
             display: flex;
@@ -61,15 +58,8 @@
         }
 
         @keyframes fadeInPage {
-            from {
-                opacity: 0;
-                transform: translateX(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
         .header-top {
@@ -94,8 +84,8 @@
 
         .header-top .app-title {
             font-size: 1.2rem;
-            color: #ff00ff;
-            text-shadow: 0 0 5px #ff00ff;
+            color: #FF69B4;
+            text-shadow: 0 0 5px #FF69B4;
         }
 
         .header-top .more-options {
@@ -103,10 +93,24 @@
             font-size: 1.5rem;
             cursor: pointer;
         }
+        
+        .page-header {
+            text-align: center;
+            font-size: 2rem;
+            color: #FF69B4;
+            text-shadow: 0 0 10px #FF69B4, 0 0 20px #FF69B4;
+            margin-bottom: 30px;
+        }
 
         .section-title {
-            color: #ff33cc;
-            text-shadow: 0 0 5px #ff33cc;
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #00FFFF;
+            text-shadow: 0 0 5px #00FFFF;
+            border-bottom: 2px solid #4b0082;
+            padding-bottom: 10px;
+            text-align: right;
         }
 
         .card {
@@ -118,37 +122,33 @@
             animation: slideIn 0.8s ease-in-out;
             border: 1px solid #4b0082;
         }
-
+        
         @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .balance-display {
             text-align: center;
             margin-bottom: 30px;
         }
-
-        .balance-display .percentage {
-            color: #ff33cc;
-            text-shadow: 0 0 8px #ff33cc;
+        
+        .balance-display .main-balance {
+            font-size: 2.8rem;
+            font-weight: bold;
+            color: #fff;
+            margin: 10px 0;
+            text-shadow: 0 0 15px #FF69B4, 0 0 25px #FF69B4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
         }
-
-        .balance-display .main-balance i {
-            color: #ff33cc;
-        }
-
+        
         .balance-display .main-balance i {
             font-size: 2rem;
             margin-left: 10px;
-            color: #00ff99;
+            color: #00FFFF;
         }
 
         .animated-egg-container {
@@ -163,21 +163,14 @@
 
         .animated-egg {
             font-size: 6rem;
-            color: #e0e0e0;
-            text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+            color: #00FFFF;
+            text-shadow: 0 0 10px #00FFFF, 0 0 20px #00FFFF;
             animation: pulseEgg 2s infinite alternate;
         }
 
         @keyframes pulseEgg {
-            from {
-                transform: scale(1);
-                text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
-            }
-
-            to {
-                transform: scale(1.05);
-                text-shadow: 0 0 15px #ff00ff, 0 0 30px #ff00ff;
-            }
+            from { transform: scale(1); text-shadow: 0 0 10px #00FFFF, 0 0 20px #00FFFF; }
+            to { transform: scale(1.05); text-shadow: 0 0 15px #00FFFF, 0 0 30px #00FFFF; }
         }
 
         .egg-overlay {
@@ -186,8 +179,8 @@
             left: 50%;
             transform: translate(-50%, -50%);
             font-size: 2rem;
-            color: #00ff99;
-            text-shadow: 0 0 5px #00ff99;
+            color: #00FFFF;
+            text-shadow: 0 0 5px #00FFFF;
         }
 
         .action-buttons-bottom {
@@ -197,7 +190,7 @@
         }
 
         .action-btn {
-            background-color: #6a0dad;
+            background-color: #007bff;
             color: #fff;
             border: none;
             border-radius: 10px;
@@ -205,15 +198,15 @@
             font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 0 10px rgba(106, 13, 173, 0.7);
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
             flex: 1;
             margin: 0 5px;
         }
 
         .action-btn:hover {
             transform: translateY(-2px);
-            background-color: #8a2be2;
-            box-shadow: 0 0 15px rgba(138, 43, 226, 0.9);
+            background-color: #0056b3;
+            box-shadow: 0 0 15px rgba(0, 86, 179, 0.9);
         }
 
         .egg-list {
@@ -239,30 +232,13 @@
             transform: translateY(-5px);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
         }
-
-        .egg-item[data-type="normal"] {
-            border-color: #5a5a5a;
-        }
-
-        .egg-item[data-type="golden"] {
-            border-color: #ffd700;
-        }
-
-        .egg-item[data-type="crystal"] {
-            border-color: #1abc9c;
-        }
-
-        .egg-item[data-type="diamond"] {
-            border-color: #3498db;
-        }
-
-        .egg-item[data-type="magic"] {
-            border-color: #9b59b6;
-        }
-
-        .egg-item[data-type="legendary"] {
-            border-color: #e74c3c;
-        }
+        
+        .egg-item[data-type="normal"] { border-color: #5a5a5a; }
+        .egg-item[data-type="golden"] { border-color: #ffd700; }
+        .egg-item[data-type="crystal"] { border-color: #1abc9c; }
+        .egg-item[data-type="diamond"] { border-color: #3498db; }
+        .egg-item[data-type="magic"] { border-color: #9b59b6; }
+        .egg-item[data-type="legendary"] { border-color: #e74c3c; }
 
         .egg-icon {
             font-size: 2.5rem;
@@ -285,15 +261,24 @@
             justify-content: center;
             align-items: center;
         }
-
         .egg-price i {
             margin-left: 5px;
-            color: #00ff99;
+            color: #00FFFF;
         }
 
         .buy-btn {
             background-color: #ffc107;
+            color: #1a1a2e;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transition: background-color 0.3s, box-shadow 0.3s;
             box-shadow: 0 0 5px rgba(255, 193, 7, 0.7);
+            width: calc(100% - 10px);
+            margin: 5px;
         }
 
         .buy-btn:hover {
@@ -301,7 +286,6 @@
             box-shadow: 0 0 10px rgba(255, 193, 7, 0.9);
         }
 
-        /* Inventory List Styling */
         .inventory-list {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -327,14 +311,13 @@
         .inventory-item h3 {
             margin-top: 0;
             font-size: 1rem;
-            color: #ff00ff;
+            color: #FF69B4;
         }
 
-        /* Wallet History Styling */
         .transaction-list {
             margin-top: 20px;
         }
-
+        
         .transaction-item {
             display: flex;
             justify-content: space-between;
@@ -345,42 +328,41 @@
             margin-bottom: 10px;
             border: 1px solid #4b0082;
         }
-
+        
         .transaction-item .left {
             display: flex;
             align-items: center;
         }
-
+        
         .transaction-item .icon {
             font-size: 1.2rem;
             margin-left: 10px;
-            color: #00ff99;
+            color: #ffc107;
         }
-
+        
         .transaction-item .details {
             display: flex;
             flex-direction: column;
             text-align: right;
         }
-
+        
         .transaction-item .type {
             font-weight: bold;
             color: #e0e0e0;
         }
-
+        
         .transaction-item .date {
             font-size: 0.8rem;
             color: #aaa;
         }
-
+        
         .transaction-item .amount {
             font-weight: bold;
-            color: #00ff99;
-            text-shadow: 0 0 5px #00ff99;
+            color: #00FFFF;
+            text-shadow: 0 0 5px #00FFFF;
             font-size: 1.1rem;
         }
 
-        /* Friends Page Styling */
         .referral-info p {
             line-height: 1.6;
             margin-bottom: 15px;
@@ -391,7 +373,7 @@
             padding: 15px;
             border-radius: 10px;
             margin-bottom: 20px;
-            border: 1px solid #ff00ff;
+            border: 1px solid #FF69B4;
             text-align: center;
         }
 
@@ -401,33 +383,31 @@
             border-radius: 8px;
             margin-bottom: 10px;
             word-break: break-all;
-            color: #00ff99;
+            color: #00FFFF;
             direction: ltr;
         }
 
         .referral-link-card button {
-            background-color: #00ff99;
+            background-color: #ffc107;
             color: #1a1a2e;
             border: none;
             padding: 10px 20px;
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
-            box-shadow: 0 0 5px #00ff99;
+            box-shadow: 0 0 5px #ffc107;
         }
-
         .referral-link-card button:hover {
-            background-color: #00cc88;
-            box-shadow: 0 0 10px #00ff99;
+            background-color: #e0a800;
+            box-shadow: 0 0 10px #ffc107;
         }
 
         .friends-list h3 {
             margin-top: 0;
-            color: #ff00ff;
-            text-shadow: 0 0 5px #ff00ff;
+            color: #FF69B4;
+            text-shadow: 0 0 5px #FF69B4;
         }
 
-        /* Earn Page Styling */
         .task-list {
             margin-top: 20px;
         }
@@ -451,7 +431,7 @@
         .task-item .icon {
             font-size: 1.5rem;
             margin-left: 15px;
-            color: #ff00ff;
+            color: #FF69B4;
         }
 
         .task-item .details {
@@ -468,37 +448,34 @@
 
         .task-item .reward {
             font-size: 0.9rem;
-            color: #00ff99;
-            text-shadow: 0 0 5px #00ff99;
+            color: #00FFFF;
+            text-shadow: 0 0 5px #00FFFF;
         }
 
         .task-item .action-btn-task {
-            background-color: #6a0dad;
+            background-color: #007bff;
             color: #fff;
             border: none;
             padding: 8px 15px;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 0 8px rgba(106, 13, 173, 0.5);
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
         }
-
         .task-item .action-btn-task:hover {
-            background-color: #8a2be2;
-            box-shadow: 0 0 12px rgba(138, 43, 226, 0.7);
+            background-color: #0056b3;
+            box-shadow: 0 0 12px rgba(0, 86, 179, 0.7);
         }
-
         .task-item .action-btn-task.claimed {
             background-color: #ffc107;
+            color: #1a1a2e;
             box-shadow: 0 0 8px rgba(255, 193, 7, 0.5);
         }
-
         .task-item .action-btn-task.claimed:hover {
             background-color: #e0a800;
             box-shadow: 0 0 12px rgba(255, 193, 7, 0.7);
         }
 
-        /* Modals */
         .modal {
             display: none;
             position: fixed;
@@ -514,13 +491,8 @@
         }
 
         @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .modal-content {
@@ -531,7 +503,7 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
             position: relative;
             max-width: 90%;
-            border: 2px solid #ff00ff;
+            border: 2px solid #FF69B4;
         }
 
         .close-modal {
@@ -540,25 +512,25 @@
             right: 15px;
             font-size: 28px;
             font-weight: bold;
-            color: #ff00ff;
+            color: #FF69B4;
             cursor: pointer;
-            text-shadow: 0 0 5px #ff00ff;
+            text-shadow: 0 0 5px #FF69B4;
         }
 
         .modal-title {
             margin-top: 0;
             font-size: 1.8rem;
-            color: #00ff99;
-            text-shadow: 0 0 8px #00ff99;
+            color: #00FFFF;
+            text-shadow: 0 0 8px #00FFFF;
         }
 
         .modal-icon {
             font-size: 3rem;
-            color: #ff00ff;
+            color: #FF69B4;
             margin-bottom: 10px;
-            text-shadow: 0 0 10px #ff00ff;
+            text-shadow: 0 0 10px #FF69B4;
         }
-
+        
         .modal-message {
             font-size: 1.1rem;
             line-height: 1.6;
@@ -566,7 +538,7 @@
         }
 
         .modal-btn {
-            background-color: #00ff99;
+            background-color: #FF69B4;
             color: #1a1a2e;
             border: none;
             padding: 10px 20px;
@@ -575,17 +547,15 @@
             font-size: 1rem;
             margin-top: 20px;
             transition: background-color 0.3s, box-shadow 0.3s;
-            box-shadow: 0 0 5px rgba(0, 255, 153, 0.7);
+            box-shadow: 0 0 5px rgba(255, 105, 180, 0.7);
         }
 
         .modal-btn:hover {
-            background-color: #00cc88;
-            box-shadow: 0 0 10px rgba(0, 255, 153, 0.7);
+            background-color: #ff3399;
+            box-shadow: 0 0 10px rgba(255, 51, 153, 0.7);
         }
 
-        .deposit-options button,
-        .deposit-form-toman input,
-        .deposit-form-toman button {
+        .deposit-options button, .deposit-form-toman input, .deposit-form-toman button {
             background-color: #555577;
             color: #fff;
             border: 1px solid #777;
@@ -597,9 +567,8 @@
             width: 100%;
             margin-bottom: 10px;
         }
-
-        .deposit-options button:hover,
-        .deposit-form-toman button:hover {
+        
+        .deposit-options button:hover, .deposit-form-toman button:hover {
             background-color: #666688;
             transform: translateY(-2px);
         }
@@ -610,14 +579,14 @@
             gap: 15px;
             margin-top: 15px;
         }
-
+        
         .deposit-form-toman input {
             text-align: right;
             background-color: #2a2a44;
             border-color: #4b0082;
             color: #e0e0e0;
         }
-
+        
         .nav-bar {
             display: flex;
             justify-content: space-around;
@@ -645,13 +614,12 @@
         }
 
         .nav-item:hover {
-            color: #ff00ff;
-            background-color: rgba(106, 13, 173, 0.2);
+            color: #00FFFF;
         }
 
         .nav-item.active {
-            color: #ff00ff;
-            text-shadow: 0 0 5px #ff00ff;
+            color: #00FFFF;
+            text-shadow: 0 0 5px #00FFFF;
         }
 
         .nav-item i {
@@ -660,594 +628,572 @@
         }
     </style>
 </head>
-
 <body>
 
-    <div id="mainApp">
+<div id="mainApp">
+    
+    <div id="homePage" class="page active">
+        <div class="header-top">
+            <span class="close-btn" onclick="alert('Close action');">بستن</span>
+            <span class="app-title">TonEgg mini app</span>
+            <i class="fas fa-ellipsis-h more-options" onclick="alert('More options');"></i>
+        </div>
 
-
-        <div id="homePage" class="page active">
-            <div class="card">
-                <div class="balance-display">
-                    <p class="percentage">+1% per day</p>
-                    <p class="main-balance" id="userBalanceHome"><i class="fas fa-gem"></i> 0.00000000</p>
-                </div>
-                <div class="animated-egg-container" onclick="collectProfit()">
-                    <i class="fas fa-egg animated-egg"></i>
-                    <span class="egg-overlay" id="freeEggStatus"></span>
-                </div>
-                <div class="action-buttons-bottom">
-                    <button class="action-btn" onclick="showModal('depositModal')">
-                        <i class="fas fa-arrow-circle-up"></i> واریز
-                    </button>
-                    <button class="action-btn" onclick="withdraw()">
-                        <i class="fas fa-arrow-circle-down"></i> برداشت
-                    </button>
-                </div>
+        <div class="card">
+            <div class="balance-display">
+                <p class="percentage">سود روزانه: <span id="dailyProfitHome">0.00</span> TON</p>
+                <p class="main-balance" id="userBalanceHome">0.00000000 TON</p>
             </div>
-
-            <div class="card">
-                <h2 class="section-title">تخم مرغ‌ها برای خرید ✨</h2>
-                <div class="egg-list">
-                    <div class="egg-item" data-type="normal">
-                        <div class="egg-icon"><i class="fas fa-egg"></i></div>
-                        <div class="egg-title">معمولی</div>
-                        <div class="egg-price">۰.۰۵ <i class="fab fa-neos"></i></div>
-                        <button class="buy-btn" data-type="normal">خرید</button>
-                    </div>
-                    <div class="egg-item" data-type="golden">
-                        <div class="egg-icon" style="color: #ffd700;"><i class="fas fa-egg"></i></div>
-                        <div class="egg-title">طلایی</div>
-                        <div class="egg-price">۰.۲۵ <i class="fab fa-neos"></i></div>
-                        <button class="buy-btn" data-type="golden">خرید</button>
-                    </div>
-                    <div class="egg-item" data-type="crystal">
-                        <div class="egg-icon" style="color: #1abc9c;"><i class="fas fa-gem"></i></div>
-                        <div class="egg-title">کریستالی</div>
-                        <div class="egg-price">۰.۵ <i class="fab fa-neos"></i></div>
-                        <button class="buy-btn" data-type="crystal">خرید</button>
-                    </div>
-                    <div class="egg-item" data-type="diamond">
-                        <div class="egg-icon" style="color: #3498db;"><i class="fas fa-gem"></i></div>
-                        <div class="egg-title">الماسی</div>
-                        <div class="egg-price">۲.۵ <i class="fab fa-neos"></i></div>
-                        <button class="buy-btn" data-type="diamond">خرید</button>
-                    </div>
-                    <div class="egg-item" data-type="magic">
-                        <div class="egg-icon" style="color: #9b59b6;"><i class="fas fa-hat-wizard"></i></div>
-                        <div class="egg-title">جادویی</div>
-                        <div class="egg-price">۵ <i class="fab fa-neos"></i></div>
-                        <button class="buy-btn" data-type="magic">خرید</button>
-                    </div>
-                    <div class="egg-item" data-type="legendary">
-                        <div class="egg-icon" style="color: #e74c3c;"><i class="fas fa-dragon"></i></div>
-                        <div class="egg-title">افسانه‌ای</div>
-                        <div class="egg-price">۲۵ <i class="fab fa-neos"></i></div>
-                        <button class="buy-btn" data-type="legendary">خرید</button>
-                    </div>
-                </div>
+            <div class="animated-egg-container" onclick="collectProfit()">
+                <i class="fas fa-egg animated-egg"></i>
+                <span class="egg-overlay" id="freeEggStatus"></span>
+            </div>
+            <div class="action-buttons-bottom">
+                <button class="action-btn" onclick="showModal('depositModal')">
+                    <i class="fas fa-arrow-circle-up"></i> واریز
+                </button>
+                <button class="action-btn" onclick="withdraw()">
+                    <i class="fas fa-arrow-circle-down"></i> برداشت
+                </button>
             </div>
         </div>
 
-        <div id="walletPage" class="page">
-            <h2 class="section-title">تاریخچه کیف پول 📜</h2>
-            <div class="card">
-                <div class="transaction-list" id="transactionHistory">
+        <div class="card">
+            <h2 class="section-title">تخم مرغ‌ها برای خرید ✨</h2>
+            <div class="egg-list">
+                <div class="egg-item" data-type="normal">
+                    <div class="egg-icon"><i class="fas fa-egg"></i></div>
+                    <div class="egg-title">معمولی</div>
+                    <div class="egg-price">۰.۰۵ <i class="fab fa-neos"></i></div>
+                    <button class="buy-btn" data-type="normal">خرید</button>
+                </div>
+                <div class="egg-item" data-type="golden">
+                    <div class="egg-icon" style="color: #ffd700;"><i class="fas fa-egg"></i></div>
+                    <div class="egg-title">طلایی</div>
+                    <div class="egg-price">۰.۲۵ <i class="fab fa-neos"></i></div>
+                    <button class="buy-btn" data-type="golden">خرید</button>
+                </div>
+                <div class="egg-item" data-type="crystal">
+                    <div class="egg-icon" style="color: #1abc9c;"><i class="fas fa-gem"></i></div>
+                    <div class="egg-title">کریستالی</div>
+                    <div class="egg-price">۰.۵ <i class="fab fa-neos"></i></div>
+                    <button class="buy-btn" data-type="crystal">خرید</button>
+                </div>
+                <div class="egg-item" data-type="diamond">
+                    <div class="egg-icon" style="color: #3498db;"><i class="fas fa-gem"></i></div>
+                    <div class="egg-title">الماسی</div>
+                    <div class="egg-price">۲.۵ <i class="fab fa-neos"></i></div>
+                    <button class="buy-btn" data-type="diamond">خرید</button>
+                </div>
+                <div class="egg-item" data-type="magic">
+                    <div class="egg-icon" style="color: #9b59b6;"><i class="fas fa-hat-wizard"></i></div>
+                    <div class="egg-title">جادویی</div>
+                    <div class="egg-price">۵ <i class="fab fa-neos"></i></div>
+                    <button class="buy-btn" data-type="magic">خرید</button>
+                </div>
+                <div class="egg-item" data-type="legendary">
+                    <div class="egg-icon" style="color: #e74c3c;"><i class="fas fa-dragon"></i></div>
+                    <div class="egg-title">افسانه‌ای</div>
+                    <div class="egg-price">۲۵ <i class="fab fa-neos"></i></div>
+                    <button class="buy-btn" data-type="legendary">خرید</button>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div id="friendsPage" class="page">
+    <div id="walletPage" class="page">
+        <h2 class="page-header">کیف پول</h2>
+        <div class="card">
+            <h2 class="section-title">موجودی من 💰</h2>
+            <div class="balance-display">
+                <p class="main-balance" id="walletBalance">0.00000000 TON</p>
+                <p class="percentage" id="walletBalanceToman">0 تومان</p>
+            </div>
+        </div>
+        <div class="card">
+            <h2 class="section-title">تاریخچه تراکنش‌ها 📜</h2>
+            <div class="transaction-list" id="transactionHistory">
+            </div>
+        </div>
+    </div>
+
+    <div id="friendsPage" class="page">
+        <h2 class="page-header">دوستان</h2>
+        <div class="card referral-info">
             <h2 class="section-title">دعوت دوستان 👥</h2>
-            <div class="card referral-info">
-                <p>دوستان خود را دعوت کنید و 10% از سود آنها را دریافت کنید! همچنین درآمد روزانه شما 0.1% افزایش می‌یابد
-                    (حداکثر تا 2% در روز).</p>
-                <h3>لینک شما</h3>
-                <div class="referral-link-card">
-                    <div class="link-display" id="referralLinkDisplay">t.me/ton_egg_bot?start=YOURID</div>
-                    <button onclick="copyReferralLink()">
-                        <i class="fas fa-share-alt"></i> دعوت از دوستان
-                    </button>
-                </div>
-                <div class="friends-list">
-                    <h3>تعداد دوستان: <span id="friendsCount">0</span></h3>
-                </div>
+            <p>دوستان خود را دعوت کنید و 10% از سود آنها را دریافت کنید! همچنین درآمد روزانه شما 0.1% افزایش می‌یابد
+                (حداکثر تا 2% در روز).</p>
+            <h3>لینک شما</h3>
+            <div class="referral-link-card">
+                <div class="link-display" id="referralLinkDisplay">t.me/ton_egg_bot?start=YOURID</div>
+                <button onclick="copyReferralLink()">
+                    <i class="fas fa-share-alt"></i> دعوت از دوستان
+                </button>
             </div>
-        </div>
-
-        <div id="earnPage" class="page">
-            <h2 class="section-title">کسب درآمد 💸</h2>
-            <div class="card">
-                <div class="task-list" id="taskList">
-                    <div class="task-item">
-                        <div class="left">
-                            <div class="icon"><i class="fas fa-gift"></i></div>
-                            <div class="details">
-                                <div class="title">بونوس خوش آمد گویی</div>
-                                <div class="reward">+۰.۰۱ <i class="fab fa-neos"></i></div>
-                            </div>
-                        </div>
-                        <button class="action-btn-task" data-task="welcomeBonus"
-                            onclick="claimTaskReward(this)">دریافت</button>
-                    </div>
-                    <div class="task-item">
-                        <div class="left">
-                            <div class="icon"><i class="fas fa-ad"></i></div>
-                            <div class="details">
-                                <div class="title">تماشای ۱۰ تبلیغ</div>
-                                <div class="reward">+۰.۰۵ <i class="fab fa-neos"></i></div>
-                            </div>
-                        </div>
-                        <button class="action-btn-task" data-task="watchAds"
-                            onclick="claimTaskReward(this)">شروع</button>
-                    </div>
-                    <div class="task-item">
-                        <div class="left">
-                            <div class="icon"><i class="fas fa-camera"></i></div>
-                            <div class="details">
-                                <div class="title">انتشار داستان</div>
-                                <div class="reward">+۰.۰۲ <i class="fab fa-neos"></i></div>
-                            </div>
-                        </div>
-                        <button class="action-btn-task" data-task="publishStory"
-                            onclick="claimTaskReward(this)">شروع</button>
-                    </div>
-                    <div class="task-item">
-                        <div class="left">
-                            <div class="icon"><i class="fas fa-users"></i></div>
-                            <div class="details">
-                                <div class="title">دعوت از ۱ دوست</div>
-                                <div class="reward">+۰.۰۱ <i class="fab fa-neos"></i></div>
-                            </div>
-                        </div>
-                        <button class="action-btn-task" data-task="invite1Friend"
-                            onclick="claimTaskReward(this)">شروع</button>
-                    </div>
-                    <div class="task-item">
-                        <div class="left">
-                            <div class="icon"><i class="fas fa-user-friends"></i></div>
-                            <div class="details">
-                                <div class="title">دعوت از ۳ دوست</div>
-                                <div class="reward">+۰.۰۲ <i class="fab fa-neos"></i></div>
-                            </div>
-                        </div>
-                        <button class="action-btn-task" data-task="invite3Friends"
-                            onclick="claimTaskReward(this)">شروع</button>
-                    </div>
-                    <div class="task-item">
-                        <div class="left">
-                            <div class="icon"><i class="fas fa-calendar-alt"></i></div>
-                            <div class="details">
-                                <div class="title">بونوس روزانه</div>
-                                <div class="reward">+۰.۰۱ <i class="fab fa-neos"></i></div>
-                            </div>
-                        </div>
-                        <button class="action-btn-task" data-task="dailyBonus"
-                            onclick="claimTaskReward(this)">دریافت</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="modal" id="purchaseModal">
-            <div class="modal-content">
-                <span class="close-modal" onclick="closeModal('purchaseModal')">&times;</span>
-                <h2 class="modal-title">خرید موفق</h2>
-                <div class="modal-icon"><i class="fas fa-check-circle"></i></div>
-                <p class="modal-message">خرید شما با موفقیت انجام شد.</p>
-                <button class="modal-btn" onclick="closeModal('purchaseModal')">متوجه شدم</button>
-            </div>
-        </div>
-
-        <div class="modal" id="profitModal">
-            <div class="modal-content">
-                <span class="close-modal" onclick="closeModal('profitModal')">&times;</span>
-                <h2 class="modal-title">سود شما</h2>
-                <div class="modal-icon"><i class="fas fa-money-bill-wave"></i></div>
-                <p class="modal-message" id="profitMessage">مبلغ ۰ تومان سود از تخم مرغ‌های خود دریافت کردید.</p>
-                <button class="modal-btn" onclick="closeModal('profitModal')">متوجه شدم</button>
-            </div>
-        </div>
-
-        <div class="modal" id="depositModal">
-            <div class="modal-content">
-                <span class="close-modal" onclick="closeModal('depositModal')">&times;</span>
-                <h2 class="modal-title">واریز وجه</h2>
-                <p class="modal-message">
-                    لطفا از گزینه‌های زیر برای واریز انتخاب کنید:
-                </p>
-                <div class="deposit-options">
-                    <button onclick="alert('اتصال به کیف پول TON برای واریز TON');">
-                        <i class="fas fa-wallet"></i> واریز با TON
-                    </button>
-                    <button onclick="showTomanDepositForm()">
-                        <i class="fas fa-credit-card"></i> واریز با کارت بانکی
-                    </button>
-                </div>
-                <div class="deposit-form-toman" id="tomanDepositForm" style="display:none;">
-                    <input type="text" id="cardNumberInput" placeholder="شماره کارت"
-                        value="به دلایل امنیتی، این قابلیت غیرفعال است." readonly>
-                    <input type="text" id="depositAmountInput" placeholder="مبلغ (تومان)">
-                    <button onclick="alert('این قابلیت نیاز به بک‌اند واقعی و درگاه پرداخت دارد.');">
-                        <i class="fas fa-arrow-circle-down"></i> واریز تومان
-                    </button>
-                </div>
-                <button class="modal-btn" onclick="closeModal('depositModal')">بستن</button>
-            </div>
-        </div>
-
-        <div class="modal" id="withdrawModal">
-            <div class="modal-content">
-                <span class="close-modal" onclick="closeModal('withdrawModal')">&times;</span>
-                <h2 class="modal-title">برداشت وجه</h2>
-                <div class="modal-icon"><i class="fas fa-hand-holding-usd"></i></div>
-                <p class="modal-message" id="withdrawMessage">
-                    درخواست برداشت شما ثبت شد و به زودی به کیف پول شما واریز خواهد شد.
-                </p>
-                <button class="modal-btn" onclick="closeModal('withdrawModal')">متوجه شدم</button>
-            </div>
-        </div>
-
-        <div class="modal" id="eggInfoModal">
-            <div class="modal-content">
-                <span class="close-modal" onclick="closeModal('eggInfoModal')">&times;</span>
-                <h2 class="modal-title" id="infoModalTitle">اطلاعات تخم مرغ</h2>
-                <div class="modal-icon" id="infoModalIcon"><i class="fas fa-egg"></i></div>
-                <p class="modal-message" id="infoModalMessage">جزئیات تخم مرغ اینجا نمایش داده می‌شود.</p>
-                <button class="modal-btn" onclick="closeModal('eggInfoModal')">متوجه شدم</button>
-            </div>
-        </div>
-
-        <div class="nav-bar">
-            <div class="nav-item active" data-page="homePage">
-                <i class="fas fa-home"></i>
-                <span>خانه</span>
-            </div>
-            <div class="nav-item" data-page="walletPage">
-                <i class="fas fa-wallet"></i>
-                <span>کیف پول</span>
-            </div>
-            <div class="nav-item" data-page="friendsPage">
-                <i class="fas fa-user-friends"></i>
-                <span>دوستان</span>
-            </div>
-            <div class="nav-item" data-page="earnPage">
-                <i class="fas fa-coins"></i>
-                <span>کسب درآمد</span>
+            <div class="friends-list">
+                <h3>تعداد دوستان: <span id="friendsCount">0</span></h3>
             </div>
         </div>
     </div>
 
-    <div class="nav-bar">
-        <div class="nav-item active" data-page="homePage">
-            <i class="fas fa-home"></i>
-            <span>خانه</span>
-        </div>
-        <div class="nav-item" data-page="walletPage">
-            <i class="fas fa-wallet"></i>
-            <span>کیف پول</span>
-        </div>
-        <div class="nav-item" data-page="friendsPage">
-            <i class="fas fa-user-friends"></i>
-            <span>دوستان</span>
-        </div>
-        <div class="nav-item" data-page="earnPage">
-            <i class="fas fa-coins"></i>
-            <span>کسب درآمد</span>
+    <div id="earnPage" class="page">
+        <h2 class="page-header">کسب درآمد</h2>
+        <div class="card">
+            <h2 class="section-title">وظایف روزانه و پاداش‌ها 💸</h2>
+            <div class="task-list" id="taskList">
+                <div class="task-item">
+                    <div class="left">
+                        <div class="icon"><i class="fas fa-gift"></i></div>
+                        <div class="details">
+                            <div class="title">بونوس خوش آمد گویی</div>
+                            <div class="reward">+۰.۰۱ <i class="fab fa-neos"></i></div>
+                        </div>
+                    </div>
+                    <button class="action-btn-task" data-task="welcomeBonus"
+                        onclick="claimTaskReward(this)">دریافت</button>
+                </div>
+                <div class="task-item">
+                    <div class="left">
+                        <div class="icon"><i class="fas fa-ad"></i></div>
+                        <div class="details">
+                            <div class="title">تماشای ۱۰ تبلیغ</div>
+                            <div class="reward">+۰.۰۵ <i class="fab fa-neos"></i></div>
+                        </div>
+                    </div>
+                    <button class="action-btn-task" data-task="watchAds"
+                        onclick="claimTaskReward(this)">شروع</button>
+                </div>
+                <div class="task-item">
+                    <div class="left">
+                        <div class="icon"><i class="fas fa-camera"></i></div>
+                        <div class="details">
+                            <div class="title">انتشار داستان</div>
+                            <div class="reward">+۰.۰۲ <i class="fab fa-neos"></i></div>
+                        </div>
+                    </div>
+                    <button class="action-btn-task" data-task="publishStory"
+                        onclick="claimTaskReward(this)">شروع</button>
+                </div>
+                <div class="task-item">
+                    <div class="left">
+                        <div class="icon"><i class="fas fa-users"></i></div>
+                        <div class="details">
+                            <div class="title">دعوت از ۱ دوست</div>
+                            <div class="reward">+۰.۰۱ <i class="fab fa-neos"></i></div>
+                        </div>
+                    </div>
+                    <button class="action-btn-task" data-task="invite1Friend"
+                        onclick="claimTaskReward(this)">شروع</button>
+                </div>
+                <div class="task-item">
+                    <div class="left">
+                        <div class="icon"><i class="fas fa-user-friends"></i></div>
+                        <div class="details">
+                            <div class="title">دعوت از ۳ دوست</div>
+                            <div class="reward">+۰.۰۲ <i class="fab fa-neos"></i></div>
+                        </div>
+                    </div>
+                    <button class="action-btn-task" data-task="invite3Friends"
+                        onclick="claimTaskReward(this)">شروع</button>
+                </div>
+                <div class="task-item">
+                    <div class="left">
+                        <div class="icon"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="details">
+                            <div class="title">بونوس روزانه</div>
+                            <div class="reward">+۰.۰۱ <i class="fab fa-neos"></i></div>
+                        </div>
+                    </div>
+                    <button class="action-btn-task" data-task="dailyBonus"
+                        onclick="claimTaskReward(this)">دریافت</button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <script>
-        const TON_TO_TOMAN_RATE = 200000;
-        const FREE_EGG_PROFIT_INTERVAL = 10 * 1000; // 10 seconds for quick demo
-        const FREE_EGG_PROFIT_AMOUNT = 0.0001; // Small profit for free egg
 
-        let userData = {
-            balanceTON: 0.00, // Initial balance
-            transactions: [], // To store wallet history
-            eggs: {
-                normal: 0, golden: 0, crystal: 0, diamond: 0, magic: 0, legendary: 0
-            },
-            dailyProfitTONPerEgg: {
-                normal: 0.0025, golden: 0.0175, crystal: 0.045, diamond: 0.3, magic: 0.75, legendary: 5
-            },
-            lastProfitCollectionTime: new Date().getTime(), // Timestamp for last profit collection
-            userId: '7805585046',
-            referralCount: 0,
-            tasksClaimed: {
-                welcomeBonus: false,
-                watchAds: false,
-                publishStory: false,
-                invite1Friend: false,
-                invite3Friends: false,
-                dailyBonus: false // This will be reset daily in a real app
-            }
-        };
+    <div class="modal" id="purchaseModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('purchaseModal')">&times;</span>
+            <h2 class="modal-title">خرید موفق</h2>
+            <div class="modal-icon"><i class="fas fa-check-circle"></i></div>
+            <p class="modal-message">خرید شما با موفقیت انجام شد.</p>
+            <button class="modal-btn" onclick="closeModal('purchaseModal')">متوجه شدم</button>
+        </div>
+    </div>
 
-        const eggPricesTON = {
-            normal: 0.05, golden: 0.25, crystal: 0.5, diamond: 2.5, magic: 5, legendary: 25
-        };
-        const eggDurations = {
-            normal: "۷ روز", golden: "۱۴ روز", crystal: "۲۱ روز", diamond: "۳۰ روز", magic: "۴۵ روز", legendary: "۶۰ روز"
-        };
-        const eggDescriptions = {
-            normal: "سرمایه‌گذاری کوتاه‌مدت با ریسک پایین و سود روزانه ۵%", golden: "سرمایه‌گذاری میان‌مدت با ریسک متوسط و سود روزانه ۷%", crystal: "سرمایه‌گذاری با پشتیبانی طلا و سود روزانه ۹%", diamond: "سرمایه‌گذاری بلندمدت با ریسک بالا و سود روزانه ۱۲%", magic: "سرمایه‌گذاری ویژه با پشتیبانی الماس و سود روزانه ۱۵%", legendary: "سرمایه‌گذاری اختصاصی با بالاترین سود روزانه ۲۰%"
-        };
-        const eggNames = {
-            normal: "تخم مرغ معمولی", golden: "تخم مرغ طلایی", crystal: "تخم مرغ کریستالی", diamond: "تخم مرغ الماسی", magic: "تخم مرغ جادویی", legendary: "تخم مرغ افسانه‌ای"
-        };
-        const eggIcons = {
-            normal: '<i class="fas fa-egg"></i>', golden: '<i class="fas fa-egg" style="color: #ffd700;"></i>', crystal: '<i class="fas fa-gem" style="color: #1abc9c;"></i>', diamond: '<i class="fas fa-gem" style="color: #3498db;"></i>', magic: '<i class="fas fa-hat-wizard" style="color: #9b59b6;"></i>', legendary: '<i class="fas fa-dragon" style="color: #e74c3c;"></i>'
-        };
+    <div class="modal" id="profitModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('profitModal')">&times;</span>
+            <h2 class="modal-title">سود شما</h2>
+            <div class="modal-icon"><i class="fas fa-money-bill-wave"></i></div>
+            <p class="modal-message" id="profitMessage">مبلغ ۰ تومان سود از تخم مرغ‌های خود دریافت کردید.</p>
+            <button class="modal-btn" onclick="closeModal('profitModal')">متوجه شدم</button>
+        </div>
+    </div>
 
-        // DOM Elements
-        const userBalanceHomeEl = document.getElementById('userBalanceHome');
-        const freeEggStatusEl = document.getElementById('freeEggStatus');
-        const transactionHistoryEl = document.getElementById('transactionHistory');
-        const referralLinkDisplayEl = document.getElementById('referralLinkDisplay');
-        const friendsCountEl = document.getElementById('friendsCount');
+    <div class="modal" id="depositModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('depositModal')">&times;</span>
+            <h2 class="modal-title">واریز وجه</h2>
+            <p class="modal-message">
+                لطفا از گزینه‌های زیر برای واریز انتخاب کنید:
+            </p>
+            <div class="deposit-options">
+                <button onclick="alert('اتصال به کیف پول TON برای واریز TON');">
+                    <i class="fas fa-wallet"></i> واریز با TON
+                </button>
+                <button onclick="showTomanDepositForm()">
+                    <i class="fas fa-credit-card"></i> واریز با کارت بانکی
+                </button>
+            </div>
+            <div class="deposit-form-toman" id="tomanDepositForm" style="display:none;">
+                <input type="text" id="cardNumberInput" placeholder="شماره کارت"
+                    value="به دلایل امنیتی، این قابلیت غیرفعال است." readonly>
+                <input type="text" id="depositAmountInput" placeholder="مبلغ (تومان)">
+                <button onclick="alert('این قابلیت نیاز به بک‌اند واقعی و درگاه پرداخت دارد.');">
+                    <i class="fas fa-arrow-circle-down"></i> واریز تومان
+                </button>
+            </div>
+            <button class="modal-btn" onclick="closeModal('depositModal')">بستن</button>
+        </div>
+    </div>
 
-        // Initialize App
-        function initializeApp() {
-            if (localStorage.getItem('userData')) {
-                userData = JSON.parse(localStorage.getItem('userData'));
-            } else {
-                // Give a free egg on first visit
-                userData.eggs.normal = 1;
-                userData.transactions.push({
-                    type: 'خرید',
-                    description: 'تخم مرغ معمولی رایگان',
-                    amount: 0,
-                    date: new Date().toLocaleString('fa-IR')
-                });
-            }
-            updateUI();
-            startFreeEggTimer();
-            renderTransactions();
-            checkTaskStatuses();
+    <div class="modal" id="withdrawModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('withdrawModal')">&times;</span>
+            <h2 class="modal-title">برداشت وجه</h2>
+            <div class="modal-icon"><i class="fas fa-hand-holding-usd"></i></div>
+            <p class="modal-message" id="withdrawMessage">
+                درخواست برداشت شما ثبت شد و به زودی به کیف پول شما واریز خواهد شد.
+            </p>
+            <button class="modal-btn" onclick="closeModal('withdrawModal')">متوجه شدم</button>
+        </div>
+    </div>
+
+    <div class="modal" id="eggInfoModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('eggInfoModal')">&times;</span>
+            <h2 class="modal-title" id="infoModalTitle">اطلاعات تخم مرغ</h2>
+            <div class="modal-icon"><i class="fas fa-egg"></i></div>
+            <p class="modal-message" id="infoModalMessage">جزئیات تخم مرغ اینجا نمایش داده می‌شود.</p>
+            <button class="modal-btn" onclick="closeModal('eggInfoModal')">متوجه شدم</button>
+        </div>
+    </div>
+</div>
+
+<div class="nav-bar">
+    <div class="nav-item active" data-page="homePage">
+        <i class="fas fa-home"></i>
+        <span>خانه</span>
+    </div>
+    <div class="nav-item" data-page="walletPage">
+        <i class="fas fa-wallet"></i>
+        <span>کیف پول</span>
+    </div>
+    <div class="nav-item" data-page="friendsPage">
+        <i class="fas fa-user-friends"></i>
+        <span>دوستان</span>
+    </div>
+    <div class="nav-item" data-page="earnPage">
+        <i class="fas fa-coins"></i>
+        <span>کسب درآمد</span>
+    </div>
+</div>
+
+<script>
+    const TON_TO_TOMAN_RATE = 200000;
+    const FREE_EGG_PROFIT_INTERVAL = 10 * 1000;
+    const FREE_EGG_PROFIT_AMOUNT = 0.0001;
+
+    let userData = {
+        balanceTON: 0.00,
+        transactions: [],
+        eggs: {
+            normal: 0, golden: 0, crystal: 0, diamond: 0, magic: 0, legendary: 0
+        },
+        dailyProfitTONPerEgg: {
+            normal: 0.0025, golden: 0.0175, crystal: 0.045, diamond: 0.3, magic: 0.75, legendary: 5
+        },
+        lastProfitCollectionTime: new Date().getTime(),
+        userId: '7805585046',
+        referralCount: 0,
+        tasksClaimed: {
+            welcomeBonus: false,
+            watchAds: false,
+            publishStory: false,
+            invite1Friend: false,
+            invite3Friends: false,
+            dailyBonus: false
         }
+    };
 
-        // Update UI Elements
-        function updateUI() {
-            userBalanceHomeEl.innerHTML = `<i class="fas fa-gem"></i> ${userData.balanceTON.toFixed(8)}`;
+    const eggPricesTON = {
+        normal: 0.05, golden: 0.25, crystal: 0.5, diamond: 2.5, magic: 5, legendary: 25
+    };
+    const eggDurations = {
+        normal: "۷ روز", golden: "۱۴ روز", crystal: "۲۱ روز", diamond: "۳۰ روز", magic: "۴۵ روز", legendary: "۶۰ روز"
+    };
+    const eggDescriptions = {
+        normal: "سرمایه‌گذاری کوتاه‌مدت با ریسک پایین و سود روزانه ۵%", golden: "سرمایه‌گذاری میان‌مدت با ریسک متوسط و سود روزانه ۷%", crystal: "سرمایه‌گذاری با پشتیبانی طلا و سود روزانه ۹%", diamond: "سرمایه‌گذاری بلندمدت با ریسک بالا و سود روزانه ۱۲%", magic: "سرمایه‌گذاری ویژه با پشتیبانی الماس و سود روزانه ۱۵%", legendary: "سرمایه‌گذاری اختصاصی با بالاترین سود روزانه ۲۰%"
+    };
+    const eggNames = {
+        normal: "تخم مرغ معمولی", golden: "تخم مرغ طلایی", crystal: "تخم مرغ کریستالی", diamond: "تخم مرغ الماسی", magic: "تخم مرغ جادویی", legendary: "تخم مرغ افسانه‌ای"
+    };
+    const eggIcons = {
+        normal: '<i class="fas fa-egg"></i>', golden: '<i class="fas fa-egg" style="color: #ffd700;"></i>', crystal: '<i class="fas fa-gem" style="color: #1abc9c;"></i>', diamond: '<i class="fas fa-gem" style="color: #3498db;"></i>', magic: '<i class="fas fa-hat-wizard" style="color: #9b59b6;"></i>', legendary: '<i class="fas fa-dragon" style="color: #e74c3c;"></i>'
+    };
 
-            for (const type in userData.eggs) {
-                const countEl = document.getElementById(`count-${type}`);
-                if (countEl) countEl.textContent = userData.eggs[type];
-            }
+    const userBalanceHomeEl = document.getElementById('userBalanceHome');
+    const dailyProfitHomeEl = document.getElementById('dailyProfitHome');
+    const freeEggStatusEl = document.getElementById('freeEggStatus');
+    const transactionHistoryEl = document.getElementById('transactionHistory');
+    const referralLinkDisplayEl = document.getElementById('referralLinkDisplay');
+    const friendsCountEl = document.getElementById('friendsCount');
+    const walletBalanceEl = document.getElementById('walletBalance');
+    const walletBalanceTomanEl = document.getElementById('walletBalanceToman');
 
-            referralLinkDisplayEl.textContent = `t.me/ton_egg_bot?start=${userData.userId}`;
-            friendsCountEl.textContent = userData.referralCount;
-
-            saveUserData();
-        }
-
-        // Save User Data to Local Storage (for demo purposes)
-        function saveUserData() {
-            localStorage.setItem('userData', JSON.stringify(userData));
-        }
-
-        // Navigation
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', () => {
-                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-                item.classList.add('active');
-
-                document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-                const targetPageId = item.getAttribute('data-page');
-                document.getElementById(targetPageId).classList.add('active');
-
-                // Re-render transactions if on wallet page
-                if (targetPageId === 'walletPage') {
-                    renderTransactions();
-                }
-            });
-        });
-
-        // Buy Egg
-        function buyEgg(type) {
-            const price = eggPricesTON[type];
-            if (userData.balanceTON >= price) {
-                userData.balanceTON -= price;
-                userData.eggs[type]++;
-                userData.transactions.push({
-                    type: 'خرید',
-                    description: eggNames[type],
-                    amount: -price,
-                    date: new Date().toLocaleString('fa-IR')
-                });
-                updateUI();
-                showModal('purchaseModal');
-                renderTransactions();
-            } else {
-                alert('موجودی کافی نیست! لطفاً ابتدا حساب خود را شارژ کنید.');
-            }
-        }
-
-        // Collect Profit (for purchased eggs)
-        function collectProfit() {
-            const currentTime = new Date().getTime();
-            const timeElapsed = currentTime - userData.lastProfitCollectionTime;
-            const oneDay = 24 * 60 * 60 * 1000;
-
-            // Calculate profit for purchased eggs
-            let totalPurchasedEggProfit = 0;
-            for (const type in userData.eggs) {
-                if (type !== 'normal' || userData.eggs[type] > 1) { // Exclude the single free normal egg from daily profit here
-                    totalPurchasedEggProfit += (userData.eggs[type] * userData.dailyProfitTONPerEgg[type]) * (timeElapsed / oneDay);
-                }
-            }
-
-            // Calculate profit for the single free normal egg (different rate)
-            let freeEggProfit = 0;
-            if (userData.eggs.normal >= 1) {
-                const freeEggTimeElapsed = currentTime - userData.lastProfitCollectionTime;
-                freeEggProfit = Math.floor(freeEggTimeElapsed / FREE_EGG_PROFIT_INTERVAL) * FREE_EGG_PROFIT_AMOUNT;
-            }
-
-            const totalProfit = totalPurchasedEggProfit + freeEggProfit;
-
-            if (totalProfit > 0) {
-                userData.balanceTON += totalProfit;
-                userData.lastProfitCollectionTime = currentTime;
-                userData.transactions.push({
-                    type: 'سود',
-                    description: 'دریافت سود تخم مرغ‌ها',
-                    amount: totalProfit,
-                    date: new Date().toLocaleString('fa-IR')
-                });
-                document.getElementById('profitMessage').textContent = `شما ${totalProfit.toFixed(8)} TON (${(totalProfit * TON_TO_TOMAN_RATE).toLocaleString()} تومان) سود از تخم مرغ‌های خود دریافت کردید.`;
-                updateUI();
-                showModal('profitModal');
-                renderTransactions();
-            } else {
-                alert('هنوز سودی برای دریافت ندارید یا زمان کافی نگذشته است!');
-            }
-        }
-
-        // Free Egg Timer
-        let freeEggTimerInterval;
-        function startFreeEggTimer() {
-            clearInterval(freeEggTimerInterval); // Clear any existing timer
-            freeEggTimerInterval = setInterval(() => {
-                const currentTime = new Date().getTime();
-                const nextProfitTime = userData.lastProfitCollectionTime + FREE_EGG_PROFIT_INTERVAL;
-                const remainingTime = nextProfitTime - currentTime;
-
-                if (remainingTime <= 0) {
-                    freeEggStatusEl.textContent = "آماده برداشت!";
-                    freeEggStatusEl.style.color = '#00ff99';
-                } else {
-                    const seconds = Math.floor(remainingTime / 1000);
-                    freeEggStatusEl.textContent = `${seconds}s`;
-                    freeEggStatusEl.style.color = '#e0e0e0';
-                }
-            }, 1000); // Update every second
-        }
-
-
-        // Deposit & Withdraw (Simulated)
-        const MIN_WITHDRAWAL_TON = 2;
-        function withdraw() {
-            if (userData.balanceTON < MIN_WITHDRAWAL_TON) {
-                alert(`حداقل مبلغ برای برداشت ${MIN_WITHDRAWAL_TON.toFixed(2)} TON است. (موجودی فعلی: ${userData.balanceTON.toFixed(8)} TON)`);
-                return;
-            }
-            alert('درخواست برداشت شما ثبت شد و به زودی به کیف پول شما واریز خواهد شد.');
+    function initializeApp() {
+        if (localStorage.getItem('userData')) {
+            userData = JSON.parse(localStorage.getItem('userData'));
+        } else {
+            userData.eggs.normal = 1;
             userData.transactions.push({
-                type: 'برداشت',
-                description: 'درخواست برداشت',
-                amount: -MIN_WITHDRAWAL_TON, // Simulate withdrawal amount
+                type: 'خرید',
+                description: 'تخم مرغ معمولی رایگان',
+                amount: 0,
                 date: new Date().toLocaleString('fa-IR')
             });
-            userData.balanceTON -= MIN_WITHDRAWAL_TON;
-            updateUI();
-            showModal('withdrawModal');
-            renderTransactions();
+        }
+        updateUI();
+        startFreeEggTimer();
+        renderTransactions();
+        checkTaskStatuses();
+    }
+
+    function updateUI() {
+        const totalDailyProfit = Object.keys(userData.eggs).reduce((sum, type) => {
+            return sum + (userData.eggs[type] * userData.dailyProfitTONPerEgg[type]);
+        }, 0);
+
+        userBalanceHomeEl.textContent = `${userData.balanceTON.toFixed(8)} TON`;
+        dailyProfitHomeEl.textContent = totalDailyProfit.toFixed(4);
+        walletBalanceEl.textContent = `${userData.balanceTON.toFixed(8)} TON`;
+        walletBalanceTomanEl.textContent = `${(userData.balanceTON * TON_TO_TOMAN_RATE).toLocaleString()} تومان`;
+        
+        for (const type in userData.eggs) {
+            const countEl = document.getElementById(`count-${type}`);
+            if (countEl) countEl.textContent = userData.eggs[type];
         }
 
-        function showTomanDepositForm() {
-            document.querySelector('#depositModal .deposit-options').style.display = 'none';
-            document.getElementById('tomanDepositForm').style.display = 'flex';
-        }
+        referralLinkDisplayEl.textContent = `t.me/ton_egg_bot?start=${userData.userId}`;
+        friendsCountEl.textContent = userData.referralCount;
 
-        // Referral
-        function copyReferralLink() {
-            navigator.clipboard.writeText(referralLinkDisplayEl.textContent).then(() => {
-                alert('لینک رفرال با موفقیت کپی شد!');
-            });
-        }
+        saveUserData();
+    }
 
-        // Tasks (Earn Page)
-        const taskRewards = {
-            welcomeBonus: 0.01,
-            watchAds: 0.05,
-            publishStory: 0.02,
-            invite1Friend: 0.01,
-            invite3Friends: 0.02,
-            dailyBonus: 0.01
-        };
+    function saveUserData() {
+        localStorage.setItem('userData', JSON.stringify(userData));
+    }
 
-        function checkTaskStatuses() {
-            const taskButtons = document.querySelectorAll('.action-btn-task');
-            taskButtons.forEach(button => {
-                const taskType = button.getAttribute('data-task');
-                if (userData.tasksClaimed[taskType]) {
-                    button.textContent = 'دریافت شده';
-                    button.classList.add('claimed');
-                    button.disabled = true;
-                } else if (taskType === 'dailyBonus') {
-                    const lastClaim = localStorage.getItem('lastDailyBonusClaim');
-                    const now = new Date().getTime();
-                    if (lastClaim && (now - parseInt(lastClaim) < (24 * 60 * 60 * 1000))) {
-                        button.textContent = 'دریافت شده';
-                        button.classList.add('claimed');
-                        button.disabled = true;
-                    } else {
-                        button.textContent = 'دریافت';
-                        button.classList.remove('claimed');
-                        button.disabled = false;
-                    }
-                }
-            });
-            saveUserData();
-        }
-
-        function claimTaskReward(button) {
-            const taskType = button.getAttribute('data-task');
-            if (userData.tasksClaimed[taskType] && taskType !== 'dailyBonus') {
-                alert('شما قبلاً این پاداش را دریافت کرده‌اید.');
-                return;
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', () => {
+            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+            item.classList.add('active');
+            
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            const targetPageId = item.getAttribute('data-page');
+            document.getElementById(targetPageId).classList.add('active');
+            
+            if (targetPageId === 'walletPage') {
+                renderTransactions();
             }
+        });
+    });
 
-            if (taskType === 'dailyBonus') {
+    function buyEgg(type) {
+        const price = eggPricesTON[type];
+        if (userData.balanceTON >= price) {
+            userData.balanceTON -= price;
+            userData.eggs[type]++;
+            userData.transactions.push({
+                type: 'خرید',
+                description: eggNames[type],
+                amount: -price,
+                date: new Date().toLocaleString('fa-IR')
+            });
+            updateUI();
+            showModal('purchaseModal');
+        } else {
+            alert('موجودی کافی نیست! لطفاً ابتدا حساب خود را شارژ کنید.');
+        }
+    }
+
+    function collectProfit() {
+        const currentTime = new Date().getTime();
+        const timeElapsed = currentTime - userData.lastProfitCollectionTime;
+        const oneDay = 24 * 60 * 60 * 1000;
+        
+        const totalDailyProfit = Object.keys(userData.eggs).reduce((sum, type) => {
+            if (userData.eggs[type] > 0) {
+                return sum + (userData.eggs[type] * userData.dailyProfitTONPerEgg[type]);
+            }
+            return sum;
+        }, 0);
+
+        const profitMultiplier = Math.floor(timeElapsed / oneDay);
+        const totalProfit = totalDailyProfit * profitMultiplier;
+
+        if (totalProfit > 0) {
+            userData.balanceTON += totalProfit;
+            userData.lastProfitCollectionTime = currentTime - (timeElapsed % oneDay);
+            userData.transactions.push({
+                type: 'سود',
+                description: 'دریافت سود تخم مرغ‌ها',
+                amount: totalProfit,
+                date: new Date().toLocaleString('fa-IR')
+            });
+            document.getElementById('profitMessage').textContent = `شما ${totalProfit.toFixed(8)} TON (${(totalProfit * TON_TO_TOMAN_RATE).toLocaleString()} تومان) سود از تخم مرغ‌های خود دریافت کردید.`;
+            updateUI();
+            showModal('profitModal');
+        } else {
+            alert('هنوز سودی برای دریافت ندارید یا زمان کافی نگذشته است!');
+        }
+    }
+    
+    let freeEggTimerInterval;
+    function startFreeEggTimer() {
+        clearInterval(freeEggTimerInterval);
+        freeEggTimerInterval = setInterval(() => {
+            const currentTime = new Date().getTime();
+            const timeSinceLastCollection = currentTime - userData.lastProfitCollectionTime;
+            const freeEggProfitCount = Math.floor(timeSinceLastCollection / FREE_EGG_PROFIT_INTERVAL);
+            const remainingTime = FREE_EGG_PROFIT_INTERVAL - (timeSinceLastCollection % FREE_EGG_PROFIT_INTERVAL);
+
+            if (freeEggProfitCount > 0) {
+                freeEggStatusEl.textContent = `آماده برداشت!`;
+                freeEggStatusEl.style.color = '#00ff99';
+            } else {
+                const seconds = Math.floor(remainingTime / 1000);
+                freeEggStatusEl.textContent = `${seconds}s`;
+                freeEggStatusEl.style.color = '#e0e0e0';
+            }
+        }, 1000);
+    }
+
+    const MIN_WITHDRAWAL_TON = 2;
+    function withdraw() {
+        if (userData.balanceTON < MIN_WITHDRAWAL_TON) {
+            alert(`حداقل مبلغ برای برداشت ${MIN_WITHDRAWAL_TON.toFixed(2)} TON است. (موجودی فعلی: ${userData.balanceTON.toFixed(8)} TON)`);
+            return;
+        }
+        userData.transactions.push({
+            type: 'برداشت',
+            description: 'درخواست برداشت',
+            amount: -MIN_WITHDRAWAL_TON,
+            date: new Date().toLocaleString('fa-IR')
+        });
+        userData.balanceTON -= MIN_WITHDRAWAL_TON;
+        updateUI();
+        showModal('withdrawModal');
+    }
+
+    function showTomanDepositForm() {
+        document.querySelector('#depositModal .deposit-options').style.display = 'none';
+        document.getElementById('tomanDepositForm').style.display = 'flex';
+    }
+
+    function copyReferralLink() {
+        navigator.clipboard.writeText(referralLinkDisplayEl.textContent).then(() => {
+            alert('لینک رفرال با موفقیت کپی شد!');
+        });
+    }
+
+    const taskRewards = {
+        welcomeBonus: 0.01,
+        watchAds: 0.05,
+        publishStory: 0.02,
+        invite1Friend: 0.01,
+        invite3Friends: 0.02,
+        dailyBonus: 0.01
+    };
+
+    function checkTaskStatuses() {
+        const taskButtons = document.querySelectorAll('.action-btn-task');
+        taskButtons.forEach(button => {
+            const taskType = button.getAttribute('data-task');
+            if (userData.tasksClaimed[taskType]) {
+                button.textContent = 'دریافت شده';
+                button.classList.add('claimed');
+                button.disabled = true;
+            } else if (taskType === 'dailyBonus') {
                 const lastClaim = localStorage.getItem('lastDailyBonusClaim');
                 const now = new Date().getTime();
                 if (lastClaim && (now - parseInt(lastClaim) < (24 * 60 * 60 * 1000))) {
-                    alert('پاداش روزانه قبلاً دریافت شده است. فردا دوباره امتحان کنید.');
-                    return;
+                    button.textContent = 'دریافت شده';
+                    button.classList.add('claimed');
+                    button.disabled = true;
+                } else {
+                    button.textContent = 'دریافت';
+                    button.classList.remove('claimed');
+                    button.disabled = false;
                 }
-                localStorage.setItem('lastDailyBonusClaim', now.toString());
             }
+        });
+        saveUserData();
+    }
 
-            const reward = taskRewards[taskType];
-            if (reward !== undefined) {
-                userData.balanceTON += reward;
-                userData.transactions.push({
-                    type: 'بونوس',
-                    description: `پاداش ${taskType === 'dailyBonus' ? 'روزانه' : 'وظیفه'}`,
-                    amount: reward,
-                    date: new Date().toLocaleString('fa-IR')
-                });
-                if (taskType !== 'dailyBonus') { // Daily bonus is only tracked by timestamp, not permanent
-                    userData.tasksClaimed[taskType] = true;
-                }
-                alert(`شما ${reward.toFixed(4)} TON دریافت کردید!`);
-                updateUI();
-                renderTransactions();
-                checkTaskStatuses(); // Update button state
-            }
+    function claimTaskReward(button) {
+        const taskType = button.getAttribute('data-task');
+        if (userData.tasksClaimed[taskType] && taskType !== 'dailyBonus') {
+            alert('شما قبلاً این پاداش را دریافت کرده‌اید.');
+            return;
         }
 
-
-        // Render Transactions History
-        function renderTransactions() {
-            transactionHistoryEl.innerHTML = '';
-            if (userData.transactions.length === 0) {
-                transactionHistoryEl.innerHTML = '<p style="text-align: center; color: #aaa;">هنوز تراکنشی ثبت نشده است.</p>';
+        if (taskType === 'dailyBonus') {
+            const lastClaim = localStorage.getItem('lastDailyBonusClaim');
+            const now = new Date().getTime();
+            if (lastClaim && (now - parseInt(lastClaim) < (24 * 60 * 60 * 1000))) {
+                alert('پاداش روزانه قبلاً دریافت شده است. فردا دوباره امتحان کنید.');
                 return;
             }
+            localStorage.setItem('lastDailyBonusClaim', now.toString());
+        }
 
-            userData.transactions.slice().reverse().forEach(trans => { // Display latest first
-                const transactionItem = document.createElement('div');
-                transactionItem.classList.add('transaction-item');
-                const amountClass = trans.amount >= 0 ? 'color: #00ff99;' : 'color: #ff00ff;';
-                const iconClass = trans.type === 'خرید' ? 'fas fa-shopping-cart' :
-                    (trans.type === 'سود' ? 'fas fa-piggy-bank' :
-                        (trans.type === 'برداشت' ? 'fas fa-arrow-alt-circle-up' : 'fas fa-gift')); // Default for bonus
+        const reward = taskRewards[taskType];
+        if (reward !== undefined) {
+            userData.balanceTON += reward;
+            userData.transactions.push({
+                type: 'بونوس',
+                description: `پاداش ${taskType === 'dailyBonus' ? 'روزانه' : 'وظیفه'}`,
+                amount: reward,
+                date: new Date().toLocaleString('fa-IR')
+            });
+            if (taskType !== 'dailyBonus') {
+                userData.tasksClaimed[taskType] = true;
+            }
+            alert(`شما ${reward.toFixed(4)} TON دریافت کردید!`);
+            updateUI();
+            checkTaskStatuses();
+        }
+    }
 
-                transactionItem.innerHTML = `
+    function renderTransactions() {
+        transactionHistoryEl.innerHTML = '';
+        if (userData.transactions.length === 0) {
+            transactionHistoryEl.innerHTML = '<p style="text-align: center; color: #aaa;">هنوز تراکنشی ثبت نشده است.</p>';
+            return;
+        }
+
+        userData.transactions.slice().reverse().forEach(trans => {
+            const transactionItem = document.createElement('div');
+            transactionItem.classList.add('transaction-item');
+            const amountClass = trans.amount >= 0 ? 'color: #00ff99;' : 'color: #ff00ff;';
+            const iconClass = trans.type === 'خرید' ? 'fas fa-shopping-cart' :
+                              (trans.type === 'سود' ? 'fas fa-piggy-bank' :
+                              (trans.type === 'برداشت' ? 'fas fa-arrow-alt-circle-up' : 'fas fa-gift'));
+
+            transactionItem.innerHTML = `
                 <div class="left">
                     <div class="icon"><i class="${iconClass}"></i></div>
                     <div class="details">
@@ -1257,47 +1203,59 @@
                 </div>
                 <div class="amount" style="${amountClass}">${trans.amount.toFixed(8)} <i class="fab fa-neos"></i></div>
             `;
-                transactionHistoryEl.appendChild(transactionItem);
-            });
-        }
-
-
-        // Event Listeners for Egg Items (for info and purchase)
-        document.querySelectorAll('.egg-item').forEach(item => {
-            item.addEventListener('click', (e) => {
-                const type = item.getAttribute('data-type');
-                if (e.target.classList.contains('buy-btn')) {
-                    buyEgg(type);
-                } else {
-                    showEggInfo(type);
-                }
-            });
+            transactionHistoryEl.appendChild(transactionItem);
         });
+    }
 
-        // Modal Functions
-        function showModal(modalId) {
-            document.getElementById(modalId).style.display = 'flex';
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-            if (modalId === 'depositModal') {
-                document.getElementById('tomanDepositForm').style.display = 'none';
-                document.querySelector('#depositModal .deposit-options').style.display = 'flex';
-            }
-        }
-
-        // Close modal when clicking outside
-        window.addEventListener('click', (e) => {
-            if (e.target.classList.contains('modal')) {
-                closeModal(e.target.id);
+    document.querySelectorAll('.egg-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+            const type = item.getAttribute('data-type');
+            if (e.target.classList.contains('buy-btn')) {
+                buyEgg(type);
+            } else {
+                showEggInfo(type);
             }
         });
+    });
 
-        // Initialize the app on page load
-        document.addEventListener('DOMContentLoaded', initializeApp);
+    function showEggInfo(type) {
+        infoModalTitle.textContent = eggNames[type];
+        infoModalIcon.innerHTML = eggIcons[type];
+        const priceToman = (eggPricesTON[type] * TON_TO_TOMAN_RATE).toLocaleString();
+        const profitToman = (userData.dailyProfitTONPerEgg[type] * TON_TO_TOMAN_RATE).toLocaleString();
+        
+        const message = `
+            <div style="text-align: right; line-height: 1.8;">
+                <div>قیمت: ${eggPricesTON[type].toFixed(2)} TON (${priceToman} تومان)</div>
+                <div>مدت سرمایه‌گذاری: ${eggDurations[type]}</div>
+                <div>سود روزانه: ${userData.dailyProfitTONPerEgg[type].toFixed(4)} TON (${profitToman} تومان)</div>
+                <div>توضیحات: ${eggDescriptions[type]}</div>
+            </div>
+        `;
+        infoModalMessage.innerHTML = message;
+        showModal('eggInfoModal');
+    }
 
-    </script>
+    function showModal(modalId) {
+        document.getElementById(modalId).style.display = 'flex';
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+        if (modalId === 'depositModal') {
+            document.getElementById('tomanDepositForm').style.display = 'none';
+            document.querySelector('#depositModal .deposit-options').style.display = 'flex';
+        }
+    }
+
+    window.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal')) {
+            closeModal(e.target.id);
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', initializeApp);
+</script>
+
 </body>
-
 </html>
