@@ -3,23 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TonEgg - سرمایه‌گذاری TON</title>
+    <title>TonEgg - مزرعه نئون</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        body {
-            font-family: 'Vazirmatn', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f2f5;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            text-align: right;
-            position: relative;
-        }
-
         @font-face {
             font-family: 'Vazirmatn';
             src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.0.3/fonts/Vazirmatn-Regular.woff2') format('woff2');
@@ -27,38 +13,68 @@
             font-style: normal;
         }
 
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a2e;
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            text-align: right;
+            position: relative;
+            overflow-x: hidden;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-in-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         #mainApp {
             width: 100%;
             max-width: 500px;
             padding: 20px;
             box-sizing: border-box;
+            position: relative;
         }
-
+        
         .header {
-            background: linear-gradient(135deg, #007bff, #0056b3);
+            background: linear-gradient(135deg, #6a0dad, #4b0082);
             color: #fff;
             padding: 20px;
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
             margin-bottom: 20px;
             text-align: center;
         }
-
+        
         .header h1 {
             margin: 0;
-            font-size: 1.8rem;
+            font-size: 2rem;
             display: flex;
             align-items: center;
             justify-content: center;
+            text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
         }
 
         .header h1 i {
             margin-left: 10px;
+            animation: neonGlow 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes neonGlow {
+            from { text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff; }
+            to { text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff; }
         }
 
         .header p {
             margin: 5px 0 0;
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 300;
         }
 
@@ -68,19 +84,44 @@
             align-items: center;
             margin-top: 15px;
             padding-top: 15px;
-            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .balance-item h3 {
             margin: 0;
             font-size: 1.2rem;
             font-weight: 400;
+            color: #ff00ff;
         }
 
         .balance-item p {
             margin: 5px 0 0;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: bold;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #ff00ff;
+            text-shadow: 0 0 5px #ff00ff;
+            border-bottom: 2px solid #ff00ff;
+            padding-bottom: 10px;
+        }
+        
+        .card {
+            background-color: #2a2a44;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            margin-top: 20px;
+            animation: slideIn 0.8s ease-in-out;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .action-buttons {
@@ -90,37 +131,24 @@
         }
 
         .action-btn {
-            background-color: #fff;
-            color: #007bff;
+            background-color: #ff00ff;
+            color: #fff;
             border: none;
             border-radius: 10px;
             padding: 10px 15px;
             font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px #ff00ff;
+            text-shadow: 0 0 5px #fff;
         }
 
         .action-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            background-color: #ff33ff;
+            box-shadow: 0 0 15px #ff33ff;
         }
-
-        .investment-section, .inventory-section {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-        }
-
-        .investment-section h2, .inventory-section h2 {
-            margin-top: 0;
-            font-size: 1.5rem;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-        }
-
+        
         .egg-list {
             display: flex;
             flex-wrap: wrap;
@@ -130,50 +158,63 @@
         }
 
         .egg-item {
-            background-color: #f9f9f9;
+            background-color: #333355;
             border-radius: 10px;
             padding: 15px;
             text-align: center;
             width: 130px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             transition: transform 0.2s ease;
             cursor: pointer;
         }
 
         .egg-item:hover {
             transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
         }
+        
+        .egg-item[data-type="normal"] { border: 2px solid #5a5a5a; }
+        .egg-item[data-type="golden"] { border: 2px solid #ffd700; }
+        .egg-item[data-type="crystal"] { border: 2px solid #1abc9c; }
+        .egg-item[data-type="diamond"] { border: 2px solid #3498db; }
+        .egg-item[data-type="magic"] { border: 2px solid #9b59b6; }
+        .egg-item[data-type="legendary"] { border: 2px solid #e74c3c; }
 
         .egg-icon {
             font-size: 2.5rem;
             margin-bottom: 10px;
+            text-shadow: 0 0 5px;
         }
 
         .egg-title {
             font-size: 1.1rem;
             font-weight: bold;
             margin-bottom: 5px;
+            color: #fff;
         }
 
         .egg-price {
             font-size: 0.9rem;
-            color: #555;
+            color: #aaa;
             margin-bottom: 10px;
         }
 
         .buy-btn {
-            background-color: #28a745;
-            color: #fff;
+            background-color: #00ff99;
+            color: #1a1a2e;
             border: none;
             padding: 8px 15px;
             border-radius: 8px;
             cursor: pointer;
             font-size: 0.8rem;
-            transition: background-color 0.3s;
+            font-weight: bold;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 0 5px #00ff99;
         }
 
         .buy-btn:hover {
-            background-color: #218838;
+            background-color: #00cc88;
+            box-shadow: 0 0 10px #00ff99;
         }
 
         .inventory-list {
@@ -185,12 +226,12 @@
         }
 
         .inventory-item {
-            background-color: #e9ecef;
+            background-color: #2a2a44;
             border-radius: 10px;
             padding: 15px;
             text-align: center;
             width: 130px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
         .inventory-item p {
@@ -206,24 +247,31 @@
         .modal {
             display: none;
             position: fixed;
-            z-index: 1;
+            z-index: 100;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: rgba(0, 0, 0, 0.8);
             justify-content: center;
             align-items: center;
+            animation: modalFadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .modal-content {
-            background-color: #fff;
+            background-color: #2a2a44;
             padding: 30px;
             border-radius: 15px;
             text-align: center;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
             position: relative;
             max-width: 90%;
+            border: 2px solid #ff00ff;
         }
 
         .close-modal {
@@ -232,73 +280,84 @@
             right: 15px;
             font-size: 28px;
             font-weight: bold;
-            color: #aaa;
+            color: #ff00ff;
             cursor: pointer;
+            text-shadow: 0 0 5px #ff00ff;
         }
 
         .modal-title {
             margin-top: 0;
             font-size: 1.8rem;
-            color: #007bff;
+            color: #00ff99;
         }
 
         .modal-icon {
             font-size: 3rem;
-            color: #28a745;
+            color: #ff00ff;
             margin-bottom: 10px;
+            text-shadow: 0 0 10px #ff00ff;
         }
         
-        #depositModal .modal-icon {
-            color: #007bff;
-        }
-
-        #profitModal .modal-icon {
-            color: #ffc107;
-        }
-
         .modal-message {
             font-size: 1.1rem;
             line-height: 1.6;
-            color: #555;
+            color: #e0e0e0;
         }
 
         .modal-btn {
-            background-color: #007bff;
-            color: #fff;
+            background-color: #00ff99;
+            color: #1a1a2e;
             border: none;
             padding: 10px 20px;
             border-radius: 8px;
             cursor: pointer;
             font-size: 1rem;
             margin-top: 20px;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 0 5px #00ff99;
         }
 
         .modal-btn:hover {
-            background-color: #0056b3;
+            background-color: #00cc88;
+            box-shadow: 0 0 10px #00ff99;
         }
 
-        .deposit-form {
+        .deposit-options button, .deposit-form-toman input, .deposit-form-toman button {
+            background-color: #555577;
+            color: #fff;
+            border: 1px solid #777;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        
+        .deposit-options button:hover, .deposit-form-toman button:hover {
+            background-color: #666688;
+            transform: translateY(-2px);
+        }
+
+        .deposit-form-toman {
             display: flex;
             flex-direction: column;
             gap: 15px;
             margin-top: 15px;
         }
-
-        .deposit-form input {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
+        
+        .deposit-form-toman input {
             text-align: right;
         }
         
         .referral-link {
-            background-color: #e9ecef;
+            background-color: #2a2a44;
             padding: 10px;
             border-radius: 8px;
             text-align: center;
             margin-top: 15px;
+            border: 1px dashed #ff00ff;
         }
         .referral-link a {
             direction: ltr;
@@ -306,6 +365,46 @@
             overflow-x: auto;
             white-space: nowrap;
             max-width: 100%;
+            color: #00ff99;
+        }
+        
+        .daily-bonus-card {
+            background-color: #2a2a44;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            margin-top: 20px;
+            border: 2px solid #00ff99;
+            animation: slideIn 0.8s ease-in-out 0.2s backwards;
+        }
+        
+        .daily-bonus-btn {
+            background-color: #00ff99;
+            color: #1a1a2e;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px #00ff99;
+        }
+        .daily-bonus-btn:hover {
+            background-color: #00cc88;
+            box-shadow: 0 0 15px #00ff99;
+        }
+        
+        .daily-bonus-btn.disabled {
+            background-color: #555;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+        
+        .free-egg-status {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #aaa;
         }
     </style>
 </head>
@@ -313,8 +412,8 @@
 
 <div id="mainApp">
     <div class="header">
-        <h1><i class="fas fa-seedling"></i> TonEgg</h1>
-        <p>مزرعه TON خودت رو بساز و سود روزانه بگیر!</p>
+        <h1><i class="fas fa-egg"></i> TonEgg</h1>
+        <p>مزرعه نئونی TON خودت رو بساز و سود روزانه بگیر!</p>
         <div class="balance-section">
             <div class="balance-item">
                 <h3>موجودی شما</h3>
@@ -325,63 +424,16 @@
                 <p id="dailyProfit">۰ TON (۰ تومان)</p>
             </div>
         </div>
-        <div class="action-buttons">
-            <button class="action-btn" onclick="collectProfit()">
-                <i class="fas fa-dollar-sign"></i> دریافت سود
-            </button>
-            <button class="action-btn" onclick="showModal('depositModal')">
-                <i class="fas fa-wallet"></i> واریز
-            </button>
-            <button class="action-btn" onclick="withdraw()">
-                <i class="fas fa-hand-holding-usd"></i> برداشت
-            </button>
-        </div>
+    </div>
+    
+    <div class="card daily-bonus-card">
+        <h2 class="section-title">بونوس روزانه 💰</h2>
+        <p>هر روز با ورود به بازی، پاداش خود را دریافت کنید!</p>
+        <button class="daily-bonus-btn" onclick="collectDailyBonus()">دریافت پاداش</button>
     </div>
 
-    <div class="investment-section">
-        <h2>تخم مرغ‌ها برای خرید</h2>
-        <div class="egg-list">
-            <div class="egg-item" data-type="normal">
-                <div class="egg-icon"><i class="fas fa-egg"></i></div>
-                <div class="egg-title">معمولی</div>
-                <div class="egg-price">۰.۰۵ TON (۱۰۰۰۰ تومان)</div>
-                <button class="buy-btn" data-type="normal">خرید</button>
-            </div>
-            <div class="egg-item" data-type="golden">
-                <div class="egg-icon" style="color: #ffd700;"><i class="fas fa-egg"></i></div>
-                <div class="egg-title">طلایی</div>
-                <div class="egg-price">۰.۲۵ TON (۵۰۰۰۰ تومان)</div>
-                <button class="buy-btn" data-type="golden">خرید</button>
-            </div>
-            <div class="egg-item" data-type="crystal">
-                <div class="egg-icon" style="color: #1abc9c;"><i class="fas fa-gem"></i></div>
-                <div class="egg-title">کریستالی</div>
-                <div class="egg-price">۰.۵ TON (۱۰۰۰۰۰ تومان)</div>
-                <button class="buy-btn" data-type="crystal">خرید</button>
-            </div>
-            <div class="egg-item" data-type="diamond">
-                <div class="egg-icon" style="color: #3498db;"><i class="fas fa-gem"></i></div>
-                <div class="egg-title">الماسی</div>
-                <div class="egg-price">۲.۵ TON (۵۰۰۰۰۰ تومان)</div>
-                <button class="buy-btn" data-type="diamond">خرید</button>
-            </div>
-            <div class="egg-item" data-type="magic">
-                <div class="egg-icon" style="color: #9b59b6;"><i class="fas fa-hat-wizard"></i></div>
-                <div class="egg-title">جادویی</div>
-                <div class="egg-price">۵ TON (۱۰۰۰۰۰۰ تومان)</div>
-                <button class="buy-btn" data-type="magic">خرید</button>
-            </div>
-            <div class="egg-item" data-type="legendary">
-                <div class="egg-icon" style="color: #e74c3c;"><i class="fas fa-dragon"></i></div>
-                <div class="egg-title">افسانه‌ای</div>
-                <div class="egg-price">۲۵ TON (۵۰۰۰۰۰۰ تومان)</div>
-                <button class="buy-btn" data-type="legendary">خرید</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="inventory-section">
-        <h2>موجودی من</h2>
+    <div class="card">
+        <h2 class="section-title">موجودی من 🐣</h2>
         <div class="inventory-list">
             <div class="inventory-item">
                 <h3>معمولی</h3>
@@ -408,10 +460,56 @@
                 <p id="count-legendary">۰</p>
             </div>
         </div>
+        <button class="action-btn" style="margin-top: 20px;" onclick="collectProfit()">
+            <i class="fas fa-dollar-sign"></i> دریافت سود تخم مرغ‌ها
+        </button>
+        <div class="free-egg-status" id="freeEggStatus"></div>
+    </div>
+
+    <div class="card">
+        <h2 class="section-title">تخم مرغ‌ها برای خرید ✨</h2>
+        <div class="egg-list">
+            <div class="egg-item" data-type="normal">
+                <div class="egg-icon"><i class="fas fa-egg"></i></div>
+                <div class="egg-title">معمولی</div>
+                <div class="egg-price">۰.۰۵ TON</div>
+                <button class="buy-btn" data-type="normal">خرید</button>
+            </div>
+            <div class="egg-item" data-type="golden">
+                <div class="egg-icon" style="color: #ffd700;"><i class="fas fa-egg"></i></div>
+                <div class="egg-title">طلایی</div>
+                <div class="egg-price">۰.۲۵ TON</div>
+                <button class="buy-btn" data-type="golden">خرید</button>
+            </div>
+            <div class="egg-item" data-type="crystal">
+                <div class="egg-icon" style="color: #1abc9c;"><i class="fas fa-gem"></i></div>
+                <div class="egg-title">کریستالی</div>
+                <div class="egg-price">۰.۵ TON</div>
+                <button class="buy-btn" data-type="crystal">خرید</button>
+            </div>
+            <div class="egg-item" data-type="diamond">
+                <div class="egg-icon" style="color: #3498db;"><i class="fas fa-gem"></i></div>
+                <div class="egg-title">الماسی</div>
+                <div class="egg-price">۲.۵ TON</div>
+                <button class="buy-btn" data-type="diamond">خرید</button>
+            </div>
+            <div class="egg-item" data-type="magic">
+                <div class="egg-icon" style="color: #9b59b6;"><i class="fas fa-hat-wizard"></i></div>
+                <div class="egg-title">جادویی</div>
+                <div class="egg-price">۵ TON</div>
+                <button class="buy-btn" data-type="magic">خرید</button>
+            </div>
+            <div class="egg-item" data-type="legendary">
+                <div class="egg-icon" style="color: #e74c3c;"><i class="fas fa-dragon"></i></div>
+                <div class="egg-title">افسانه‌ای</div>
+                <div class="egg-price">۲۵ TON</div>
+                <button class="buy-btn" data-type="legendary">خرید</button>
+            </div>
+        </div>
     </div>
     
-    <div class="investment-section">
-        <h2>رفرال و بونوس</h2>
+    <div class="card">
+        <h2 class="section-title">رفرال و بونوس 🎁</h2>
         <p>با دعوت از دوستانتان، از سرمایه‌گذاری آنها سود ببرید!</p>
         <div class="referral-link">
             <p>لینک رفرال شما:</p>
@@ -419,7 +517,7 @@
             <button class="buy-btn" onclick="copyReferralLink()">کپی لینک</button>
         </div>
     </div>
-
+    
     <div class="modal" id="purchaseModal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal('purchaseModal')">&times;</span>
@@ -445,13 +543,24 @@
             <span class="close-modal" onclick="closeModal('depositModal')">&times;</span>
             <h2 class="modal-title">واریز وجه</h2>
             <p class="modal-message">
-                برای واریز، لطفاً از طریق کیف پول خود به آدرس زیر TON ارسال کنید.
+                لطفا از گزینه‌های زیر برای واریز انتخاب کنید:
             </p>
-            <div class="deposit-form">
-                <input type="text" id="walletAddress" value="UQCxqp4HAry2FPbTUCHS0NMJuoMdrv8l1Ors-QNjhF3FW11C" readonly>
-                <button class="modal-btn" onclick="copyWalletAddress()">کپی آدرس ولت</button>
-                <button class="modal-btn" onclick="closeModal('depositModal')">بستن</button>
+            <div class="deposit-options">
+                <button onclick="alert('اتصال به کیف پول TON');">
+                    <i class="fas fa-wallet"></i> واریز با TON
+                </button>
+                <button onclick="showTomanDeposit()">
+                    <i class="fas fa-credit-card"></i> واریز با کارت بانکی
+                </button>
             </div>
+            <div class="deposit-form-toman" id="tomanDepositForm" style="display:none;">
+                <input type="text" id="cardNumberInput" placeholder="شماره کارت" readonly value="به دلایل امنیتی، این قابلیت غیرفعال است.">
+                <input type="text" id="depositAmountInput" placeholder="مبلغ (تومان)">
+                <button onclick="alert('این قابلیت نیاز به بک‌اند دارد.');">
+                    <i class="fas fa-arrow-circle-down"></i> واریز
+                </button>
+            </div>
+            <button class="modal-btn" onclick="closeModal('depositModal')">بستن</button>
         </div>
     </div>
     
@@ -459,6 +568,7 @@
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal('withdrawModal')">&times;</span>
             <h2 class="modal-title">برداشت وجه</h2>
+            <div class="modal-icon"><i class="fas fa-hand-holding-usd"></i></div>
             <p class="modal-message" id="withdrawMessage">
                 موجودی شما با موفقیت به کیف پولتان واریز خواهد شد.
             </p>
@@ -475,21 +585,46 @@
             <button class="modal-btn" onclick="closeModal('eggInfoModal')">متوجه شدم</button>
         </div>
     </div>
+    
+    <div class="modal" id="dailyBonusModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('dailyBonusModal')">&times;</span>
+            <h2 class="modal-title">پاداش روزانه!</h2>
+            <div class="modal-icon"><i class="fas fa-gift"></i></div>
+            <p class="modal-message" id="dailyBonusMessage">
+                مبلغ ۰.۰۱ TON به موجودی شما اضافه شد.
+            </p>
+            <button class="modal-btn" onclick="closeModal('dailyBonusModal')">متوجه شدم</button>
+        </div>
+    </div>
+    
+    <div class="modal" id="menuModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('menuModal')">&times;</span>
+            <h2 class="modal-title">منو</h2>
+            <button class="modal-btn" onclick="closeModal('menuModal'); showModal('depositModal');">واریز</button>
+            <button class="modal-btn" onclick="closeModal('menuModal'); withdraw();">برداشت</button>
+            <button class="modal-btn" onclick="closeModal('menuModal'); alert('به زودی!');">پروفایل</button>
+        </div>
+    </div>
 </div>
 
 <script>
     const TON_TO_TOMAN_RATE = 200000;
+    const FREE_EGG_PROFIT_DURATION = 60 * 60 * 1000; // 1 hour in milliseconds
+    const DAILY_BONUS_TON = 0.01;
 
     let userData = {
-        balanceTON: 0,
+        balanceTON: 0.1, 
         balanceToman: 0,
         dailyProfitTON: 0,
         dailyProfitToman: 0,
         eggs: {
-            normal: 0, golden: 0, crystal: 0, diamond: 0, magic: 0, legendary: 0
+            normal: 1, golden: 0, crystal: 0, diamond: 0, magic: 0, legendary: 0
         },
-        hasFreeEgg: false,
-        lastWithdrawalDate: null,
+        hasFreeEgg: true,
+        lastBonusClaimDate: null,
+        lastProfitCollectionDate: new Date().getTime(),
         userId: '7805585046',
         referralCount: 0,
         referredBy: null
@@ -516,28 +651,28 @@
 
     const userBalanceEl = document.getElementById('userBalance');
     const dailyProfitEl = document.getElementById('dailyProfit');
-    const depositModal = document.getElementById('depositModal');
     const purchaseModal = document.getElementById('purchaseModal');
     const profitModal = document.getElementById('profitModal');
     const eggInfoModal = document.getElementById('eggInfoModal');
     const withdrawModal = document.getElementById('withdrawModal');
+    const depositModal = document.getElementById('depositModal');
     const profitMessageEl = document.getElementById('profitMessage');
     const infoModalTitle = document.getElementById('infoModalTitle');
     const infoModalIcon = document.getElementById('infoModalIcon');
     const infoModalMessage = document.getElementById('infoModalMessage');
     const referralLinkEl = document.getElementById('referralLink');
-    const walletAddressEl = document.getElementById('walletAddress');
-
     const inventoryCounts = {
         normal: document.getElementById('count-normal'), golden: document.getElementById('count-golden'), crystal: document.getElementById('count-crystal'), diamond: document.getElementById('count-diamond'), magic: document.getElementById('count-magic'), legendary: document.getElementById('count-legendary')
     };
+    const dailyBonusBtn = document.querySelector('.daily-bonus-btn');
+    const freeEggStatusEl = document.getElementById('freeEggStatus');
 
     function initializeApp() {
-        if (!userData.hasFreeEgg) {
-            userData.eggs.normal = 1;
-            userData.hasFreeEgg = true;
+        if (userData.hasFreeEgg) {
+            updateFreeEggStatus();
         }
         updateUI();
+        updateDailyBonusStatus();
     }
     
     function updateUI() {
@@ -549,8 +684,7 @@
             inventoryCounts[type].textContent = userData.eggs[type];
         }
         referralLinkEl.href = `https://t.me/vioou_bot?start=${userData.userId}`;
-        referralLinkEl.textContent = `https://t.me/vioou_bot?start=${userData.userId}`;
-        walletAddressEl.value = 'UQCxqp4HAry2FPbTUCHS0NMJuoMdrv8l1Ors-QNjhF3FW11C';
+        referralLinkEl.textContent = `t.me/vioou_bot?start=${userData.userId}`;
     }
 
     function buyEgg(type) {
@@ -558,6 +692,7 @@
         if (userData.balanceTON >= price) {
             userData.balanceTON -= price;
             userData.eggs[type]++;
+            userData.dailyProfitTON += eggProfitsTON[type];
             updateUI();
             showModal('purchaseModal');
         } else {
@@ -566,25 +701,78 @@
     }
 
     function collectProfit() {
+        const currentTime = new Date().getTime();
+        const timeElapsed = currentTime - userData.lastProfitCollectionDate;
+        const profitMultiplier = Math.floor(timeElapsed / (24 * 60 * 60 * 1000));
+        
         let totalProfit = 0;
-        for (const type in userData.eggs) {
-            totalProfit += userData.eggs[type] * eggProfitsTON[type];
-        }
-        if (totalProfit > 0) {
-            userData.balanceTON += totalProfit;
-            userData.dailyProfitTON = totalProfit;
-            profitMessageEl.textContent = `شما ${totalProfit.toFixed(2)} TON (${(totalProfit * TON_TO_TOMAN_RATE).toLocaleString()} تومان) سود از تخم مرغ‌های خود دریافت کردید.`;
-            updateUI();
-            showModal('profitModal');
+        if (profitMultiplier > 0) {
+            for (const type in userData.eggs) {
+                totalProfit += userData.eggs[type] * eggProfitsTON[type] * profitMultiplier;
+            }
+            if (totalProfit > 0) {
+                userData.balanceTON += totalProfit;
+                userData.dailyProfitTON = totalProfit;
+                profitMessageEl.textContent = `شما ${totalProfit.toFixed(2)} TON (${(totalProfit * TON_TO_TOMAN_RATE).toLocaleString()} تومان) سود از تخم مرغ‌های خود دریافت کردید.`;
+                userData.lastProfitCollectionDate = currentTime;
+                updateUI();
+                showModal('profitModal');
+            } else {
+                alert('هنوز تخم مرغی برای دریافت سود ندارید!');
+            }
         } else {
-            alert('هنوز تخم مرغی برای دریافت سود ندارید!');
+            alert('هنوز برای دریافت سود زود است!');
         }
-    }
-
-    function depositWithTon() {
-        alert('برای واریز، از طریق کیف پول خود به آدرس نمایش داده شده در پنجره واریز TON ارسال کنید.');
     }
     
+    function collectDailyBonus() {
+        const now = new Date().getTime();
+        if (userData.lastBonusClaimDate && now - userData.lastBonusClaimDate < (24 * 60 * 60 * 1000)) {
+            alert('شما امروز پاداش خود را دریافت کرده‌اید. فردا دوباره امتحان کنید!');
+            return;
+        }
+        userData.balanceTON += DAILY_BONUS_TON;
+        userData.lastBonusClaimDate = now;
+        updateUI();
+        document.getElementById('dailyBonusMessage').textContent = `مبلغ ${DAILY_BONUS_TON} TON به موجودی شما اضافه شد.`;
+        showModal('dailyBonusModal');
+        updateDailyBonusStatus();
+    }
+    
+    function updateDailyBonusStatus() {
+        const now = new Date().getTime();
+        if (userData.lastBonusClaimDate && now - userData.lastBonusClaimDate < (24 * 60 * 60 * 1000)) {
+            dailyBonusBtn.textContent = "پاداش دریافت شد";
+            dailyBonusBtn.classList.add('disabled');
+            dailyBonusBtn.disabled = true;
+        } else {
+            dailyBonusBtn.textContent = "دریافت پاداش";
+            dailyBonusBtn.classList.remove('disabled');
+            dailyBonusBtn.disabled = false;
+        }
+    }
+    
+    function updateFreeEggStatus() {
+        const currentTime = new Date().getTime();
+        const nextHatchTime = userData.lastProfitCollectionDate + FREE_EGG_PROFIT_DURATION;
+        const remainingTime = nextHatchTime - currentTime;
+        
+        if (remainingTime <= 0) {
+            freeEggStatusEl.textContent = "تخم مرغ رایگان شما آماده برداشت است!";
+        } else {
+            const minutes = Math.floor(remainingTime / (60 * 1000));
+            const seconds = Math.floor((remainingTime % (60 * 1000)) / 1000);
+            freeEggStatusEl.textContent = `تخم مرغ رایگان: ${minutes} دقیقه و ${seconds} ثانیه باقی مانده`;
+        }
+        
+        requestAnimationFrame(updateFreeEggStatus);
+    }
+
+    function showTomanDeposit() {
+        document.getElementById('tomanDepositForm').style.display = 'flex';
+        document.querySelector('#depositModal .deposit-options').style.display = 'none';
+    }
+
     const MIN_WITHDRAWAL_TON = 2;
     function withdraw() {
         if (userData.balanceTON < MIN_WITHDRAWAL_TON) {
@@ -598,22 +786,19 @@
     function showEggInfo(type) {
         infoModalTitle.textContent = eggNames[type];
         infoModalIcon.innerHTML = eggIcons[type];
+        const priceToman = (eggPricesTON[type] * TON_TO_TOMAN_RATE).toLocaleString();
+        const profitToman = (eggProfitsTON[type] * TON_TO_TOMAN_RATE).toLocaleString();
+        
         const message = `
             <div style="text-align: right; line-height: 1.8;">
-                <div>قیمت: ${eggPricesTON[type].toFixed(2)} TON (${(eggPricesTON[type] * TON_TO_TOMAN_RATE).toLocaleString()} تومان)</div>
+                <div>قیمت: ${eggPricesTON[type].toFixed(2)} TON (${priceToman} تومان)</div>
                 <div>مدت سرمایه‌گذاری: ${eggDurations[type]}</div>
-                <div>سود روزانه: ${eggProfitsTON[type].toFixed(4)} TON (${(eggProfitsTON[type] * TON_TO_TOMAN_RATE).toLocaleString()} تومان)</div>
+                <div>سود روزانه: ${eggProfitsTON[type].toFixed(4)} TON (${profitToman} تومان)</div>
                 <div>توضیحات: ${eggDescriptions[type]}</div>
             </div>
         `;
         infoModalMessage.innerHTML = message;
         showModal('eggInfoModal');
-    }
-    
-    function copyWalletAddress() {
-        navigator.clipboard.writeText(document.getElementById('walletAddress').value).then(() => {
-            alert('آدرس ولت با موفقیت کپی شد!');
-        });
     }
     
     function copyReferralLink() {
@@ -628,6 +813,10 @@
 
     function closeModal(modalId) {
         document.getElementById(modalId).style.display = 'none';
+        if (modalId === 'depositModal') {
+            document.getElementById('tomanDepositForm').style.display = 'none';
+            document.querySelector('#depositModal .deposit-options').style.display = 'flex';
+        }
     }
 
     document.querySelectorAll('.buy-btn').forEach(btn => {
@@ -648,14 +837,16 @@
 
     document.getElementById('collectBtn').addEventListener('click', collectProfit);
     document.querySelector('.action-buttons button:last-child').addEventListener('click', withdraw);
+    document.querySelector('.action-buttons button:first-child').addEventListener('click', () => showModal('menuModal'));
 
     window.addEventListener('click', (e) => {
         if (e.target.classList.contains('modal')) {
-            e.target.style.display = 'none';
+            closeModal(e.target.id);
         }
     });
 
     document.addEventListener('DOMContentLoaded', initializeApp);
+
 </script>
 </body>
 </html>
