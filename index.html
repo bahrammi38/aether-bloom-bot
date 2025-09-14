@@ -72,7 +72,6 @@
             text-align: center;
             font-size: 2rem;
             color: #fff;
-            text-shadow: 0 0 10px #fff, 0 0 20px #fff;
             margin-bottom: 30px;
         }
 
@@ -81,7 +80,6 @@
             margin-top: 0;
             margin-bottom: 20px;
             color: #fff;
-            text-shadow: 0 0 5px #fff;
             border-bottom: 2px solid #4b0082;
             padding-bottom: 10px;
             text-align: right;
@@ -112,7 +110,6 @@
             font-weight: bold;
             color: #fff;
             margin: 10px 0;
-            text-shadow: 0 0 15px #fff, 0 0 25px #fff;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -160,17 +157,36 @@
             border-radius: 50%;
             background-color: #555555;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             box-shadow: 
                 inset 0 0 10px rgba(0, 0, 0, 0.5), 
                 0 0 15px rgba(255, 255, 255, 0.3);
         }
+        
+        .animated-egg-border {
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 3px solid #fff; /* Border for the egg shape */
+            box-sizing: border-box;
+            pointer-events: none;
+            opacity: 0.8;
+        }
 
-        .animated-egg {
-            font-size: 6rem;
+        .animated-egg-count {
+            font-size: 3rem;
+            font-weight: bold;
             color: #fff;
-            text-shadow: 0 0 8px rgba(255, 255, 255, 0.7), 0 0 15px rgba(255, 255, 255, 0.5);
+            line-height: 1;
+        }
+        
+        .animated-egg-text {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-top: 5px;
         }
         
         .animated-egg-fill {
@@ -180,8 +196,8 @@
             width: 100%;
             background-color: #fff;
             border-radius: 0 0 50% 50%;
-            box-shadow: 0 0 10px #fff;
             transition: height 0.3s ease-in-out;
+            opacity: 0.6;
         }
         
         .action-buttons-bottom {
@@ -244,7 +260,6 @@
         .egg-icon {
             font-size: 2.5rem;
             margin-bottom: 10px;
-            text-shadow: 0 0 5px;
         }
 
         .egg-title {
@@ -358,18 +373,15 @@
         
         .transaction-item .amount {
             font-weight: bold;
-            text-shadow: 0 0 5px;
             font-size: 1.1rem;
         }
         
         .transaction-item .amount.positive {
             color: #4CAF50;
-            text-shadow: 0 0 5px #4CAF50;
         }
         
         .transaction-item .amount.negative {
             color: #E53935;
-            text-shadow: 0 0 5px #E53935;
         }
 
         .referral-info p {
@@ -414,7 +426,6 @@
         .friends-list h3 {
             margin-top: 0;
             color: #fff;
-            text-shadow: 0 0 5px #fff;
         }
 
         .task-list {
@@ -458,7 +469,6 @@
         .task-item .reward {
             font-size: 0.9rem;
             color: #fff;
-            text-shadow: 0 0 5px #fff;
         }
 
         .task-item .action-btn-task {
@@ -533,21 +543,18 @@
             font-weight: bold;
             color: #fff;
             cursor: pointer;
-            text-shadow: 0 0 5px #fff;
         }
 
         .modal-title {
             margin-top: 0;
             font-size: 1.8rem;
             color: #fff;
-            text-shadow: 0 0 8px #fff;
         }
 
         .modal-icon {
             font-size: 3rem;
             color: #fff;
             margin-bottom: 10px;
-            text-shadow: 0 0 10px #fff;
         }
         
         .modal-message {
@@ -634,12 +641,10 @@
 
         .nav-item:hover {
             color: #fff;
-            text-shadow: 0 0 5px #fff;
         }
 
         .nav-item.active {
             color: #fff;
-            text-shadow: 0 0 5px #fff;
         }
 
         .nav-item i {
@@ -660,7 +665,9 @@
             </div>
             <div class="animated-egg-container">
                 <div class="animated-egg-inner">
-                    <i class="fas fa-egg animated-egg"></i>
+                    <div class="animated-egg-border"></div>
+                    <div class="animated-egg-count" id="animatedEggCount">0</div>
+                    <div class="animated-egg-text">تخم مرغ</div>
                     <div class="animated-egg-fill"></div>
                 </div>
             </div>
@@ -921,6 +928,8 @@
     const TON_TO_TOMAN_RATE = 200000;
     const FREE_EGG_PROFIT_INTERVAL = 10 * 1000;
     const FREE_EGG_PROFIT_AMOUNT = 0.0001;
+    const EGG_INCREMENT_INTERVAL = 60 * 1000; // 1 minute
+    let eggCount = 0;
 
     let userData = {
         balanceTON: 0.00,
@@ -981,9 +990,8 @@
     const infoModalTitle = document.getElementById('infoModalTitle');
     const infoModalIcon = document.getElementById('infoModalIcon');
     const infoModalMessage = document.getElementById('infoModalMessage');
-    const eggFillEl = document.createElement('div');
-    eggFillEl.classList.add('animated-egg-fill');
-    document.querySelector('.animated-egg-inner').appendChild(eggFillEl);
+    const animatedEggCountEl = document.getElementById('animatedEggCount');
+    const eggFillEl = document.querySelector('.animated-egg-fill');
 
     function initializeApp() {
         if (localStorage.getItem('userData')) {
@@ -997,8 +1005,13 @@
                 date: new Date().toLocaleString('fa-IR')
             });
         }
+        if (localStorage.getItem('eggCount')) {
+            eggCount = parseInt(localStorage.getItem('eggCount'));
+        } else {
+            eggCount = 20; // Initial egg count
+        }
         updateUI();
-        startFreeEggTimer();
+        startEggAnimations();
         checkTaskStatuses();
     }
 
@@ -1023,8 +1036,10 @@
 
         referralLinkDisplayEl.textContent = `t.me/ton_egg_bot?start=${userData.userId}`;
         friendsCountEl.textContent = userData.referralCount;
+        animatedEggCountEl.textContent = eggCount;
 
         saveUserData();
+        localStorage.setItem('eggCount', eggCount.toString());
     }
 
     function saveUserData() {
@@ -1068,10 +1083,7 @@
         alert('تخم مرغ‌ها به طور خودکار به شما سود می‌دهند!');
     }
     
-    let eggFillAnimation;
-    function startFreeEggTimer() {
-        clearInterval(eggFillAnimation);
-        
+    function startEggAnimations() {
         let startTime = userData.lastProfitCollectionTime;
         
         const updateFill = () => {
@@ -1097,6 +1109,11 @@
             requestAnimationFrame(updateFill);
         };
         requestAnimationFrame(updateFill);
+
+        setInterval(() => {
+            eggCount++;
+            updateUI();
+        }, EGG_INCREMENT_INTERVAL);
     }
 
     const MIN_WITHDRAWAL_TON = 2;
@@ -1217,7 +1234,7 @@
 
             transactionItem.innerHTML = `
                 <div class="left">
-                    <div class="icon" style="color: ${amountClass === 'positive' ? '#4CAF50' : '#E53935'};"><i class="${iconClass}"></i></div>
+                    <div class="icon"><i class="${iconClass}"></i></div>
                     <div class="details">
                         <div class="type">${trans.type} - ${trans.description}</div>
                         <div class="date">${trans.date}</div>
