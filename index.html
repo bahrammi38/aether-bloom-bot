@@ -170,10 +170,11 @@
             width: 140px;
             height: 140px;
             border-radius: 50%;
-            border: 3px solid #fff; /* Border for the egg shape */
+            border: 3px solid #fff;
             box-sizing: border-box;
             pointer-events: none;
             opacity: 0.8;
+            background: transparent;
         }
 
         .animated-egg-count {
@@ -192,12 +193,14 @@
         .animated-egg-fill {
             position: absolute;
             bottom: 0;
-            left: 0;
-            width: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 0;
             background-color: #fff;
-            border-radius: 0 0 50% 50%;
+            border-radius: 50% 50% 0 0;
             transition: height 0.3s ease-in-out;
-            opacity: 0.6;
+            opacity: 0.8;
         }
         
         .action-buttons-bottom {
@@ -667,7 +670,7 @@
                 <div class="animated-egg-inner">
                     <div class="animated-egg-border"></div>
                     <div class="animated-egg-count" id="animatedEggCount">0</div>
-                    <div class="animated-egg-text">تخم مرغ</div>
+                    <div class="animated-egg-text">عدد</div>
                     <div class="animated-egg-fill"></div>
                 </div>
             </div>
@@ -928,7 +931,7 @@
     const TON_TO_TOMAN_RATE = 200000;
     const FREE_EGG_PROFIT_INTERVAL = 10 * 1000;
     const FREE_EGG_PROFIT_AMOUNT = 0.0001;
-    const EGG_INCREMENT_INTERVAL = 60 * 1000; // 1 minute
+    const EGG_INCREMENT_INTERVAL = 60 * 1000;
     let eggCount = 0;
 
     let userData = {
@@ -1008,7 +1011,7 @@
         if (localStorage.getItem('eggCount')) {
             eggCount = parseInt(localStorage.getItem('eggCount'));
         } else {
-            eggCount = 20; // Initial egg count
+            eggCount = 20;
         }
         updateUI();
         startEggAnimations();
