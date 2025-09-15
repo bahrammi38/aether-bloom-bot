@@ -22,8 +22,8 @@
 
         body {
             font-family: 'Vazirmatn', sans-serif;
-            background-color: #1a1a2e;
-            color: #e0e0e0;
+            background-color: #f8f9fa; /* Light background */
+            color: #212529; /* Dark text */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -42,6 +42,7 @@
             position: relative;
             padding-bottom: 70px;
             height: calc(100% - 70px);
+            background-color: #fff;
         }
 
         .page {
@@ -50,28 +51,28 @@
             height: 100%;
             padding: 20px;
             box-sizing: border-box;
-            animation: fadeInPage 0.5s ease-in-out forwards;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: opacity 0.3s, transform 0.3s;
             position: absolute;
             top: 0;
             left: 0;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
             padding-top: 20px;
+            background-color: #fff;
         }
 
         .page.active {
             display: block;
-        }
-
-        @keyframes fadeInPage {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
+            opacity: 1;
+            transform: translateX(0);
         }
 
         .page-header {
             text-align: center;
             font-size: 2rem;
-            color: #fff;
+            color: #007bff;
             margin-bottom: 30px;
         }
 
@@ -79,27 +80,21 @@
             font-size: 1.5rem;
             margin-top: 0;
             margin-bottom: 20px;
-            color: #fff;
-            border-bottom: 2px solid #4b0082;
+            color: #333;
+            border-bottom: 2px solid #e9ecef;
             padding-bottom: 10px;
             text-align: right;
         }
-
+        
         .card {
-            background-color: #2a2a44;
+            background-color: #f8f9fa;
             padding: 20px;
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
-            animation: slideIn 0.8s ease-in-out;
-            border: 1px solid #4b0082;
+            border: 1px solid #dee2e6;
         }
         
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         .balance-display {
             text-align: center;
             margin-bottom: 30px;
@@ -108,7 +103,7 @@
         .balance-display .main-balance {
             font-size: 2.8rem;
             font-weight: bold;
-            color: #fff;
+            color: #007bff;
             margin: 10px 0;
             display: flex;
             align-items: center;
@@ -119,9 +114,14 @@
         .balance-display .main-balance i {
             font-size: 2rem;
             margin-left: 10px;
-            color: #fff;
+            color: #007bff;
+        }
+        
+        .balance-display .percentage {
+            color: #28a745;
         }
 
+        /* Egg Design */
         .animated-egg-container {
             width: 180px;
             height: 180px;
@@ -130,64 +130,17 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            border-radius: 50%;
-            background: #2a2a44;
-            box-shadow: 
-                inset 0 0 15px rgba(0, 0, 0, 0.8), 
-                0 0 25px rgba(0, 100, 255, 0.6), 
-                0 0 40px rgba(0, 50, 200, 0.4);
-            transform-style: preserve-3d;
-            perspective: 1000px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .animated-egg-container:hover {
-            transform: scale(1.05);
-            box-shadow: 
-                inset 0 0 20px rgba(0, 0, 0, 0.9),
-                0 0 35px rgba(0, 100, 255, 0.8),
-                0 0 50px rgba(0, 50, 200, 0.6);
-        }
-
-        .animated-egg-inner {
-            position: absolute;
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            background-color: #555555;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 
-                inset 0 0 10px rgba(0, 0, 0, 0.5), 
-                0 0 15px rgba(255, 255, 255, 0.3);
         }
         
-        .animated-egg-border {
+        .animated-egg-shape {
             position: absolute;
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            border: 3px solid #fff;
+            width: 120px;
+            height: 160px;
+            border-radius: 60% 60% 60% 60% / 70% 70% 30% 30%;
+            border: 3px solid #00FFFF;
             box-sizing: border-box;
-            pointer-events: none;
-            opacity: 0.8;
             background: transparent;
-        }
-
-        .animated-egg-count {
-            font-size: 3rem;
-            font-weight: bold;
-            color: #fff;
-            line-height: 1;
-        }
-        
-        .animated-egg-text {
-            font-size: 1.2rem;
-            color: #fff;
-            margin-top: 5px;
+            box-shadow: 0 0 10px #00FFFF;
         }
         
         .animated-egg-fill {
@@ -195,14 +148,57 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 120px;
+            width: 114px;
             height: 0;
             background-color: #fff;
-            border-radius: 50% 50% 0 0;
-            transition: height 0.3s ease-in-out;
-            opacity: 0.8;
+            border-radius: 60% 60% 60% 60% / 70% 70% 30% 30%;
+            transition: height 1s ease-in-out;
+            z-index: 1;
+            box-shadow: 0 0 5px #fff;
         }
         
+        .animated-egg-counter {
+            position: absolute;
+            font-size: 3rem;
+            font-weight: bold;
+            color: #333;
+            z-index: 2;
+        }
+        .animated-egg-text {
+            position: absolute;
+            font-size: 1.2rem;
+            color: #666;
+            z-index: 2;
+            transform: translateY(30px);
+        }
+
+        /* Accordion Menu */
+        .accordion-item {
+            margin-bottom: 10px;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .accordion-header {
+            background-color: #f1f1f1;
+            padding: 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .accordion-header:hover {
+            background-color: #e2e6ea;
+        }
+        .accordion-content {
+            padding: 15px;
+            background-color: #fff;
+            display: none;
+            line-height: 1.6;
+        }
+
         .action-buttons-bottom {
             display: flex;
             justify-content: space-around;
@@ -222,13 +218,13 @@
             flex: 1;
             margin: 0 5px;
         }
-
         .action-btn:hover {
             transform: translateY(-2px);
             background-color: #0056b3;
             box-shadow: 0 0 15px rgba(0, 86, 179, 0.9);
         }
-
+        
+        /* Egg List */
         .egg-list {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -237,56 +233,36 @@
         }
 
         .egg-item {
-            background-color: #333355;
+            background-color: #f8f9fa;
             border-radius: 10px;
             padding: 15px;
             text-align: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             cursor: pointer;
-            border: 1px solid #4b0082;
+            border: 1px solid #dee2e6;
             position: relative;
         }
-
         .egg-item:hover {
             transform: translateY(-5px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-        }
-        
-        .egg-item[data-type="normal"] { border-color: #5a5a5a; }
-        .egg-item[data-type="golden"] { border-color: #ffd700; }
-        .egg-item[data-type="crystal"] { border-color: #1abc9c; }
-        .egg-item[data-type="diamond"] { border-color: #3498db; }
-        .egg-item[data-type="magic"] { border-color: #9b59b6; }
-        .egg-item[data-type="legendary"] { border-color: #e74c3c; }
-
-        .egg-icon {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
-        .egg-title {
-            font-size: 1.1rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #fff;
-        }
+        /* Colors for different eggs */
+        .egg-item[data-type="normal"] .egg-icon { color: #868e96; }
+        .egg-item[data-type="golden"] .egg-icon { color: #ffd700; }
+        .egg-item[data-type="crystal"] .egg-icon { color: #1abc9c; }
+        .egg-item[data-type="diamond"] .egg-icon { color: #3498db; }
+        .egg-item[data-type="magic"] .egg-icon { color: #9b59b6; }
+        .egg-item[data-type="legendary"] .egg-icon { color: #e74c3c; }
 
-        .egg-price {
-            font-size: 0.9rem;
-            color: #aaa;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .egg-price i {
-            margin-left: 5px;
-            color: #fff;
-        }
+        .egg-icon { font-size: 2.5rem; margin-bottom: 10px; }
+        .egg-title { font-size: 1.1rem; font-weight: bold; margin-bottom: 5px; color: #212529; }
+        .egg-price { font-size: 0.9rem; color: #6c757d; margin-bottom: 10px; }
+        .egg-price i { margin-left: 5px; color: #007bff; }
 
         .buy-btn {
-            background-color: #007bff;
+            background-color: #28a745;
             color: #fff;
             border: none;
             padding: 8px 15px;
@@ -294,123 +270,43 @@
             cursor: pointer;
             font-size: 0.8rem;
             font-weight: bold;
-            transition: background-color 0.3s, box-shadow 0.3s;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.7);
-            width: calc(100% - 10px);
-            margin: 5px;
+            transition: background-color 0.3s;
         }
+        .buy-btn:hover { background-color: #218838; }
 
-        .buy-btn:hover {
-            background-color: #0056b3;
-            box-shadow: 0 0 10px rgba(0, 86, 179, 0.9);
-        }
-
-        .inventory-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .inventory-item {
-            background-color: #333355;
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            border: 1px solid #4b0082;
-        }
-
-        .inventory-item p {
-            margin: 5px 0;
-            font-size: 0.9rem;
-            color: #e0e0e0;
-        }
-
-        .inventory-item h3 {
-            margin-top: 0;
-            font-size: 1rem;
-            color: #fff;
-        }
-
-        .transaction-list {
-            margin-top: 20px;
-        }
-        
+        /* Wallet History */
+        .transaction-list { margin-top: 20px; }
         .transaction-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #333355;
+            background-color: #f1f1f1;
             padding: 15px;
             border-radius: 10px;
             margin-bottom: 10px;
-            border: 1px solid #4b0082;
+            border: 1px solid #dee2e6;
         }
+        .transaction-item .amount.positive { color: #28a745; }
+        .transaction-item .amount.negative { color: #dc3545; }
         
-        .transaction-item .left {
-            display: flex;
-            align-items: center;
-        }
+        .transaction-item .left, .transaction-item .details { text-align: right; }
+        .transaction-item .icon { font-size: 1.2rem; margin-left: 10px; color: #6c757d; }
+        .transaction-item .type { font-weight: bold; color: #495057; }
+        .transaction-item .date { font-size: 0.8rem; color: #6c757d; }
+        .transaction-item .amount { font-weight: bold; font-size: 1.1rem; }
         
-        .transaction-item .icon {
-            font-size: 1.2rem;
-            margin-left: 10px;
-        }
-        
-        .transaction-item .details {
-            display: flex;
-            flex-direction: column;
-            text-align: right;
-        }
-        
-        .transaction-item .type {
-            font-weight: bold;
-            color: #e0e0e0;
-        }
-        
-        .transaction-item .date {
-            font-size: 0.8rem;
-            color: #aaa;
-        }
-        
-        .transaction-item .amount {
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-        
-        .transaction-item .amount.positive {
-            color: #4CAF50;
-        }
-        
-        .transaction-item .amount.negative {
-            color: #E53935;
-        }
-
-        .referral-info p {
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
+        /* Friends Page */
         .referral-link-card {
-            background-color: #333355;
-            padding: 15px;
+            background-color: #f1f1f1;
             border-radius: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #fff;
-            text-align: center;
+            padding: 15px;
+            border: 1px solid #dee2e6;
         }
-
         .referral-link-card .link-display {
-            background-color: #2a2a44;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            word-break: break-all;
-            color: #fff;
+            background-color: #e9ecef;
+            color: #007bff;
             direction: ltr;
         }
-
         .referral-link-card button {
             background-color: #007bff;
             color: #fff;
@@ -419,95 +315,44 @@
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.7);
+            transition: background-color 0.3s;
         }
-        .referral-link-card button:hover {
-            background-color: #0056b3;
-            box-shadow: 0 0 10px rgba(0, 86, 179, 0.9);
-        }
-
-        .friends-list h3 {
-            margin-top: 0;
-            color: #fff;
-        }
-
-        .task-list {
-            margin-top: 20px;
-        }
-
+        .referral-link-card button:hover { background-color: #0056b3; }
+        
+        /* Earn Page */
         .task-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #333355;
-            padding: 15px;
+            background-color: #f1f1f1;
             border-radius: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #4b0082;
+            padding: 15px;
+            border: 1px solid #dee2e6;
         }
-
-        .task-item .left {
-            display: flex;
-            align-items: center;
-        }
-
-        .task-item .icon {
-            font-size: 1.5rem;
-            margin-left: 15px;
-            color: #fff;
-        }
-
-        .task-item .details {
-            display: flex;
-            flex-direction: column;
-            text-align: right;
-        }
-
-        .task-item .title {
-            font-weight: bold;
-            color: #e0e0e0;
-            margin-bottom: 5px;
-        }
-
-        .task-item .reward {
-            font-size: 0.9rem;
-            color: #fff;
-        }
+        .task-item .left .icon { color: #007bff; }
+        .task-item .details .title { color: #495057; }
+        .task-item .details .reward { color: #28a745; }
 
         .task-item .action-btn-task {
-            background-color: #4CAF50;
-            color: #000000;
+            background-color: #28a745;
+            color: #fff;
             border: none;
             padding: 8px 15px;
             border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
             font-weight: bold;
-            position: relative;
-        }
-        .task-item .action-btn-task:hover:not(.claimed) {
-            background-color: #45a049;
-            box-shadow: 0 0 12px rgba(69, 160, 73, 0.7);
+            transition: background-color 0.3s;
         }
         .task-item .action-btn-task.claimed {
-            background-color: #4CAF50;
-            color: #fff;
-            box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
+            background-color: transparent;
+            color: #28a745;
+            border: 2px solid #28a745;
             cursor: not-allowed;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
-            padding: 8px;
+            padding: 6px 15px;
         }
-
-        .task-item .action-btn-task.claimed i {
-            font-size: 1.2rem;
-            margin: 0;
-            padding: 0;
-        }
+        .task-item .action-btn-task.claimed i { font-size: 1.2rem; }
         
+        /* Modals */
         .modal {
             display: none;
             position: fixed;
@@ -516,144 +361,61 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.6);
             justify-content: center;
             align-items: center;
             animation: modalFadeIn 0.3s ease-in-out;
         }
-
-        @keyframes modalFadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
         .modal-content {
-            background-color: #2a2a44;
+            background-color: #fff;
             padding: 30px;
             border-radius: 15px;
             text-align: center;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
-            position: relative;
-            max-width: 90%;
-            border: 2px solid #fff;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid #dee2e6;
         }
-
         .close-modal {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 28px;
-            font-weight: bold;
-            color: #fff;
-            cursor: pointer;
+            color: #333;
         }
-
-        .modal-title {
-            margin-top: 0;
-            font-size: 1.8rem;
-            color: #fff;
-        }
-
-        .modal-icon {
-            font-size: 3rem;
-            color: #fff;
-            margin-bottom: 10px;
-        }
-        
-        .modal-message {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: #e0e0e0;
-        }
-
+        .modal-title { color: #007bff; }
+        .modal-icon { color: #007bff; }
+        .modal-message { color: #495057; }
         .modal-btn {
             background-color: #007bff;
             color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-            margin-top: 20px;
-            transition: background-color 0.3s, box-shadow 0.3s;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.7);
         }
-
-        .modal-btn:hover {
-            background-color: #0056b3;
-            box-shadow: 0 0 10px rgba(0, 86, 179, 0.9);
-        }
-
-        .deposit-options button, .deposit-form-toman input, .deposit-form-toman button {
-            background-color: #555577;
-            color: #fff;
-            border: 1px solid #777;
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-            width: 100%;
-            margin-bottom: 10px;
-        }
+        .modal-btn:hover { background-color: #0056b3; }
         
-        .deposit-options button:hover, .deposit-form-toman button:hover {
-            background-color: #666688;
-            transform: translateY(-2px);
-        }
-
-        .deposit-form-toman {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 15px;
-        }
-        
-        .deposit-form-toman input {
-            text-align: right;
-            background-color: #2a2a44;
-            border-color: #4b0082;
-            color: #e0e0e0;
-        }
-        
+        /* Nav-Bar */
         .nav-bar {
             display: flex;
             justify-content: space-around;
             width: 100%;
             max-width: 500px;
-            background-color: #2a2a44;
-            border-top: 1px solid #4b0082;
+            background-color: #f1f1f1;
+            border-top: 1px solid #dee2e6;
             padding: 10px 0;
             position: fixed;
             bottom: 0;
             z-index: 20;
-            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
         }
-
         .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #aaa;
+            color: #6c757d;
             font-size: 0.8rem;
             cursor: pointer;
-            transition: color 0.3s;
+            transition: color 0.2s;
             padding: 5px;
-            border-radius: 8px;
         }
-
-        .nav-item:hover {
-            color: #fff;
-        }
-
         .nav-item.active {
-            color: #fff;
+            color: #007bff;
         }
+        .nav-item i { font-size: 1.5rem; margin-bottom: 5px; }
 
-        .nav-item i {
-            font-size: 1.5rem;
-            margin-bottom: 5px;
-        }
+        /* Accordion-specific styles */
+        .accordion-header i.fa-chevron-down { transition: transform 0.3s; }
+        .accordion-header.active i.fa-chevron-down { transform: rotate(180deg); }
+
     </style>
 </head>
 <body>
@@ -662,28 +424,38 @@
     
     <div id="homePage" class="page active">
         <div class="card">
+            <h2 class="page-header">TonEgg</h2>
             <div class="balance-display">
                 <p class="percentage">سود روزانه: <span id="dailyProfitHome">0.00</span> TON</p>
                 <p class="main-balance" id="userBalanceHome">0.00000000 TON</p>
             </div>
             <div class="animated-egg-container">
-                <div class="animated-egg-inner">
-                    <div class="animated-egg-border"></div>
-                    <div class="animated-egg-count" id="animatedEggCount">0</div>
-                    <div class="animated-egg-text">عدد</div>
-                    <div class="animated-egg-fill"></div>
-                </div>
+                <div class="animated-egg-shape"></div>
+                <div class="animated-egg-fill"></div>
+                <div class="animated-egg-counter" id="animatedEggCount">0</div>
+                <div class="animated-egg-text">تخم مرغ</div>
             </div>
             <div class="action-buttons-bottom">
                 <button class="action-btn" onclick="showModal('depositModal')">
                     <i class="fas fa-arrow-circle-up"></i> واریز
                 </button>
-                <button class="action-btn" onclick="withdraw()">
+                <button class="action-btn" onclick="showWithdrawModal()">
                     <i class="fas fa-arrow-circle-down"></i> برداشت
                 </button>
             </div>
         </div>
 
+        <div class="accordion-item card">
+            <div class="accordion-header">
+                <span>سیاست درآمدزایی و برداشت</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+                <p><strong>سیاست درآمدزایی:</strong> با خرید هر تخم مرغ، روزانه درصدی از قیمت آن به شما سود تعلق می‌گیرد. این سود به صورت خودکار به موجودی شما اضافه می‌شود.</p>
+                <p><strong>برداشت وجه:</strong> شما می‌توانید در هر زمان سرمایه‌گذاری خود را متوقف کرده و موجودی خود را برداشت کنید. توجه داشته باشید که برداشت شامل یک کارمزد (به صورت نمایشی) است. با این حال، سود دریافتی شما از مبلغ پرداخت اولیه کمتر نخواهد بود.</p>
+            </div>
+        </div>
+        
         <div class="card">
             <h2 class="section-title">تخم مرغ‌ها برای خرید ✨</h2>
             <div class="egg-list">
@@ -835,6 +607,18 @@
                 </div>
             </div>
         </div>
+        
+        <div class="card">
+            <h2 class="section-title">تبلیغات 📣</h2>
+            <p>برای نمایش تبلیغ خود، فرم زیر را پر کنید. تبلیغ شما پس از تایید مدیر نمایش داده خواهد شد.</p>
+            <div class="ad-request-form">
+                <input type="text" id="adLink" placeholder="لینک تبلیغ" class="form-control">
+                <input type="text" id="adBudget" placeholder="مبلغ شارژ (TON)" class="form-control">
+                <textarea id="adDescription" placeholder="توضیحات تبلیغ" class="form-control"></textarea>
+                <button class="action-btn" onclick="submitAdRequest()">ثبت درخواست</button>
+            </div>
+        </div>
+
     </div>
 
 
@@ -875,8 +659,8 @@
             </div>
             <div class="deposit-form-toman" id="tomanDepositForm" style="display:none;">
                 <input type="text" id="cardNumberInput" placeholder="شماره کارت"
-                    value="به دلایل امنیتی، این قابلیت غیرفعال است." readonly>
-                <input type="text" id="depositAmountInput" placeholder="مبلغ (تومان)">
+                    value="به دلایل امنیتی، این قابلیت غیرفعال است." readonly class="form-control">
+                <input type="text" id="depositAmountInput" placeholder="مبلغ (تومان)" class="form-control">
                 <button onclick="alert('این قابلیت نیاز به بک‌اند واقعی و درگاه پرداخت دارد.');">
                     <i class="fas fa-arrow-circle-down"></i> واریز تومان
                 </button>
@@ -890,10 +674,13 @@
             <span class="close-modal" onclick="closeModal('withdrawModal')">&times;</span>
             <h2 class="modal-title">برداشت وجه</h2>
             <div class="modal-icon"><i class="fas fa-hand-holding-usd"></i></div>
-            <p class="modal-message" id="withdrawMessage">
-                درخواست برداشت شما ثبت شد و به زودی به کیف پول شما واریز خواهد شد.
-            </p>
-            <button class="modal-btn" onclick="closeModal('withdrawModal')">متوجه شدم</button>
+            <div class="withdraw-form">
+                <input type="text" id="withdrawAmountInput" placeholder="مبلغ برداشت (TON)" class="form-control">
+                <input type="text" id="userWalletAddress" placeholder="آدرس کیف پول TON" class="form-control">
+                <p style="font-size:0.9rem; color:#dc3545;">کارمزد برداشت: <span id="withdrawalFee">0.00</span> TON</p>
+                <button class="modal-btn" onclick="processWithdrawal()">ثبت درخواست برداشت</button>
+            </div>
+            <button class="modal-btn" onclick="closeModal('withdrawModal')">بستن</button>
         </div>
     </div>
 
@@ -929,10 +716,12 @@
 
 <script>
     const TON_TO_TOMAN_RATE = 200000;
-    const FREE_EGG_PROFIT_INTERVAL = 10 * 1000;
+    const FREE_EGG_PROFIT_INTERVAL = 60 * 1000; // 1 minute
     const FREE_EGG_PROFIT_AMOUNT = 0.0001;
-    const EGG_INCREMENT_INTERVAL = 60 * 1000;
+    const EGG_INCREMENT_INTERVAL = 60 * 1000; // 1 minute
     let eggCount = 0;
+
+    const WITHDRAWAL_FEE_PERCENTAGE = 0.05; // 5% fee for withdrawal
 
     let userData = {
         balanceTON: 0.00,
@@ -995,6 +784,9 @@
     const infoModalMessage = document.getElementById('infoModalMessage');
     const animatedEggCountEl = document.getElementById('animatedEggCount');
     const eggFillEl = document.querySelector('.animated-egg-fill');
+    const withdrawAmountInputEl = document.getElementById('withdrawAmountInput');
+    const userWalletAddressEl = document.getElementById('userWalletAddress');
+    const withdrawalFeeEl = document.getElementById('withdrawalFee');
 
     function initializeApp() {
         if (localStorage.getItem('userData')) {
@@ -1086,7 +878,9 @@
         alert('تخم مرغ‌ها به طور خودکار به شما سود می‌دهند!');
     }
     
+    let eggFillAnimation;
     function startEggAnimations() {
+        clearInterval(eggFillAnimation);
         let startTime = userData.lastProfitCollectionTime;
         
         const updateFill = () => {
@@ -1094,7 +888,6 @@
             const timeSinceLastCollection = currentTime - startTime;
             const progress = (timeSinceLastCollection / FREE_EGG_PROFIT_INTERVAL) * 100;
             const fillHeight = Math.min(progress, 100);
-
             eggFillEl.style.height = `${fillHeight}%`;
 
             if (fillHeight >= 100) {
@@ -1120,20 +913,43 @@
     }
 
     const MIN_WITHDRAWAL_TON = 2;
-    function withdraw() {
-        if (userData.balanceTON < MIN_WITHDRAWAL_TON) {
-            alert(`حداقل مبلغ برای برداشت ${MIN_WITHDRAWAL_TON.toFixed(2)} TON است. (موجودی فعلی: ${userData.balanceTON.toFixed(8)} TON)`);
+    function showWithdrawModal() {
+        const withdrawalFee = userData.balanceTON * WITHDRAWAL_FEE_PERCENTAGE;
+        withdrawalFeeEl.textContent = withdrawalFee.toFixed(8);
+        showModal('withdrawModal');
+    }
+
+    function processWithdrawal() {
+        const amount = parseFloat(withdrawAmountInputEl.value);
+        if (isNaN(amount) || amount <= 0) {
+            alert('لطفاً یک مبلغ معتبر وارد کنید.');
             return;
         }
+
+        const withdrawalFee = amount * WITHDRAWAL_FEE_PERCENTAGE;
+        const netAmount = amount - withdrawalFee;
+
+        if (userData.balanceTON < amount) {
+            alert(`موجودی کافی نیست! حداقل مبلغ برای برداشت ${MIN_WITHDRAWAL_TON.toFixed(2)} TON است. (موجودی فعلی: ${userData.balanceTON.toFixed(8)} TON)`);
+            return;
+        }
+        
+        if (amount < MIN_WITHDRAWAL_TON) {
+            alert(`حداقل مبلغ برداشت ${MIN_WITHDRAWAL_TON.toFixed(2)} TON است.`);
+            return;
+        }
+
+        userData.balanceTON -= amount;
         userData.transactions.push({
             type: 'برداشت',
-            description: 'درخواست برداشت',
-            amount: -MIN_WITHDRAWAL_TON,
+            description: `برداشت با کارمزد`,
+            amount: -amount,
             date: new Date().toLocaleString('fa-IR')
         });
-        userData.balanceTON -= MIN_WITHDRAWAL_TON;
+        
+        alert(`درخواست برداشت ${netAmount.toFixed(8)} TON پس از کسر کارمزد ${withdrawalFee.toFixed(8)} TON ثبت شد.`);
         updateUI();
-        showModal('withdrawModal');
+        closeModal('withdrawModal');
     }
 
     function showTomanDepositForm() {
@@ -1145,6 +961,33 @@
         navigator.clipboard.writeText(referralLinkDisplayEl.textContent).then(() => {
             alert('لینک رفرال با موفقیت کپی شد!');
         });
+    }
+
+    function submitAdRequest() {
+        const adLink = document.getElementById('adLink').value;
+        const adBudget = parseFloat(document.getElementById('adBudget').value);
+        const adDescription = document.getElementById('adDescription').value;
+
+        if (!adLink || !adBudget || adBudget <= 0 || !adDescription) {
+            alert('لطفا تمامی فیلدها را به درستی پر کنید.');
+            return;
+        }
+        
+        if (userData.balanceTON < adBudget) {
+            alert('موجودی کافی برای پرداخت هزینه تبلیغ ندارید.');
+            return;
+        }
+
+        userData.balanceTON -= adBudget;
+        userData.transactions.push({
+            type: 'تبلیغ',
+            description: `درخواست تبلیغ برای ${adLink}`,
+            amount: -adBudget,
+            date: new Date().toLocaleString('fa-IR')
+        });
+
+        alert(`درخواست تبلیغ شما با بودجه ${adBudget.toFixed(2)} TON ثبت شد. پس از تایید به کاربران نمایش داده می‌شود.`);
+        updateUI();
     }
 
     const taskRewards = {
@@ -1222,7 +1065,7 @@
 
         transactionHistoryEl.innerHTML = '';
         if (userData.transactions.length === 0) {
-            transactionHistoryEl.innerHTML = '<p style="text-align: center; color: #aaa;">هنوز تراکنشی ثبت نشده است.</p>';
+            transactionHistoryEl.innerHTML = '<p style="text-align: center; color: #6c757d;">هنوز تراکنشی ثبت نشده است.</p>';
             return;
         }
 
@@ -1232,7 +1075,8 @@
             const amountClass = trans.amount >= 0 ? 'positive' : 'negative';
             const iconClass = trans.type === 'خرید' ? 'fas fa-shopping-cart' :
                               (trans.type === 'سود' ? 'fas fa-piggy-bank' :
-                              (trans.type === 'برداشت' ? 'fas fa-arrow-alt-circle-up' : 'fas fa-gift'));
+                              (trans.type === 'برداشت' ? 'fas fa-arrow-alt-circle-up' :
+                              (trans.type === 'تبلیغ' ? 'fas fa-bullhorn' : 'fas fa-gift')));
             const amountText = `${trans.amount >= 0 ? '+' : ''}${trans.amount.toFixed(8)}`;
 
             transactionItem.innerHTML = `
@@ -1296,7 +1140,24 @@
         }
     });
 
-    document.addEventListener('DOMContentLoaded', initializeApp);
+    document.addEventListener('DOMContentLoaded', () => {
+        initializeApp();
+        
+        // Accordion functionality
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const icon = header.querySelector('i');
+                if (content.style.display === 'block') {
+                    content.style.display = 'none';
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    content.style.display = 'block';
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+    });
 </script>
 </body>
 </html>
