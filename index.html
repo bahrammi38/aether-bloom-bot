@@ -22,8 +22,8 @@
 
         body {
             font-family: 'Vazirmatn', sans-serif;
-            background-color: #f8f9fa; /* Light background */
-            color: #212529; /* Dark text */
+            background-color: #f0f2f5; /* Light gray background */
+            color: #212529;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -40,9 +40,9 @@
             display: flex;
             flex-direction: column;
             position: relative;
-            padding-bottom: 70px;
+            padding-bottom: 70px; /* Space for nav-bar */
             height: calc(100% - 70px);
-            background-color: #fff;
+            background-color: #f0f2f5; /* Match body background */
         }
 
         .page {
@@ -60,7 +60,7 @@
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
             padding-top: 20px;
-            background-color: #fff;
+            background-color: #f0f2f5; /* Match body background */
         }
 
         .page.active {
@@ -72,7 +72,7 @@
         .page-header {
             text-align: center;
             font-size: 2rem;
-            color: #007bff;
+            color: #212529;
             margin-bottom: 30px;
         }
 
@@ -87,7 +87,7 @@
         }
         
         .card {
-            background-color: #f8f9fa;
+            background-color: #ffffff; /* White background for cards */
             padding: 20px;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -103,7 +103,7 @@
         .balance-display .main-balance {
             font-size: 2.8rem;
             font-weight: bold;
-            color: #007bff;
+            color: #212529;
             margin: 10px 0;
             display: flex;
             align-items: center;
@@ -114,14 +114,13 @@
         .balance-display .main-balance i {
             font-size: 2rem;
             margin-left: 10px;
-            color: #007bff;
+            color: #212529;
         }
         
         .balance-display .percentage {
             color: #28a745;
         }
 
-        /* Egg Design */
         .animated-egg-container {
             width: 180px;
             height: 180px;
@@ -137,10 +136,11 @@
             width: 120px;
             height: 160px;
             border-radius: 60% 60% 60% 60% / 70% 70% 30% 30%;
-            border: 3px solid #00FFFF;
+            border: 3px solid #000;
             box-sizing: border-box;
             background: transparent;
-            box-shadow: 0 0 10px #00FFFF;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
         }
         
         .animated-egg-fill {
@@ -161,18 +161,17 @@
             position: absolute;
             font-size: 3rem;
             font-weight: bold;
-            color: #333;
+            color: #212529;
             z-index: 2;
         }
         .animated-egg-text {
             position: absolute;
             font-size: 1.2rem;
-            color: #666;
+            color: #6c757d;
             z-index: 2;
             transform: translateY(30px);
         }
 
-        /* Accordion Menu */
         .accordion-item {
             margin-bottom: 10px;
             border: 1px solid #e9ecef;
@@ -197,6 +196,7 @@
             background-color: #fff;
             display: none;
             line-height: 1.6;
+            color: #495057;
         }
 
         .action-buttons-bottom {
@@ -224,7 +224,6 @@
             box-shadow: 0 0 15px rgba(0, 86, 179, 0.9);
         }
         
-        /* Egg List */
         .egg-list {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -233,14 +232,14 @@
         }
 
         .egg-item {
-            background-color: #f8f9fa;
+            background-color: #2c3e50; /* Dark background for egg items */
             border-radius: 10px;
             padding: 15px;
             text-align: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             cursor: pointer;
-            border: 1px solid #dee2e6;
+            border: 2px solid #000; /* Black border */
             position: relative;
         }
         .egg-item:hover {
@@ -248,18 +247,10 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
-        /* Colors for different eggs */
-        .egg-item[data-type="normal"] .egg-icon { color: #868e96; }
-        .egg-item[data-type="golden"] .egg-icon { color: #ffd700; }
-        .egg-item[data-type="crystal"] .egg-icon { color: #1abc9c; }
-        .egg-item[data-type="diamond"] .egg-icon { color: #3498db; }
-        .egg-item[data-type="magic"] .egg-icon { color: #9b59b6; }
-        .egg-item[data-type="legendary"] .egg-icon { color: #e74c3c; }
-
-        .egg-icon { font-size: 2.5rem; margin-bottom: 10px; }
-        .egg-title { font-size: 1.1rem; font-weight: bold; margin-bottom: 5px; color: #212529; }
-        .egg-price { font-size: 0.9rem; color: #6c757d; margin-bottom: 10px; }
-        .egg-price i { margin-left: 5px; color: #007bff; }
+        .egg-icon { font-size: 2.5rem; margin-bottom: 10px; color: #fff; } /* White icons */
+        .egg-title { font-size: 1.1rem; font-weight: bold; margin-bottom: 5px; color: #fff; } /* White text */
+        .egg-price { font-size: 0.9rem; color: #bbb; margin-bottom: 10px; } /* Lighter gray for price */
+        .egg-price i { margin-left: 5px; color: #fff; } /* White TON icon */
 
         .buy-btn {
             background-color: #28a745;
@@ -274,7 +265,6 @@
         }
         .buy-btn:hover { background-color: #218838; }
 
-        /* Wallet History */
         .transaction-list { margin-top: 20px; }
         .transaction-item {
             display: flex;
@@ -295,7 +285,6 @@
         .transaction-item .date { font-size: 0.8rem; color: #6c757d; }
         .transaction-item .amount { font-weight: bold; font-size: 1.1rem; }
         
-        /* Friends Page */
         .referral-link-card {
             background-color: #f1f1f1;
             border-radius: 10px;
@@ -319,7 +308,6 @@
         }
         .referral-link-card button:hover { background-color: #0056b3; }
         
-        /* Earn Page */
         .task-item {
             background-color: #f1f1f1;
             border-radius: 10px;
@@ -329,7 +317,6 @@
         .task-item .left .icon { color: #007bff; }
         .task-item .details .title { color: #495057; }
         .task-item .details .reward { color: #28a745; }
-
         .task-item .action-btn-task {
             background-color: #28a745;
             color: #fff;
@@ -340,6 +327,7 @@
             font-weight: bold;
             transition: background-color 0.3s;
         }
+        .task-item .action-btn-task:hover { background-color: #218838; }
         .task-item .action-btn-task.claimed {
             background-color: transparent;
             color: #28a745;
@@ -351,8 +339,17 @@
             padding: 6px 15px;
         }
         .task-item .action-btn-task.claimed i { font-size: 1.2rem; }
-        
-        /* Modals */
+
+        .ad-request-form { display: flex; flex-direction: column; gap: 15px; }
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        .form-control::placeholder { color: #adb5bd; }
+
         .modal {
             display: none;
             position: fixed;
@@ -374,26 +371,20 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
             border: 1px solid #dee2e6;
         }
-        .close-modal {
-            color: #333;
-        }
+        .close-modal { color: #333; }
         .modal-title { color: #007bff; }
         .modal-icon { color: #007bff; }
         .modal-message { color: #495057; }
-        .modal-btn {
-            background-color: #007bff;
-            color: #fff;
-        }
+        .modal-btn { background-color: #007bff; color: #fff; }
         .modal-btn:hover { background-color: #0056b3; }
         
-        /* Nav-Bar */
         .nav-bar {
             display: flex;
             justify-content: space-around;
             width: 100%;
             max-width: 500px;
-            background-color: #f1f1f1;
-            border-top: 1px solid #dee2e6;
+            background-color: #34495e; /* Darker nav-bar */
+            border-top: 1px solid #2c3e50;
             padding: 10px 0;
             position: fixed;
             bottom: 0;
@@ -401,18 +392,15 @@
             box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
         }
         .nav-item {
-            color: #6c757d;
+            color: #bbb; /* Light gray for inactive nav items */
             font-size: 0.8rem;
             cursor: pointer;
             transition: color 0.2s;
             padding: 5px;
         }
-        .nav-item.active {
-            color: #007bff;
-        }
+        .nav-item.active { color: #fff; } /* White for active nav items */
         .nav-item i { font-size: 1.5rem; margin-bottom: 5px; }
 
-        /* Accordion-specific styles */
         .accordion-header i.fa-chevron-down { transition: transform 0.3s; }
         .accordion-header.active i.fa-chevron-down { transform: rotate(180deg); }
 
@@ -452,7 +440,7 @@
             </div>
             <div class="accordion-content">
                 <p><strong>سیاست درآمدزایی:</strong> با خرید هر تخم مرغ، روزانه درصدی از قیمت آن به شما سود تعلق می‌گیرد. این سود به صورت خودکار به موجودی شما اضافه می‌شود.</p>
-                <p><strong>برداشت وجه:</strong> شما می‌توانید در هر زمان سرمایه‌گذاری خود را متوقف کرده و موجودی خود را برداشت کنید. توجه داشته باشید که برداشت شامل یک کارمزد (به صورت نمایشی) است. با این حال، سود دریافتی شما از مبلغ پرداخت اولیه کمتر نخواهد بود.</p>
+                <p><strong>برداشت وجه:</strong> شما می‌توانید در هر زمان سرمایه‌گذاری خود را متوقف کرده و موجودی خود را برداشت کنید. برای هر برداشت، یک کارمزد **${WITHDRAWAL_FEE_PERCENTAGE * 100}%** کسر خواهد شد. با این حال، مجموع سود دریافتی شما از مبلغ پرداخت اولیه کمتر نخواهد بود.</p>
             </div>
         </div>
         
@@ -460,37 +448,37 @@
             <h2 class="section-title">تخم مرغ‌ها برای خرید ✨</h2>
             <div class="egg-list">
                 <div class="egg-item" data-type="normal">
-                    <div class="egg-icon"><i class="fas fa-egg"></i></div>
+                    <div class="egg-icon" style="color: #adb5bd;"><i class="fas fa-egg"></i></div>
                     <div class="egg-title">معمولی</div>
                     <div class="egg-price">۰.۰۵ <i class="fab fa-neos"></i></div>
                     <button class="buy-btn" data-type="normal">خرید</button>
                 </div>
                 <div class="egg-item" data-type="golden">
-                    <div class="egg-icon" style="color: #ffd700;"><i class="fas fa-egg"></i></div>
+                    <div class="egg-icon" style="color: #e9c46a;"><i class="fas fa-egg"></i></div>
                     <div class="egg-title">طلایی</div>
                     <div class="egg-price">۰.۲۵ <i class="fab fa-neos"></i></div>
                     <button class="buy-btn" data-type="golden">خرید</button>
                 </div>
                 <div class="egg-item" data-type="crystal">
-                    <div class="egg-icon" style="color: #1abc9c;"><i class="fas fa-gem"></i></div>
+                    <div class="egg-icon" style="color: #48bfe3;"><i class="fas fa-gem"></i></div>
                     <div class="egg-title">کریستالی</div>
                     <div class="egg-price">۰.۵ <i class="fab fa-neos"></i></div>
                     <button class="buy-btn" data-type="crystal">خرید</button>
                 </div>
                 <div class="egg-item" data-type="diamond">
-                    <div class="egg-icon" style="color: #3498db;"><i class="fas fa-gem"></i></div>
+                    <div class="egg-icon" style="color: #6a4c93;"><i class="fas fa-gem"></i></div>
                     <div class="egg-title">الماسی</div>
                     <div class="egg-price">۲.۵ <i class="fab fa-neos"></i></div>
                     <button class="buy-btn" data-type="diamond">خرید</button>
                 </div>
                 <div class="egg-item" data-type="magic">
-                    <div class="egg-icon" style="color: #9b59b6;"><i class="fas fa-hat-wizard"></i></div>
+                    <div class="egg-icon" style="color: #a4508b;"><i class="fas fa-hat-wizard"></i></div>
                     <div class="egg-title">جادویی</div>
                     <div class="egg-price">۵ <i class="fab fa-neos"></i></div>
                     <button class="buy-btn" data-type="magic">خرید</button>
                 </div>
                 <div class="egg-item" data-type="legendary">
-                    <div class="egg-icon" style="color: #e74c3c;"><i class="fas fa-dragon"></i></div>
+                    <div class="egg-icon" style="color: #d81159;"><i class="fas fa-dragon"></i></div>
                     <div class="egg-title">افسانه‌ای</div>
                     <div class="egg-price">۲۵ <i class="fab fa-neos"></i></div>
                     <button class="buy-btn" data-type="legendary">خرید</button>
@@ -541,7 +529,7 @@
             <div class="task-list" id="taskList">
                 <div class="task-item">
                     <div class="left">
-                        <div class="icon"><i class="fas fa-gift"></i></div>
+                        <div class="icon" style="color: #007bff;"><i class="fas fa-gift"></i></div>
                         <div class="details">
                             <div class="title">بونوس خوش آمد گویی</div>
                             <div class="reward">+۰.۰۱ <i class="fab fa-neos"></i></div>
@@ -552,7 +540,7 @@
                 </div>
                 <div class="task-item">
                     <div class="left">
-                        <div class="icon"><i class="fas fa-ad"></i></div>
+                        <div class="icon" style="color: #007bff;"><i class="fas fa-ad"></i></div>
                         <div class="details">
                             <div class="title">تماشای ۱۰ تبلیغ</div>
                             <div class="reward">+۰.۰۵ <i class="fab fa-neos"></i></div>
@@ -563,7 +551,7 @@
                 </div>
                 <div class="task-item">
                     <div class="left">
-                        <div class="icon"><i class="fas fa-camera"></i></div>
+                        <div class="icon" style="color: #007bff;"><i class="fas fa-camera"></i></div>
                         <div class="details">
                             <div class="title">انتشار داستان</div>
                             <div class="reward">+۰.۰۲ <i class="fab fa-neos"></i></div>
@@ -574,7 +562,7 @@
                 </div>
                 <div class="task-item">
                     <div class="left">
-                        <div class="icon"><i class="fas fa-users"></i></div>
+                        <div class="icon" style="color: #007bff;"><i class="fas fa-users"></i></div>
                         <div class="details">
                             <div class="title">دعوت از ۱ دوست</div>
                             <div class="reward">+۰.۰۱ <i class="fab fa-neos"></i></div>
@@ -585,7 +573,7 @@
                 </div>
                 <div class="task-item">
                     <div class="left">
-                        <div class="icon"><i class="fas fa-user-friends"></i></div>
+                        <div class="icon" style="color: #007bff;"><i class="fas fa-user-friends"></i></div>
                         <div class="details">
                             <div class="title">دعوت از ۳ دوست</div>
                             <div class="reward">+۰.۰۲ <i class="fab fa-neos"></i></div>
@@ -596,7 +584,7 @@
                 </div>
                 <div class="task-item">
                     <div class="left">
-                        <div class="icon"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="icon" style="color: #007bff;"><i class="fas fa-calendar-alt"></i></div>
                         <div class="details">
                             <div class="title">بونوس روزانه</div>
                             <div class="reward">+۰.۰۱ <i class="fab fa-neos"></i></div>
@@ -716,12 +704,11 @@
 
 <script>
     const TON_TO_TOMAN_RATE = 200000;
-    const FREE_EGG_PROFIT_INTERVAL = 60 * 1000; // 1 minute
+    const FREE_EGG_PROFIT_INTERVAL = 60 * 1000;
     const FREE_EGG_PROFIT_AMOUNT = 0.0001;
-    const EGG_INCREMENT_INTERVAL = 60 * 1000; // 1 minute
+    const EGG_INCREMENT_INTERVAL = 60 * 1000;
     let eggCount = 0;
-
-    const WITHDRAWAL_FEE_PERCENTAGE = 0.05; // 5% fee for withdrawal
+    const WITHDRAWAL_FEE_PERCENTAGE = 0.05;
 
     let userData = {
         balanceTON: 0.00,
@@ -752,24 +739,24 @@
         normal: "۷ روز", golden: "۱۴ روز", crystal: "۲۱ روز", diamond: "۳۰ روز", magic: "۴۵ روز", legendary: "۶۰ روز"
     };
     const eggDescriptions = {
-        normal: "سرمایه‌گذاری کوتاه‌مدت با ریسک پایین و سود روزانه ۵%",
-        golden: "سرمایه‌گذاری میان‌مدت با ریسک متوسط و سود روزانه ۷%",
-        crystal: "سرمایه‌گذاری با پشتیبانی طلا و سود روزانه ۹%",
-        diamond: "سرمایه‌گذاری بلندمدت با ریسک بالا و سود روزانه ۱۲%",
-        magic: "سرمایه‌گذاری ویژه با پشتیبانی الماس و سود روزانه ۱۵%",
-        legendary: "سرمایه‌گذاری اختصاصی با بالاترین سود روزانه ۲۰%"
+        normal: "سرمایه‌گذاری کوتاه‌مدت با ریسک پایین و سود روزانه ۵٪",
+        golden: "سرمایه‌گذاری میان‌مدت با ریسک متوسط و سود روزانه ۷٪",
+        crystal: "سرمایه‌گذاری با پشتیبانی طلا و سود روزانه ۹٪",
+        diamond: "سرمایه‌گذاری بلندمدت با ریسک بالا و سود روزانه ۱۲٪",
+        magic: "سرمایه‌گذاری ویژه با پشتیبانی الماس و سود روزانه ۱۵٪",
+        legendary: "سرمایه‌گذاری اختصاصی با بالاترین سود روزانه ۲۰٪"
     };
     const eggNames = {
         normal: "تخم مرغ معمولی", golden: "تخم مرغ طلایی", crystal: "تخم مرغ کریستالی",
         diamond: "تخم مرغ الماسی", magic: "تخم مرغ جادویی", legendary: "تخم مرغ افسانه‌ای"
     };
     const eggIcons = {
-        normal: '<i class="fas fa-egg"></i>',
-        golden: '<i class="fas fa-egg" style="color: #ffd700;"></i>',
-        crystal: '<i class="fas fa-gem" style="color: #1abc9c;"></i>',
-        diamond: '<i class="fas fa-gem" style="color: #3498db;"></i>',
-        magic: '<i class="fas fa-hat-wizard" style="color: #9b59b6;"></i>',
-        legendary: '<i class="fas fa-dragon" style="color: #e74c3c;"></i>'
+        normal: '<i class="fas fa-egg" style="color: #adb5bd;"></i>', /* Gray */
+        golden: '<i class="fas fa-egg" style="color: #e9c46a;"></i>', /* Gold */
+        crystal: '<i class="fas fa-gem" style="color: #48bfe3;"></i>', /* Turquoise */
+        diamond: '<i class="fas fa-gem" style="color: #6a4c93;"></i>', /* Soft Blue */
+        magic: '<i class="fas fa-hat-wizard" style="color: #a4508b;"></i>', /* Purple */
+        legendary: '<i class="fas fa-dragon" style="color: #d81159;"></i>' /* Red */
     };
 
     const userBalanceHomeEl = document.getElementById('userBalanceHome');
@@ -787,6 +774,7 @@
     const withdrawAmountInputEl = document.getElementById('withdrawAmountInput');
     const userWalletAddressEl = document.getElementById('userWalletAddress');
     const withdrawalFeeEl = document.getElementById('withdrawalFee');
+    const adRequestFormEl = document.querySelector('.ad-request-form');
 
     function initializeApp() {
         if (localStorage.getItem('userData')) {
@@ -873,14 +861,8 @@
             alert('موجودی کافی نیست! لطفاً ابتدا حساب خود را شارژ کنید.');
         }
     }
-
-    function collectProfit() {
-        alert('تخم مرغ‌ها به طور خودکار به شما سود می‌دهند!');
-    }
     
-    let eggFillAnimation;
     function startEggAnimations() {
-        clearInterval(eggFillAnimation);
         let startTime = userData.lastProfitCollectionTime;
         
         const updateFill = () => {
@@ -888,6 +870,7 @@
             const timeSinceLastCollection = currentTime - startTime;
             const progress = (timeSinceLastCollection / FREE_EGG_PROFIT_INTERVAL) * 100;
             const fillHeight = Math.min(progress, 100);
+
             eggFillEl.style.height = `${fillHeight}%`;
 
             if (fillHeight >= 100) {
@@ -1111,7 +1094,7 @@
         const profitToman = (userData.dailyProfitTONPerEgg[type] * TON_TO_TOMAN_RATE).toLocaleString();
         
         const message = `
-            <div style="text-align: right; line-height: 1.8;">
+            <div style="text-align: right; line-height: 1.8; color: #495057;">
                 <div>قیمت: ${eggPricesTON[type].toFixed(2)} TON (${priceToman} تومان)</div>
                 <div>مدت سرمایه‌گذاری: ${eggDurations[type]}</div>
                 <div>سود روزانه: ${userData.dailyProfitTONPerEgg[type].toFixed(4)} TON (${profitToman} تومان)</div>
@@ -1143,7 +1126,6 @@
     document.addEventListener('DOMContentLoaded', () => {
         initializeApp();
         
-        // Accordion functionality
         document.querySelectorAll('.accordion-header').forEach(header => {
             header.addEventListener('click', () => {
                 const content = header.nextElementSibling;
